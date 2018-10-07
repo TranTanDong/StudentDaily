@@ -1,4 +1,4 @@
-package com.example.woo.studentdaily;
+package com.example.woo.studentdaily.Main.Fragment;
 
 
 import android.os.Bundle;
@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.woo.studentdaily.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DailyFragment extends Fragment {
+public class DiaryFragment extends Fragment {
 
 
-    public DailyFragment() {
+    public DiaryFragment() {
         // Required empty public constructor
     }
 
@@ -26,4 +28,12 @@ public class DailyFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_daily, container, false);
     }
 
+    public static DiaryFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        DiaryFragment fragment = new DiaryFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 }
