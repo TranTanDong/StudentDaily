@@ -11,10 +11,10 @@
     <dimen name="margin_item_horizontal">30dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_margin">8dp</dimen>
-    <dimen name="card_radius">8dp</dimen>
+    <dimen name="card_radius">2dp</dimen>           //Used
     <!--font size-->
-    <dimen name="font_size_input">16sp</dimen>
-    <dimen name="font_size_text">14sp</dimen>
+    <dimen name="font_size_input">16sp</dimen> 
+    <dimen name="font_size_text">16sp</dimen>       //Used
     <dimen name="font_size_title">14sp</dimen>
     <dimen name="font_size_btn">14sp</dimen>
     <dimen name="font_size_title_item">16sp</dimen>
@@ -22,8 +22,15 @@
     <dimen name="font_size_header">28sp</dimen>
     <dimen name="font_size_toolbar">18sp</dimen>
     <dimen name="font_size_sub_title">11sp</dimen>
+
+
+    <dimen name="image_view_plan">30dp</dimen>
+    <dimen name="size_card_view_plan">30dp</dimen>
+
+
     <!--margin popup-->
     <dimen name="popup_margin">18dp</dimen>
+    <dimen name="margin">5dp</dimen>                    //Used
     <!--button-->
     <dimen name="btn_padding_left_right">8dp</dimen>
     <dimen name="btn_margin_left_right">48dp</dimen>
@@ -31,7 +38,7 @@
     <dimen name="input_padding">18dp</dimen>
     <dimen name="input_drawable_padding">30dp</dimen>
     <!--activity-->
-    <dimen name="activity_margin">18dp</dimen>
+    <dimen name="activity_margin">10dp</dimen>             //Used
     <dimen name="icon_result_size">48dp</dimen>
     <dimen name="icon_info_size">24dp</dimen>
     <dimen name="avatar_size">96dp</dimen>

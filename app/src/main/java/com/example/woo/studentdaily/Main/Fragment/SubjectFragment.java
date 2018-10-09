@@ -33,13 +33,13 @@ public class SubjectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View viewSubject = inflater.inflate(R.layout.fragment_subject, container, false);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        //Xử lý toolbar
-        rcv_listSubject = viewSubject.findViewById(R.id.rcv_listSubject);
+        View view = inflater.inflate(R.layout.fragment_subject, container, false);
+//        AppCompatActivity activity = (AppCompatActivity) getActivity();
+//        //Xử lý toolbar
+//        rcv_listSubject = viewSubject.findViewById(R.id.rcv_listSubject);
 
 
-        return viewSubject;
+        return view;
     }
 
     public static SubjectFragment newInstance() {

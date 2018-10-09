@@ -21,7 +21,7 @@
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:textColor="@color/textColor"
+            android:textColor="@color/textColorBlack"
             android:textColorHint="@color/cardview_dark_background"
             android:layout_height="wrap_content" />
     </FrameLayout>

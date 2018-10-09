@@ -1,7 +1,9 @@
 package com.example.woo.studentdaily.Main.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.woo.studentdaily.Plan.Adapter.PagerAdapter;
+import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.R;
 
 
@@ -20,6 +23,7 @@ import com.example.woo.studentdaily.R;
 public class PlanFragment extends Fragment {
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private FloatingActionButton btn_add_plan;
 
     public PlanFragment() {
         // Required empty public constructor
@@ -31,6 +35,13 @@ public class PlanFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_plan, container, false);
+        btn_add_plan = view.findViewById(R.id.btn_add_plan);
+        btn_add_plan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AddPlanActivity.class));
+            }
+        });
 
         tabLayout = view.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("CƠ BẢN"));

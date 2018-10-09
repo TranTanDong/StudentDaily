@@ -30,8 +30,9 @@
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
+        android:requiresFadingEdge="none"
         app:menu="@menu/navigation" />
 </RelativeLayout>

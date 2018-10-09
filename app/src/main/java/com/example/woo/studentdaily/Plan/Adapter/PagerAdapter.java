@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.woo.studentdaily.Plan.TabPlanFragment;
-import com.example.woo.studentdaily.Plan.TabPlanListFragment;
+import com.example.woo.studentdaily.Plan.Fragment.TabPlanFragment;
+import com.example.woo.studentdaily.Plan.Fragment.TabPlanListFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
 

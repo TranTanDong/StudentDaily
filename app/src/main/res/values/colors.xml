@@ -14,8 +14,8 @@
     <color name="bgInputBlue">#F1F9FF</color>
     <color name="bgInputRed">#ffebee</color>
     <!--text color-->
-    <color name="textColor">@android:color/black</color>
-    <color name="textColorBtn">@android:color/white</color>
+    <color name="textColorBlack">@android:color/black</color>
+    <color name="textColorWhite">@android:color/white</color>
     <color name="textColorHeader">#2699FB</color>
     <color name="textColorHint">#CFDEF3</color>
     <color name="textColorHintFail">#FFAFBD</color>

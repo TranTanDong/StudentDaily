@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Plan.TabPlanListFragment">
+    tools:context=".Plan.Fragment.TabPlanListFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
 
-</FrameLayout>
+       <android.support.v7.widget.RecyclerView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           tools:listitem="@layout/item_tab_plan_list">
+       </android.support.v7.widget.RecyclerView>
+       <include layout="@layout/item_tab_plan_list"/>
+       <include layout="@layout/item_tab_plan_list"/>
+       <include layout="@layout/item_tab_plan_list"/>
+       <include layout="@layout/item_tab_plan_list"/>
+       <include layout="@layout/item_tab_plan_list"/>
+
+   </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

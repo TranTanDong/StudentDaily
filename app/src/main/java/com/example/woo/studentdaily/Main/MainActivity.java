@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mMainNav     = findViewById(R.id.navigation);
         mMainNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.removeShiftMode(mMainNav);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,PlanFragment.newInstance()).commit();
         setTitle("Kế hoạch");
         toolbar =  findViewById(R.id.toolbar);
