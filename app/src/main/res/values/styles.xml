@@ -23,4 +23,23 @@
         <item name="android:textSize">@dimen/font_size_toolbar</item>
     </style>
 
+    <!--<style name="error" parent="@android:style/TextAppearance">-->
+        <!--<item name="android:textColor">@color/endGradientFail</item>-->
+        <!--<item name="android:textSize">12dp</item>-->
+    <!--</style>-->
+
+    <!--<style name="textInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlineBox">-->
+        <!--<item name="boxBackgroundColor">@android:color/transparent</item>-->
+        <!--<item name="boxCornerRadiusBottomLeft">10dp</item>-->
+        <!--<item name="boxCornerRadiusTopLeft">10dp</item>-->
+        <!--<item name="boxCornerRadiusBottomRight">10dp</item>-->
+        <!--<item name="boxCornerRadiusTopRight">10dp</item>-->
+        <!--<item name="errorTextAppearance">@style/error</item>-->
+        <!--<item name="boxBackgroundMode">outline</item>-->
+        <!--<item name="boxPaddingLeft">@dimen/input_drawable_padding</item>-->
+        <!--<item name="boxPaddingRight">@dimen/input_drawable_padding</item>-->
+        <!--<item name="boxStrokeColor">@color/colorAccent</item>-->
+        <!--<item name="boxStrokeWidth">2dp</item>-->
+    <!--</style>-->
+
 </resources>

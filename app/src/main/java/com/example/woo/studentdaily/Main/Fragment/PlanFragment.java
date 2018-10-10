@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.woo.studentdaily.Login.LoginActivity;
 import com.example.woo.studentdaily.Plan.Adapter.PagerAdapter;
 import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.R;
@@ -39,7 +40,7 @@ public class PlanFragment extends Fragment {
         btn_add_plan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddPlanActivity.class));
+                startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         });
 
