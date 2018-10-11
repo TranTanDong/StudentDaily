@@ -147,7 +147,7 @@
                 android:textColor="@color/textColorWhite"
                 android:layout_marginTop="20dp"
                 android:background="@color/colorAccent"
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_sign_up"
                 android:textAllCaps="false"/>
 
         </LinearLayout>

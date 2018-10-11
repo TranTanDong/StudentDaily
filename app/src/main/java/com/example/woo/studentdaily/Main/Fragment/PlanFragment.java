@@ -40,7 +40,7 @@ public class PlanFragment extends Fragment {
         btn_add_plan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                startActivity(new Intent(getActivity(), AddPlanActivity.class));
             }
         });
 
