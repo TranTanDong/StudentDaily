@@ -11,20 +11,19 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Main.MainActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity android:name=".Plan.AddPlanActivity" />
-        <activity
-            android:name=".Login.LoginActivity">
+        <activity android:name=".Login.LoginActivity">
+        </activity>
+        <activity android:name=".Login.SignUpActivity" />
+        <activity android:name=".Login.SetInfAccountActivity" />
+        <activity android:name=".Login.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Login.SignUpActivity" />
-        <activity android:name=".Login.SetInfAccountActivity"></activity>
     </application>
 
 </manifest>

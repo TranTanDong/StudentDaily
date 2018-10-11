@@ -121,11 +121,10 @@ public class AddPlanActivity extends AppCompatActivity {
                                tmp++;
                             }
                         }
-                        if (tmp<5){
-                            ArrayCheckedReminded[which] = isChecked;
-                        }else {
+                        if (tmp>4){
                             Toast.makeText(getApplicationContext(), "Đã chọn sô lượng nhắc nhỡ tối đa", Toast.LENGTH_SHORT).show();
-                            ArrayCheckedReminded[which] = false;
+                        }else {
+                            ArrayCheckedReminded[which] = isChecked;
                         }
 
                     }

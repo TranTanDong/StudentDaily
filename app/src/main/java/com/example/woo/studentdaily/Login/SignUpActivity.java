@@ -20,11 +20,18 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         addToolbar();
+        addControls();
+        addEvents();
+    }
+
+    private void addControls() {
         btn_sign_up = findViewById(R.id.btn_sign_up);
+    }
+
+    private void addEvents() {
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
             }
         });
     }
