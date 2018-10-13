@@ -8,19 +8,19 @@ import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.woo.studentdaily.R;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -28,6 +28,7 @@ public class AddPlanActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private CardView cvStartDayPlan, cvStartTimePlan;
     private TextView tvStartDayPlan, tvStartTimePlan, tvReminded;
+    private Spinner spnPlan;
 
     final boolean ArrayCheckedReminded[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     private Calendar calendar = Calendar.getInstance();
@@ -77,6 +78,16 @@ public class AddPlanActivity extends AppCompatActivity {
         tvStartDayPlan = findViewById(R.id.tv_start_day_plan);
         tvStartTimePlan = findViewById(R.id.tv_start_time_plan);
         tvReminded  = findViewById(R.id.tv_reminded);
+        spnPlan = findViewById(R.id.spn_plan);
+
+        ArrayAdapter<String> adapterPlan = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                getResources().getStringArray(R.array.ArrayReminded)
+        );
+        adapterPlan.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        spnPlan.setAdapter(adapterPlan);
+
 
         String s = sdf.format(calendar.getTime());
         String strArr[] = s.split("-");

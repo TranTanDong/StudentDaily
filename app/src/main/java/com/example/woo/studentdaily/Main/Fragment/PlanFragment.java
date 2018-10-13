@@ -45,8 +45,8 @@ public class PlanFragment extends Fragment {
         });
 
         tabLayout = view.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("CƠ BẢN"));
-        tabLayout.addTab(tabLayout.newTab().setText("TOÀN BỘ"));
+        tabLayout.addTab(tabLayout.newTab().setText("SỰ KIỆN"));
+        tabLayout.addTab(tabLayout.newTab().setText("KẾ HOẠCH"));
 
         viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(new PagerAdapter(getFragmentManager(), tabLayout.getTabCount()));

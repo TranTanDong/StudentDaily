@@ -13,6 +13,7 @@
     <color name="bgBlue">#2699FB</color>
     <color name="bgInputBlue">#F1F9FF</color>
     <color name="bgInputRed">#ffebee</color>
+    <color name="bgGray">#FAFAFA</color>
     <!--text color-->
     <color name="textColorBlack">@android:color/black</color>
     <color name="textColorWhite">@android:color/white</color>
