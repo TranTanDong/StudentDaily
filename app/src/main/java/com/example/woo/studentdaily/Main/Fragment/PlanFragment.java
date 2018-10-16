@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.woo.studentdaily.Login.LoginActivity;
-import com.example.woo.studentdaily.Plan.Adapter.PagerAdapter;
+import com.example.woo.studentdaily.Plan.Adapter.PagerAdapterPlan;
 import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.R;
 
@@ -22,9 +20,9 @@ import com.example.woo.studentdaily.R;
  * A simple {@link Fragment} subclass.
  */
 public class PlanFragment extends Fragment {
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    private FloatingActionButton btn_add_plan;
+    private ViewPager viewPagerPlan;
+    private TabLayout tabLayoutPlan;
+    private FloatingActionButton btnAddPlan;
 
     public PlanFragment() {
         // Required empty public constructor
@@ -36,25 +34,25 @@ public class PlanFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_plan, container, false);
-        btn_add_plan = view.findViewById(R.id.btn_add_plan);
-        btn_add_plan.setOnClickListener(new View.OnClickListener() {
+        btnAddPlan = view.findViewById(R.id.btn_add_plan);
+        btnAddPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), AddPlanActivity.class));
             }
         });
 
-        tabLayout = view.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("SỰ KIỆN"));
-        tabLayout.addTab(tabLayout.newTab().setText("KẾ HOẠCH"));
+        tabLayoutPlan = view.findViewById(R.id.tab_layout_plan);
+        tabLayoutPlan.addTab(tabLayoutPlan.newTab().setText("SỰ KIỆN"));
+        tabLayoutPlan.addTab(tabLayoutPlan.newTab().setText("KẾ HOẠCH"));
 
-        viewPager = view.findViewById(R.id.view_pager);
-        viewPager.setAdapter(new PagerAdapter(getFragmentManager(), tabLayout.getTabCount()));
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        viewPagerPlan = view.findViewById(R.id.view_pager_plan);
+        viewPagerPlan.setAdapter(new PagerAdapterPlan(getFragmentManager(), tabLayoutPlan.getTabCount()));
+        viewPagerPlan.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayoutPlan));
+        tabLayoutPlan.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                viewPagerPlan.setCurrentItem(tab.getPosition());
             }
 
             @Override

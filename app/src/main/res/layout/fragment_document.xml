@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Subject.Fragment.DocumentFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <com.github.florent37.expansionpanel.ExpansionHeader
+        android:layout_height="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        app:expansion_headerIndicator="@id/headerIndicator"
+        app:expansion_layout="@id/expansionLayout"
+        app:expansion_toggleOnClick="true">
+
+        <!-- HEADER -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:text="Lịch học"/>
+        ...
+        <!-- HEADER INDICATOR -->
+        <ImageView
+            android:adjustViewBounds="true"
+            android:id="@+id/headerIndicator"
+            android:layout_gravity="center_vertical|right"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+
+    </com.github.florent37.expansionpanel.ExpansionHeader>
+
+    <com.github.florent37.expansionpanel.ExpansionLayout
+        android:id="@+id/expansionLayout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <!-- CONTENT -->
+      <include layout="@layout/activity_add_plan"/>
+
+    </com.github.florent37.expansionpanel.ExpansionLayout>
+</LinearLayout>

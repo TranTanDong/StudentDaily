@@ -9,25 +9,15 @@
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
+        android:id="@+id/tab_layout_plan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"
         app:tabGravity="fill">
-        <!--<android.support.design.widget.TabItem-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="PLAN"-->
-            <!--android:id="@+id/tab_plan" />-->
-        <!--<android.support.design.widget.TabItem-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="PLAN LIST"-->
-            <!--android:id="@+id/tab_plan_list"/>-->
     </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
-        android:layout_below="@id/tab_layout"
-        android:id="@+id/view_pager"
+        android:layout_below="@id/tab_layout_plan"
+        android:id="@+id/view_pager_plan"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>

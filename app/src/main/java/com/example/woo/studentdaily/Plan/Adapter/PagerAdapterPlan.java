@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.example.woo.studentdaily.Plan.Fragment.TabPlanFragment;
 import com.example.woo.studentdaily.Plan.Fragment.TabPlanListFragment;
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapterPlan extends FragmentStatePagerAdapter {
 
-    int mNumOfTabs;
+    private int mNumOfTabs;
 
-    public PagerAdapter(FragmentManager fm, int NumOfTabs) {
+    public PagerAdapterPlan(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
     }

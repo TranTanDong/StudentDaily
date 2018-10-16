@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Subject.AddSubjectActivity">
+
+    <include layout="@layout/toolbar_layout"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/bgGray">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bgWhite"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="@dimen/margin">
+
+                    <EditText
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Tên môn học"
+                        android:textSize="@dimen/font_size_text" />
+                    <ImageView
+                        android:id="@+id/btn_color_subject"
+                        android:layout_width="@dimen/image_view_plan"
+                        android:layout_height="@dimen/image_view_plan"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_color_lens_black_24dp"/>
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:hint="Tên lớp"
+                    android:textSize="@dimen/font_size_text"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Năm học"
+                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:textSize="@dimen/font_size_text"
+                        android:layout_gravity="center"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:text="Học kỳ"
+                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:textSize="@dimen/font_size_text"
+                        android:layout_gravity="center"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bgWhite"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="GIẢNG VIÊN"
+                    android:textSize="@dimen/font_size_text"
+                    android:textColor="@color/colorAccent"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:gravity="center"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_account"
+                        android:drawablePadding="@dimen/input_drawable_padding"
+                        android:hint="Tên giảng viên"
+                        android:inputType="text"
+                        android:fontFamily="sans-serif"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/font_size_input"
+                        android:textColor="@color/textColorBlack"
+                        android:background="@color/textColorWhite"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_phone_number"
+                        android:drawablePadding="@dimen/input_drawable_padding"
+                        android:hint="Số điện thoại"
+                        android:inputType="text"
+                        android:fontFamily="sans-serif"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/font_size_input"
+                        android:textColor="@color/textColorBlack"
+                        android:background="@color/textColorWhite"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawablePadding="@dimen/input_drawable_padding"
+                        android:hint="Email giảng viên"
+                        android:inputType="text"
+                        android:fontFamily="sans-serif"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/font_size_input"
+                        android:textColor="@color/textColorBlack"
+                        android:background="@color/textColorWhite"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_web_lecturers"
+                        android:drawablePadding="@dimen/input_drawable_padding"
+                        android:hint="Web giảng viên"
+                        android:inputType="text"
+                        android:fontFamily="sans-serif"
+                        android:textColorHint="@color/textColorHint"
+                        android:textSize="@dimen/font_size_input"
+                        android:textColor="@color/textColorBlack"
+                        android:background="@color/textColorWhite"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

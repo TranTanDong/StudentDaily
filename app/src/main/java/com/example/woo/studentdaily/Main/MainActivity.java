@@ -1,5 +1,6 @@
 package com.example.woo.studentdaily.Main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +16,7 @@ import com.example.woo.studentdaily.Main.Fragment.ExtendedFragment;
 import com.example.woo.studentdaily.Main.Fragment.PlanFragment;
 import com.example.woo.studentdaily.Main.Fragment.SubjectFragment;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Subject.AddSubjectActivity;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 
@@ -86,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.add1){
+            startActivity(new Intent(MainActivity.this, AddSubjectActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 }

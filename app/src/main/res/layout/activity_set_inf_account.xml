@@ -30,7 +30,7 @@
                     android:layout_width="76dp"
                     android:layout_height="76dp"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_add_photo" />
+                    android:background="@drawable/ic_add_photo" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -43,6 +43,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nhập họ tên"
+                        android:drawableRight="@drawable/ic_edit_black_24dp"
                         android:textSize="@dimen/font_size_text"/>
 
                     <RadioGroup
@@ -143,7 +144,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_update_inf"
                 android:layout_width="200dp"
                 android:layout_height="55dp"
                 android:layout_gravity="center"
