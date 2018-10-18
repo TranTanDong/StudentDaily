@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Subject.Fragment.LecturersFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Phạm Ngọc Quyền"
+        android:layout_margin="10dp"
+        android:textSize="@dimen/font_size_header"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:text="0123456789"
+        android:drawableLeft="@drawable/ic_phone_number"
+        android:textSize="@dimen/font_size_topic"
+        android:gravity="center_vertical"
+        android:drawablePadding="30dp"
+        android:fontFamily="sans-serif-black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="pnquyen@cit.ctu.edu.vn"
+        android:drawableLeft="@drawable/ic_email"
+        android:textSize="@dimen/font_size_topic"
+        android:gravity="center_vertical"
+        android:drawablePadding="30dp"
+        android:fontFamily="sans-serif-black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="pnquyen.com"
+        android:drawableLeft="@drawable/ic_web_lecturers"
+        android:textSize="@dimen/font_size_topic"
+        android:gravity="center_vertical"
+        android:drawablePadding="30dp"
+        android:fontFamily="sans-serif-black"/>
+
+</LinearLayout>
