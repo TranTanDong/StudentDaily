@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.woo.studentdaily.R;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -89,9 +90,11 @@ public class AddPlanActivity extends AppCompatActivity {
         spnPlan.setAdapter(adapterPlan);
 
 
-        String s = sdf.format(calendar.getTime());
-        String strArr[] = s.split("-");
-        tvStartDayPlan.setText("Thứ x, "+strArr[0]+" thg "+ strArr[1] + " "+strArr[2]);
+//        String s = sdf.format(calendar.getTime());
+//        String strArr[] = s.split("-");
+//        tvStartDayPlan.setText("Thứ x, "+strArr[0]+" thg "+ strArr[1] + " "+strArr[2]);
+        String s = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        tvStartDayPlan.setText(s);
 
         tvStartTimePlan.setText(stf.format(calendar.getTime()));
     }
@@ -198,9 +201,11 @@ public class AddPlanActivity extends AppCompatActivity {
                 calendar.set(calendar.YEAR, year);
                 calendar.set(calendar.MONTH, month);
                 calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
-                String s = sdf.format(calendar.getTime());
-                String strArr[] = s.split("-");
-                tv_start_day_plan.setText("Thứ x, "+strArr[0]+" thg "+ strArr[1] + " "+strArr[2]);
+                String s = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                tv_start_day_plan.setText(s);
+//                String s = sdf.format(calendar.getTime());
+//                String strArr[] = s.split("-");
+//                tv_start_day_plan.setText("Thứ x, "+strArr[0]+" thg "+ strArr[1] + " "+strArr[2]);
             }
         };
 

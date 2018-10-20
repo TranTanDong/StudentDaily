@@ -33,23 +33,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:weightSum="3"
                 android:orientation="horizontal">
                 <Spinner
                     android:id="@+id/spn_plan"
-                    android:layout_width="match_parent"
+                    android:layout_width="300dp"
                     android:layout_height="45dp"
-                    android:layout_weight="2.8"
                     android:layout_gravity="center"
                     android:textAlignment="center"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/font_size_text"
                     android:textStyle="bold|italic" />
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bgGray"
                     android:layout_gravity="center"
-                    android:layout_weight="0.1"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/ic_add_tab_plan"/>
@@ -66,18 +64,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:orientation="horizontal">
                     <EditText
-                        android:layout_width="wrap_content"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.6"
                         android:hint="Tên sự kiện"
                         android:textSize="@dimen/font_size_text"/>
                     <ImageView
                         android:layout_width="@dimen/image_view_plan"
                         android:layout_height="@dimen/image_view_plan"
-                        android:layout_weight="0.2"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_color_lens_black_24dp"/>
                 </LinearLayout>
@@ -85,18 +80,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:orientation="horizontal">
                     <EditText
-                        android:layout_width="wrap_content"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.7"
                         android:hint="Vị trí"
                         android:textSize="16sp"/>
                     <ImageView
                         android:layout_width="@dimen/image_view_plan"
                         android:layout_height="@dimen/image_view_plan"
-                        android:layout_weight="0.2"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_location_on_black_24dp"/>
                 </LinearLayout>
@@ -118,8 +110,9 @@
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/cv_start_day_plan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/size_card_view_plan"
+                        android:layout_width="220dp"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
                         app:cardCornerRadius="@dimen/card_radius"
                         android:layout_weight="1.8">
 
@@ -127,9 +120,11 @@
                             android:id="@+id/tv_start_day_plan"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
                             android:layout_gravity="center"
                             android:maxLines="2"
-                            android:text="Thứ 3, 09 thg 10 2018"
+                            android:text="Thứ 3, ngày 09 tháng 10 năm 2018"
                             android:fontFamily="sans-serif-black"
                             android:textSize="@dimen/font_size_text"
                             android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"/>
@@ -140,6 +135,7 @@
                         android:id="@+id/cv_start_time_plan"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/size_card_view_plan"
+                        android:layout_gravity="center"
                         app:cardCornerRadius="@dimen/card_radius"
                         android:layout_marginLeft="@dimen/activity_margin"
                         android:layout_weight="0.5">
@@ -175,17 +171,20 @@
                     android:weightSum="3">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/size_card_view_plan"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
                         app:cardCornerRadius="@dimen/card_radius"
+                        android:layout_gravity="center"
                         android:layout_weight="1.8">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
                             android:maxLines="2"
-                            android:text="Thứ 3, 09 thg 10 2018"
+                            android:text="Thứ 3, ngày 09 tháng 10 năm 2018"
                             android:fontFamily="sans-serif-black"
                             android:textSize="@dimen/font_size_text"
                             android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"/>
@@ -195,6 +194,7 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/size_card_view_plan"
+                        android:layout_gravity="center"
                         app:cardCornerRadius="@dimen/card_radius"
                         android:layout_marginLeft="@dimen/activity_margin"
                         android:layout_weight="0.5">

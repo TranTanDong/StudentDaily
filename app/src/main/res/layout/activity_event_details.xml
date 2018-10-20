@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thứ 3, 16 thg 10 2018"
+            android:text="Thứ 3, ngày 16 tháng 10 năm 2018"
             android:textSize="@dimen/font_size_text"
             android:fontFamily="sans-serif-black"/>
         <TextView
