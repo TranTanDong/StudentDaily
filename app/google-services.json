@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "895938677716",
+    "firebase_url": "https://studentdiary-e027b.firebaseio.com",
+    "project_id": "studentdiary-e027b",
+    "storage_bucket": "studentdiary-e027b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895938677716:android:09512392b3bade87",
+        "android_client_info": {
+          "package_name": "com.example.woo.studentdaily"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895938677716-ukfv998f0ss1ddkfrvkmtk83i2jcgjk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsCHQqEKy3G6RZkWx6kEyJxNeHxqoVJUQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

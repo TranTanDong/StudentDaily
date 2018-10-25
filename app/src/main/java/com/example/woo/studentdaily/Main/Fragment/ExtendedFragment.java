@@ -1,13 +1,20 @@
 package com.example.woo.studentdaily.Main.Fragment;
 
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.woo.studentdaily.Login.LoginActivity;
 import com.example.woo.studentdaily.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
@@ -25,7 +32,41 @@ public class ExtendedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_extended, container, false);
+        View view = inflater.inflate(R.layout.fragment_extended, container, false);
+        LinearLayout btnLogout = view.findViewById(R.id.btn_log_out);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSigout();
+            }
+        });
+        return view;
+    }
+
+    //Xử lý đăng xuất
+    private void showSigout() {
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Đăng xuất");
+        builder.setMessage("Bạn có muốn đăng xuất không?");
+        builder.setCancelable(false);
+        builder.setNegativeButton("CÓ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mAuth.signOut();
+                startActivity(new Intent(getContext(), LoginActivity.class));
+                dialogInterface.dismiss();
+                getActivity().finish();
+            }
+        });
+        builder.setPositiveButton("KHÔNG", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public static ExtendedFragment newInstance() {
