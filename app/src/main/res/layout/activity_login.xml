@@ -123,7 +123,7 @@
                 android:layout_marginTop="@dimen/margin_item"
                 android:fontFamily="sans-serif"
                 android:padding="@dimen/margin_item"
-                android:text="Tôi chưa có tài khoản!"
+                android:text="Bạn chưa có tài khoản!"
                 android:textAllCaps="false"
                 android:textColor="@color/textColorBlack"
                 android:textSize="@dimen/font_size_text" />

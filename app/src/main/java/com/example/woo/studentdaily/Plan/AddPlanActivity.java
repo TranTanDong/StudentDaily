@@ -33,7 +33,6 @@ public class AddPlanActivity extends AppCompatActivity {
 
     final boolean ArrayCheckedReminded[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     private Calendar calendar = Calendar.getInstance();
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     private SimpleDateFormat stf = new SimpleDateFormat("hh:mm a");
     @Override
     protected void onCreate(Bundle savedInstanceState) {

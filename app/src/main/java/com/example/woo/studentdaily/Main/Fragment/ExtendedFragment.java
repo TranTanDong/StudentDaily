@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.woo.studentdaily.Login.LoginActivity;
+import com.example.woo.studentdaily.Login.SetInfAccountActivity;
 import com.example.woo.studentdaily.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +35,14 @@ public class ExtendedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_extended, container, false);
         LinearLayout btnLogout = view.findViewById(R.id.btn_log_out);
+        LinearLayout btnDetailAccount = view.findViewById(R.id.lnl_inf_account);
+
+        btnDetailAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SetInfAccountActivity.class));
+            }
+        });
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

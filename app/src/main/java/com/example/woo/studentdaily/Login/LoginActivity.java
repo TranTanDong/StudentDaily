@@ -1,6 +1,8 @@
 package com.example.woo.studentdaily.Login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,9 +25,10 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private TextView tvToSignUp;
     private TextInputEditText edtEmail, edtPassword;
-    public static boolean mFlag = true;
-
+    private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
+
+    public static boolean mFlag = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +44,12 @@ public class LoginActivity extends AppCompatActivity {
         updateUI(currentUser, mFlag);
     }
 
+    //Nếu đã đăng nhập trước và đã cập nhật thông tin
     private void updateUI(FirebaseUser currentUser, boolean mFlag) {
         if (currentUser != null && mFlag == true){
-            startActivity(new Intent(LoginActivity.this, SetInfAccountActivity.class));
-            finish();
+                Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(mIntent);
+                finish();
         }
     }
 
@@ -54,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             String mEmail = data.getStringExtra("EMAIL");
             mFlag = false;
             edtEmail.setText(mEmail);
-            Toast.makeText(this, "Nhập mật khẩu để đăng nhập", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, " Hãy nhập mật khẩu để đăng nhập", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -64,6 +70,9 @@ public class LoginActivity extends AppCompatActivity {
         tvToSignUp  = findViewById(R.id.tv_to_sign_up);
         edtEmail    = findViewById(R.id.edt_li_email);
         edtPassword = findViewById(R.id.edt_li_password);
+        progressDialog = new ProgressDialog(this);
+
+        tvToSignUp.setPaintFlags(tvToSignUp.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private void addEvents() {
@@ -85,21 +94,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void processLogin() {
-        String mEmail = edtEmail.getText().toString();
+        String mEmail = edtEmail.getText().toString().trim();
         String mPass  = edtPassword.getText().toString();
         if (TextUtils.isEmpty(mEmail)){
             Toast.makeText(this, "Bạn chưa nhập email", Toast.LENGTH_SHORT).show();
         }else if (TextUtils.isEmpty(mPass)){
             Toast.makeText(this, "Bạn chưa nhập mật khẩu", Toast.LENGTH_SHORT).show();
         }else {
+            progressDialog.setMessage("Đang xác thực tài khoản");
+            progressDialog.show();
             mAuth.signInWithEmailAndPassword(mEmail, mPass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
+                        progressDialog.hide();
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user, true);
-                    }else
+                    }else {
+                        progressDialog.hide();
                         Toast.makeText(LoginActivity.this, "Email hoặc mật khẩu chưa đúng", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }

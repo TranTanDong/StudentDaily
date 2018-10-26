@@ -40,6 +40,7 @@
                     android:orientation="vertical">
 
                     <EditText
+                        android:id="@+id/edt_set_inf_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nhập họ tên"
@@ -77,6 +78,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin"
+                        android:layout_marginBottom="@dimen/margin"
                         android:text="01/01/2018"
                         android:gravity="center|left"
                         android:fontFamily="sans-serif"
