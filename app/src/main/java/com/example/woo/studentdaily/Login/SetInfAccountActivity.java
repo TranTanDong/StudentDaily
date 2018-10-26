@@ -28,7 +28,7 @@ public class SetInfAccountActivity extends AppCompatActivity {
     private void addControls() {
         btnUpdateInf    = findViewById(R.id.btn_update_inf);
         edtFullName     = findViewById(R.id.edt_set_inf_name);
-        
+
     }
 
     private void addEvents() {

@@ -19,14 +19,24 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Server.Server;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -66,22 +76,52 @@ public class SignUpActivity extends AppCompatActivity {
         tvBirthDay.setText(Common.sdf.format(calendar.getTime()));
     }
 
-    private void signUp(final String email, String password, String fullName, String birthDay, boolean isFemale) {
-        Log.i("ViewData", email + password + fullName + birthDay + isFemale);
-
+    private void signUp(final String email, String password, final String fullName, final String birthDay, final boolean isFemale) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    insertData();
+                    final String code = mAuth.getCurrentUser().getUid();
+                    insertDataUser(code, fullName, email, isFemale, birthDay);
                     showDialogResult("Đăng ký thành công", email);
+                    Log.i("ViewData", code + email + fullName + birthDay + isFemale);
                 }else Toast.makeText(SignUpActivity.this, "Email chưa đúng định dạng", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
-    private void insertData() {
+    private void insertDataUser(final String code, final String fullName, final String email, final boolean isFemale, final String birthDay) {
+        String sex = "1";
+        if (isFemale == true){
+            sex = "1";
+        }else sex = "0";
+        final String finalSex = sex;
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertUser, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("KQQ", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                hashMap.put("u_code", code);
+                hashMap.put("u_name", fullName);
+                hashMap.put("u_image", "dasd");
+                hashMap.put("u_email", email);
+                hashMap.put("u_sex", finalSex);
+                hashMap.put("u_birthday", birthDay);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void showDialogResult(final String result, final String email) {
