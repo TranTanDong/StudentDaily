@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 
 public class Common {
 
-    public static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public static boolean isEmptyOrNull(String s){
         if (s == "" || s == null){
             return true;

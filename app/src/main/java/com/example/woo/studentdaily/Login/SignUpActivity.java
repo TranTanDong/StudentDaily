@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView tvBirthDay;
     private RadioButton radioMale, radioFemale;
     private RadioGroup radioGroup;
-    private boolean isFemale = true;
+    private int isFemale = 1;
 
     private FirebaseAuth mAuth;
     private Calendar calendar = Calendar.getInstance();
@@ -76,13 +76,14 @@ public class SignUpActivity extends AppCompatActivity {
         tvBirthDay.setText(Common.sdf.format(calendar.getTime()));
     }
 
-    private void signUp(final String email, String password, final String fullName, final String birthDay, final boolean isFemale) {
+    private void signUp(final String email, String password, final String fullName, final String birthDay, final int isFemale) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     final String code = mAuth.getCurrentUser().getUid();
-                    insertDataUser(code, fullName, email, isFemale, birthDay);
+                    String name = fullName;
+                    insertDataUser(code, name, email, isFemale, birthDay);
                     showDialogResult("Đăng ký thành công", email);
                     Log.i("ViewData", code + email + fullName + birthDay + isFemale);
                 }else Toast.makeText(SignUpActivity.this, "Email chưa đúng định dạng", Toast.LENGTH_SHORT).show();
@@ -91,32 +92,27 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void insertDataUser(final String code, final String fullName, final String email, final boolean isFemale, final String birthDay) {
-        String sex = "1";
-        if (isFemale == true){
-            sex = "1";
-        }else sex = "0";
-        final String finalSex = sex;
+    private void insertDataUser(final String code, final String name, final String email, final int isFemale, final String birthDay) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertUser, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("KQQ", response);
+                Toast.makeText(SignUpActivity.this, "Success"+response+name, Toast.LENGTH_SHORT).show();
+                Log.d("DATA", response+name);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(SignUpActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
+                Map<String, String> hashMap = new HashMap<>();
                 hashMap.put("u_code", code);
-                hashMap.put("u_name", fullName);
-                hashMap.put("u_image", "dasd");
+                hashMap.put("u_name", name);
                 hashMap.put("u_email", email);
-                hashMap.put("u_sex", finalSex);
+                hashMap.put("u_sex", String.valueOf(isFemale));
                 hashMap.put("u_birthday", birthDay);
                 return hashMap;
             }
@@ -151,8 +147,8 @@ public class SignUpActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int id = group.getCheckedRadioButtonId();
                 if (id == R.id.radio_male){
-                    isFemale = false;
-                }else isFemale = true;
+                    isFemale = 1;
+                }else isFemale = 0;
             }
         });
 
