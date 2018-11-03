@@ -14,30 +14,32 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="3.1">
+        android:gravity="center_vertical">
 
         <View
-            android:layout_weight="0.2"
-            android:layout_width="5dp"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
+            android:layout_gravity="left"
             android:background="@color/textColorHint"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_content_plan"
+            android:layout_width="265dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
             android:layout_marginLeft="10dp"
             android:text="Kế hoạch 5 năm"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:fontFamily="sans-serif-black"
             android:textSize="20sp"
             />
 
         <TextView
+            android:id="@+id/tv_update_day_plan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/colorAccent"
             android:text="07 thg 10"
             android:textSize="14sp"/>

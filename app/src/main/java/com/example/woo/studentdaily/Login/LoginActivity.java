@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             String mEmail = data.getStringExtra("EMAIL");
             mFlag = false;
             edtEmail.setText(mEmail);
-            Toast.makeText(this, " Hãy nhập mật khẩu để đăng nhập", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.let_enter_password), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -97,11 +97,11 @@ public class LoginActivity extends AppCompatActivity {
         String mEmail = edtEmail.getText().toString().trim();
         String mPass  = edtPassword.getText().toString();
         if (TextUtils.isEmpty(mEmail)){
-            Toast.makeText(this, "Bạn chưa nhập email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.email_not_yet), Toast.LENGTH_SHORT).show();
         }else if (TextUtils.isEmpty(mPass)){
-            Toast.makeText(this, "Bạn chưa nhập mật khẩu", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.password_not_yet), Toast.LENGTH_SHORT).show();
         }else {
-            progressDialog.setMessage("Đang xác thực tài khoản");
+            progressDialog.setMessage(getResources().getString(R.string.authenticating_account));
             progressDialog.show();
             mAuth.signInWithEmailAndPassword(mEmail, mPass).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                         updateUI(user, true);
                     }else {
                         progressDialog.hide();
-                        Toast.makeText(LoginActivity.this, "Email hoặc mật khẩu chưa đúng", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, getResources().getString(R.string.email_or_password_fail), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

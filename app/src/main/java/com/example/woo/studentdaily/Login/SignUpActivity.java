@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
     private Button btnSignUp;
     private TextInputEditText edtFullName, edtEmail, edtPassword, edtRepassword;
     private TextView tvBirthDay;
-    private RadioButton radioMale, radioFemale;
     private RadioGroup radioGroup;
     private int isFemale = 1;
 
@@ -70,8 +68,6 @@ public class SignUpActivity extends AppCompatActivity {
         edtRepassword   = findViewById(R.id.edt_su_repassword);
 
         radioGroup      = findViewById(R.id.radio_group);
-        radioMale       = findViewById(R.id.radio_male);
-        radioFemale     = findViewById(R.id.radio_female);
 
         tvBirthDay.setText(Common.sdf.format(calendar.getTime()));
     }
@@ -84,9 +80,9 @@ public class SignUpActivity extends AppCompatActivity {
                     final String code = mAuth.getCurrentUser().getUid();
                     String name = fullName;
                     insertDataUser(code, name, email, isFemale, birthDay);
-                    showDialogResult("Đăng ký thành công", email);
+                    showDialogResult(getResources().getString(R.string.sign_up_success), email);
                     Log.i("ViewData", code + email + fullName + birthDay + isFemale);
-                }else Toast.makeText(SignUpActivity.this, "Email chưa đúng định dạng", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(SignUpActivity.this, getResources().getString(R.string.email_incorrect_formatting), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -97,13 +93,13 @@ public class SignUpActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertUser, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(SignUpActivity.this, "Success"+response+name, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
                 Log.i("DATA", response+name);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignUpActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -141,7 +137,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-        //Xử lý radio giới tính ---- 0 false nữ --- !=0 true nam
+        //Xử lý radio giới tính
+        // 0 false nữ
+        // 1 true nam
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -171,11 +169,11 @@ public class SignUpActivity extends AppCompatActivity {
                 String mBirthDay = tvBirthDay.getText().toString();
 
                 if (TextUtils.isEmpty(mEmail) || TextUtils.isEmpty(mPass) || TextUtils.isEmpty(mRepass) || TextUtils.isEmpty(mName)){
-                    Toast.makeText(SignUpActivity.this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.enter_full_inf), Toast.LENGTH_SHORT).show();
                 }else if (edtPassword.getText().length() < 6) {
-                    Toast.makeText(SignUpActivity.this, "Mật khẩu phải từ 6 ký tự", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, getResources().getString(R.string.password_min_six_char), Toast.LENGTH_SHORT).show();
                 }else if (!mPass.equals(mRepass)){
-                        Toast.makeText(SignUpActivity.this, "Nhập lại mật khẩu chưa đúng", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, getResources().getString(R.string.re_password_failed), Toast.LENGTH_SHORT).show();
                         edtPassword.setText(null);
                         edtRepassword.setText(null);
                 }else signUp(mEmail, mPass, mName, mBirthDay, isFemale);
@@ -209,7 +207,7 @@ public class SignUpActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_close);
         setSupportActionBar(toolbar);
-        setTitle("Tài khoản mới");
+        setTitle(getResources().getString(R.string.new_account));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
