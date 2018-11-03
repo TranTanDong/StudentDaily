@@ -98,7 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(SignUpActivity.this, "Success"+response+name, Toast.LENGTH_SHORT).show();
-                Log.d("DATA", response+name);
+                Log.i("DATA", response+name);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -141,14 +141,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
-        //Xử lý radio giới tính
+        //Xử lý radio giới tính ---- 0 false nữ --- !=0 true nam
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int id = group.getCheckedRadioButtonId();
                 if (id == R.id.radio_male){
-                    isFemale = 1;
-                }else isFemale = 0;
+                    isFemale = 0;
+                }else isFemale = 1;
             }
         });
 
