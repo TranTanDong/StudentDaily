@@ -5,31 +5,43 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddPlanActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    private CardView cvStartDayPlan, cvStartTimePlan;
-    private TextView tvStartDayPlan, tvStartTimePlan, tvReminded;
+    private CardView cvStartDayEvent, cvStartTimeEvent, cvEndDayEvent, cvEndTimeEvent;
+    private TextView tvStartDayEvent, tvStartTimeEvent, tvEndDayEvent, tvEndTimeEvent, tvRemindedEvent;
+    private EditText edtNameEvent, edtPlaceEvent, edtDescribeEvent;
+    private CheckBox cbFullDayEvent;
     private Spinner spnPlan;
+    private ImageView btnAddNewPlan;
+    private ArrayList<String> plans;
+    private ArrayAdapter<String> adapterPlan;
 
     final boolean ArrayCheckedReminded[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     private Calendar calendar = Calendar.getInstance();
@@ -73,53 +85,127 @@ public class AddPlanActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        cvStartDayPlan = findViewById(R.id.cv_start_day_plan);
-        cvStartTimePlan = findViewById(R.id.cv_start_time_plan);
-        tvStartDayPlan = findViewById(R.id.tv_start_day_plan);
-        tvStartTimePlan = findViewById(R.id.tv_start_time_plan);
-        tvReminded  = findViewById(R.id.tv_reminded);
-        spnPlan = findViewById(R.id.spn_plan);
+        cvStartDayEvent = findViewById(R.id.cv_start_day_event);
+        cvEndDayEvent   = findViewById(R.id.cv_end_day_event);
 
-        ArrayAdapter<String> adapterPlan = new ArrayAdapter<String>(
+        cvStartTimeEvent = findViewById(R.id.cv_start_time_event);
+        cvEndTimeEvent   = findViewById(R.id.cv_end_time_event);
+
+        tvStartDayEvent = findViewById(R.id.tv_start_day_event);
+        tvEndDayEvent   = findViewById(R.id.tv_end_day_event);
+
+        tvStartTimeEvent = findViewById(R.id.tv_start_time_event);
+        tvEndTimeEvent   = findViewById(R.id.tv_end_time_event);
+
+        tvRemindedEvent = findViewById(R.id.tv_reminded_event);
+
+        edtNameEvent     = findViewById(R.id.edt_name_event);
+        edtPlaceEvent    = findViewById(R.id.edt_place_event);
+        edtDescribeEvent = findViewById(R.id.edt_describe_event);
+
+        cbFullDayEvent   = findViewById(R.id.cb_full_day_event);
+
+        btnAddNewPlan    = findViewById(R.id.btn_add_new_plan);
+
+        plans = new ArrayList<>();
+        spnPlan = findViewById(R.id.spn_event_plan);
+
+        adapterPlan = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.ArrayReminded)
+                plans
         );
         adapterPlan.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnPlan.setAdapter(adapterPlan);
 
-
-//        String s = sdf.format(calendar.getTime());
-//        String strArr[] = s.split("-");
-//        tvStartDayPlan.setText("Thứ x, "+strArr[0]+" thg "+ strArr[1] + " "+strArr[2]);
-        String s = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-        tvStartDayPlan.setText(s);
-
-        tvStartTimePlan.setText(stf.format(calendar.getTime()));
+//        String s = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        //Gán giá trị mặt định
+        String s = Common.fullDay.format(calendar.getTime());
+        tvStartDayEvent.setText(s);
+        tvEndDayEvent.setText(tvStartDayEvent.getText().toString());
+        tvStartTimeEvent.setText(stf.format(calendar.getTime()));
     }
 
     private void addEvents() {
-
-        cvStartDayPlan.setOnClickListener(new View.OnClickListener() {
+        //Chọn ngày bắt đầu sự kiện
+        cvStartDayEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processDay(tvStartDayPlan, AddPlanActivity.this);
+                processDay(tvStartDayEvent, AddPlanActivity.this);
             }
         });
-
-        cvStartTimePlan.setOnClickListener(new View.OnClickListener() {
+        //Chon thời gian bắt đầu
+        cvStartTimeEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processTime(tvStartTimePlan, AddPlanActivity.this);
+                processTime(tvStartTimeEvent, AddPlanActivity.this);
             }
         });
-
-        tvReminded.setOnClickListener(new View.OnClickListener() {
+        //Chọn mốc thời gian nhắc nhở
+        tvRemindedEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 processReminded();
             }
         });
+        //Xử lý checkbox
+        cbFullDayEvent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    cvStartTimeEvent.setVisibility(View.INVISIBLE);
+                    cvEndTimeEvent.setVisibility(View.INVISIBLE);
+                }else {
+                    cvStartTimeEvent.setVisibility(View.VISIBLE);
+                    cvEndTimeEvent.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        //Thêm kế hoạch mới
+        btnAddNewPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processAddNewPlan();
+            }
+        });
+    }
+
+    private void processAddNewPlan() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_add_new_plan, null);
+        builder.setView(dialogView);
+        builder.setCancelable(false);
+
+        final TextInputEditText edtAddNewPlan;
+        final TextView tvDayAddNewPlan;
+
+        edtAddNewPlan = dialogView.findViewById(R.id.edt_add_new_plan);
+        tvDayAddNewPlan = dialogView.findViewById(R.id.tv_day_add_new_plan);
+
+        tvDayAddNewPlan.setText(Common.sdf.format(calendar.getTime()));
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String plan = edtAddNewPlan.getText().toString();
+                if (!plan.trim().isEmpty() && !plan.equals(" ")){
+                    plans.add(plan);
+                    adapterPlan.notifyDataSetChanged();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("HỦY", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void processReminded() {
@@ -151,7 +237,7 @@ public class AddPlanActivity extends AppCompatActivity {
                                 s = s + getResources().getStringArray(R.array.ArrayReminded)[i] + ", ";
                             }
                         }
-                        tvReminded.setText(s.substring(0, s.length()-2));
+                        tvRemindedEvent.setText(s.substring(0, s.length()-2));
                         s = null;
                         for (int i=0; i < ArrayCheckedReminded.length;i++){
                             if (ArrayCheckedReminded[i] == true){
@@ -187,7 +273,7 @@ public class AddPlanActivity extends AppCompatActivity {
                 callback,
                 calendar.get(calendar.HOUR_OF_DAY),
                 calendar.get(calendar.MINUTE),
-                true
+                false
         );
         timePickerDialog.show();
     }
@@ -200,11 +286,8 @@ public class AddPlanActivity extends AppCompatActivity {
                 calendar.set(calendar.YEAR, year);
                 calendar.set(calendar.MONTH, month);
                 calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
-                String s = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+                String s = Common.fullDay.format(calendar.getTime());
                 tv_start_day_plan.setText(s);
-//                String s = sdf.format(calendar.getTime());
-//                String strArr[] = s.split("-");
-//                tv_start_day_plan.setText("Thứ x, "+strArr[0]+" thg "+ strArr[1] + " "+strArr[2]);
             }
         };
 

@@ -33,9 +33,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:background="@color/bgLightBlue"
                 android:orientation="horizontal">
                 <Spinner
-                    android:id="@+id/spn_plan"
+                    android:id="@+id/spn_event_plan"
                     android:layout_width="300dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
@@ -44,9 +45,9 @@
                     android:textSize="@dimen/font_size_text"
                     android:textStyle="bold|italic" />
                 <ImageView
+                    android:id="@+id/btn_add_new_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/bgGray"
                     android:layout_gravity="center"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
@@ -66,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <EditText
+                        android:id="@+id/edt_name_event"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:hint="Tên sự kiện"
@@ -82,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <EditText
+                        android:id="@+id/edt_place_event"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:hint="Vị trí"
@@ -109,22 +112,23 @@
                     android:weightSum="3">
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/cv_start_day_plan"
-                        android:layout_width="220dp"
+                        android:id="@+id/cv_start_day_event"
+                        android:layout_width="210dp"
                         android:layout_gravity="center"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="@dimen/card_radius"
                         android:layout_weight="1.8">
 
                         <TextView
-                            android:id="@+id/tv_start_day_plan"
+                            android:id="@+id/tv_start_day_event"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:layout_marginBottom="2dp"
                             android:layout_gravity="center"
+                            android:gravity="center"
                             android:maxLines="2"
-                            android:text="Thứ 3, ngày 09 tháng 10 năm 2018"
+                            android:text="T3, 2018-11-01"
                             android:fontFamily="sans-serif-black"
                             android:textSize="@dimen/font_size_text"
                             android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"/>
@@ -132,8 +136,8 @@
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:id="@+id/cv_start_time_plan"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/cv_start_time_event"
+                        android:layout_width="110dp"
                         android:layout_height="@dimen/size_card_view_plan"
                         android:layout_gravity="center"
                         app:cardCornerRadius="@dimen/card_radius"
@@ -141,7 +145,7 @@
                         android:layout_weight="0.5">
 
                         <TextView
-                            android:id="@+id/tv_start_time_plan"
+                            android:id="@+id/tv_start_time_event"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -171,20 +175,23 @@
                     android:weightSum="3">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="220dp"
+                        android:id="@+id/cv_end_day_event"
+                        android:layout_width="210dp"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="@dimen/card_radius"
                         android:layout_gravity="center"
                         android:layout_weight="1.8">
 
                         <TextView
+                            android:id="@+id/tv_end_day_event"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="2dp"
                             android:layout_marginBottom="2dp"
+                            android:gravity="center"
                             android:maxLines="2"
-                            android:text="Thứ 3, ngày 09 tháng 10 năm 2018"
+                            android:text="T4, 2018-11-01"
                             android:fontFamily="sans-serif-black"
                             android:textSize="@dimen/font_size_text"
                             android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"/>
@@ -192,7 +199,8 @@
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/cv_end_time_event"
+                        android:layout_width="110dp"
                         android:layout_height="@dimen/size_card_view_plan"
                         android:layout_gravity="center"
                         app:cardCornerRadius="@dimen/card_radius"
@@ -200,6 +208,7 @@
                         android:layout_weight="0.5">
 
                         <TextView
+                            android:id="@+id/tv_end_time_event"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -220,6 +229,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/cb_full_day_event"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"/>
@@ -243,6 +253,7 @@
                     android:textSize="16sp" />
 
                 <SeekBar
+                    android:id="@+id/sb_priority"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:max="100"
@@ -259,7 +270,7 @@
                     android:textSize="@dimen/font_size_text" />
 
                 <TextView
-                    android:id="@+id/tv_reminded"
+                    android:id="@+id/tv_reminded_event"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="10 phút"
@@ -280,6 +291,7 @@
                     android:textSize="@dimen/font_size_text" />
 
                 <EditText
+                    android:id="@+id/edt_describe_event"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.6"

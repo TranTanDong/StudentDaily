@@ -4,19 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools">
     <item
         tools:ignore="MenuTitle"
-        android:id="@+id/search_view"
-        android:icon="@drawable/ic_search_black_24dp"
-        app:showAsAction="always"/>
-
-    <item
-        tools:ignore="MenuTitle"
         android:id="@+id/add1"
+        android:visible="false"
         android:icon="@drawable/ic_add_black_24dp"
         app:showAsAction="always"/>
 
     <item
         tools:ignore="MenuTitle"
-        android:id="@+id/more"
-        android:icon="@drawable/ic_more_vert_black_24dp"
+        android:id="@+id/search_subject"
+        android:visible="false"
+        android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always"/>
+
+    <item
+        tools:ignore="MenuTitle"
+        android:id="@+id/search_plan"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="always"/>
+
+    <item
+        tools:ignore="MenuTitle"
+        android:id="@+id/search_diary"
+        android:visible="false"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="always"/>
+
 </menu>

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_plan"
         android:icon="@drawable/ic_event_black_24dp"
         android:title="Kế hoạch" />
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_subject"
         android:icon="@drawable/ic_library_books_black_24dp"
         android:title="Môn học" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_diary"
         android:icon="@drawable/ic_history_black_24dp"
         android:title="Nhật ký" />
 
     <item
-        android:id="@+id/navigation_extended"
+        android:id="@+id/navigation_more"
         android:icon="@drawable/ic_dehaze_black_24dp"
         android:title="Xem thêm" />
 

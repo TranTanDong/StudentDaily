@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="KẾ HOẠCH MỚI"
+        android:fontFamily="sans-serif-black"
+        android:textSize="@dimen/font_size_topic"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:layout_margin="20dp"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edt_add_new_plan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên kế hoạch"
+            android:inputType="text"
+            android:fontFamily="sans-serif"
+            android:textSize="@dimen/font_size_input"
+            android:textColor="@color/textColorBlack"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_day_add_new_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="20 thg 11"
+        android:textColor="@color/colorPrimary"
+        android:gravity="end"
+        android:textStyle="italic"
+        android:paddingRight="20dp"/>
+
+</LinearLayout>
