@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bgGray"
-    tools:context=".Login.SetInfAccountActivity">
+    tools:context=".More.SetInfAccountActivity">
 
     <include layout="@layout/toolbar_layout"/>
 
@@ -27,6 +27,7 @@
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_user_set"
                     android:layout_width="76dp"
                     android:layout_height="76dp"
                     android:layout_margin="10dp"
@@ -40,7 +41,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/edt_set_inf_name"
+                        android:id="@+id/edt_name_set"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nhập họ tên"
@@ -48,12 +49,14 @@
                         android:textSize="@dimen/font_size_text"/>
 
                     <RadioGroup
+                        android:id="@+id/radio_group_set"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin"
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/radio_female_set"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Nam"
@@ -61,10 +64,12 @@
                             android:textSize="@dimen/font_size_text"/>
 
                         <RadioButton
+                            android:id="@+id/radio_male_set"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="30dp"
                             android:text="Nữ"
+                            android:checked="false"
                             android:textSize="@dimen/font_size_text"/>
 
                     </RadioGroup>
@@ -75,6 +80,7 @@
                         android:background="@color/bgGray"></View>
 
                     <TextView
+                        android:id="@+id/tv_birthday_set"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin"
@@ -90,37 +96,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/bgWhite"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="76dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="Username"
-                        android:textSize="@dimen/font_size_text"
-                        android:fontFamily="sans-serif-black"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_gravity="center"
-                        android:text="ttdong"
-                        android:textSize="@dimen/font_size_text"
-                        android:fontFamily="sans-serif"/>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bgGray"></View>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -135,6 +113,7 @@
                         android:textSize="@dimen/font_size_text"
                         android:fontFamily="sans-serif-black"/>
                     <TextView
+                        android:id="@+id/tv_email_set"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"

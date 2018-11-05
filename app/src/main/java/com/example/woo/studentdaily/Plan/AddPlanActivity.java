@@ -120,7 +120,7 @@ public class AddPlanActivity extends AppCompatActivity {
 
 //        String s = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         //Gán giá trị mặt định
-        String s = Common.fullDay.format(calendar.getTime());
+        String s = Common.f_eymmdd.format(calendar.getTime());
         tvStartDayEvent.setText(s);
         tvEndDayEvent.setText(tvStartDayEvent.getText().toString());
         tvStartTimeEvent.setText(stf.format(calendar.getTime()));
@@ -183,7 +183,7 @@ public class AddPlanActivity extends AppCompatActivity {
         edtAddNewPlan = dialogView.findViewById(R.id.edt_add_new_plan);
         tvDayAddNewPlan = dialogView.findViewById(R.id.tv_day_add_new_plan);
 
-        tvDayAddNewPlan.setText(Common.sdf.format(calendar.getTime()));
+        tvDayAddNewPlan.setText(Common.f_ymmdd.format(calendar.getTime()));
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -286,7 +286,7 @@ public class AddPlanActivity extends AppCompatActivity {
                 calendar.set(calendar.YEAR, year);
                 calendar.set(calendar.MONTH, month);
                 calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
-                String s = Common.fullDay.format(calendar.getTime());
+                String s = Common.f_eymmdd.format(calendar.getTime());
                 tv_start_day_plan.setText(s);
             }
         };

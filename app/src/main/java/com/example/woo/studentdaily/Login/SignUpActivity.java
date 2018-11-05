@@ -69,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         radioGroup      = findViewById(R.id.radio_group);
 
-        tvBirthDay.setText(Common.sdf.format(calendar.getTime()));
+        tvBirthDay.setText(Common.f_ymmdd.format(calendar.getTime()));
     }
 
     private void signUp(final String email, String password, final String fullName, final String birthDay, final int isFemale) {
@@ -108,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
                 hashMap.put("u_code", code);
                 hashMap.put("u_name", name);
                 hashMap.put("u_email", email);
-                hashMap.put("u_sex", String.valueOf(isFemale));
+                hashMap.put("u_gender", String.valueOf(isFemale));
                 hashMap.put("u_birthday", birthDay);
                 return hashMap;
             }
@@ -188,7 +188,7 @@ public class SignUpActivity extends AppCompatActivity {
                 calendar.set(calendar.YEAR, year);
                 calendar.set(calendar.MONTH, month);
                 calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
-                tvBirthDay.setText(Common.sdf.format(calendar.getTime()));
+                tvBirthDay.setText(Common.f_ymmdd.format(calendar.getTime()));
             }
         };
 

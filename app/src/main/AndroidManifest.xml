@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.woo.studentdaily">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +18,7 @@
         <activity android:name=".Plan.AddPlanActivity" />
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Login.SignUpActivity" />
-        <activity android:name=".Login.SetInfAccountActivity" />
+        <activity android:name=".More.SetInfAccountActivity" />
         <activity android:name=".Login.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,8 @@
         </activity>
         <activity android:name=".Subject.AddSubjectActivity" />
         <activity android:name=".Subject.SubjectContentActivity" />
-        <activity android:name=".Plan.EventDetailsActivity"></activity>
+        <activity android:name=".Plan.EventDetailsActivity" />
+        <activity android:name=".More.InfoUserActivity"></activity>
     </application>
 
 </manifest>

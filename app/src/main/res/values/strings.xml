@@ -22,6 +22,9 @@
     <string name="authenticating_account">Đang xác thực tài khoản</string>
     <string name="email_or_password_fail">Email hoặc mật khẩu chưa đúng</string>
 
+    <!-- More -->
+    <string name="info_account">Thông tin tài khoản</string>
+
     <string-array name="ArrayReminded">
         <item>5 phút</item>
         <item>10 phút</item>

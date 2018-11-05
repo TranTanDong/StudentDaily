@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".More.InfoUserActivity">
+
+    <include layout="@layout/toolbar_layout"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bgWhite"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_image_user"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_account_circle"/>
+
+        <TextView
+            android:id="@+id/tv_name_topic_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Trần Tấn Đồng"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/bgWhite"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Họ tên"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+            <TextView
+                android:id="@+id/tv_name_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:text="Trần Tấn Đồng"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bgGray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Giới tính"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+            <TextView
+                android:id="@+id/tv_gender_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:text="Nam"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bgGray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Ngày sinh"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+            <TextView
+                android:id="@+id/tv_birthday_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:text="02/12/1996"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bgGray"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Email"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+            <TextView
+                android:id="@+id/tv_email_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:text="trantandong@gmail.com"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_change_user"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:text="ĐỔI THÔNG TIN"
+        android:textColor="@color/textColorWhite"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorAccent"
+        android:textAllCaps="false"/>
+
+
+</LinearLayout>
