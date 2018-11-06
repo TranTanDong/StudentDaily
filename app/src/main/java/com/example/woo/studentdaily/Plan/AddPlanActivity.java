@@ -28,9 +28,11 @@ import android.widget.Toast;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddPlanActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -124,6 +126,20 @@ public class AddPlanActivity extends AppCompatActivity {
         tvStartDayEvent.setText(s);
         tvEndDayEvent.setText(tvStartDayEvent.getText().toString());
         tvStartTimeEvent.setText(stf.format(calendar.getTime()));
+
+        String currentDateandTime = stf.format(new Date());
+
+        Date date = null;
+        try {
+            date = stf.parse(currentDateandTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR, 1);
+
+        tvEndTimeEvent.setText(stf.format(calendar.getTime()));
     }
 
     private void addEvents() {
@@ -134,11 +150,25 @@ public class AddPlanActivity extends AppCompatActivity {
                 processDay(tvStartDayEvent, AddPlanActivity.this);
             }
         });
+        //Chọn ngày kết thúc sự kiện
+        cvEndDayEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                processDay(tvEndDayEvent, AddPlanActivity.this);
+            }
+        });
         //Chon thời gian bắt đầu
         cvStartTimeEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 processTime(tvStartTimeEvent, AddPlanActivity.this);
+            }
+        });
+        //Chon thời gian kết thúc
+        cvEndTimeEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                processTime(tvEndTimeEvent, AddPlanActivity.this);
             }
         });
         //Chọn mốc thời gian nhắc nhở
@@ -183,7 +213,7 @@ public class AddPlanActivity extends AppCompatActivity {
         edtAddNewPlan = dialogView.findViewById(R.id.edt_add_new_plan);
         tvDayAddNewPlan = dialogView.findViewById(R.id.tv_day_add_new_plan);
 
-        tvDayAddNewPlan.setText(Common.f_ymmdd.format(calendar.getTime()));
+        tvDayAddNewPlan.setText(Common.f_ddmmy.format(calendar.getTime()));
 
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -222,6 +252,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         }
                         if (tmp>4){
                             Toast.makeText(getApplicationContext(), "Đã chọn sô lượng nhắc nhỡ tối đa", Toast.LENGTH_SHORT).show();
+                            ArrayCheckedReminded[which] = false;
                         }else {
                             ArrayCheckedReminded[which] = isChecked;
                         }

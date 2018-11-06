@@ -42,7 +42,7 @@ public class InfoUserActivity extends AppCompatActivity {
         tvNameTopicUser.setText(user.getName());
         tvNameUser.setText(user.getName());
         tvEmailUser.setText(user.getEmail());
-        tvBirthdayUser.setText(user.getBirthDay());
+        tvBirthdayUser.setText(Common.moveSlashTo(user.getBirthDay(), "-", "/"));
         if (user.isGender()){
             tvGenderUser.setText("Nam");
         }else tvGenderUser.setText("Nữ");

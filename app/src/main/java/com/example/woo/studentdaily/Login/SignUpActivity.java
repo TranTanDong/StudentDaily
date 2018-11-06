@@ -69,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         radioGroup      = findViewById(R.id.radio_group);
 
-        tvBirthDay.setText(Common.f_ymmdd.format(calendar.getTime()));
+        tvBirthDay.setText("01/01/2000");
     }
 
     private void signUp(final String email, String password, final String fullName, final String birthDay, final int isFemale) {
@@ -109,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                 hashMap.put("u_name", name);
                 hashMap.put("u_email", email);
                 hashMap.put("u_gender", String.valueOf(isFemale));
-                hashMap.put("u_birthday", birthDay);
+                hashMap.put("u_birthday", Common.moveSlashTo(birthDay, "/", "-"));
                 return hashMap;
             }
         };
@@ -188,12 +188,13 @@ public class SignUpActivity extends AppCompatActivity {
                 calendar.set(calendar.YEAR, year);
                 calendar.set(calendar.MONTH, month);
                 calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
-                tvBirthDay.setText(Common.f_ymmdd.format(calendar.getTime()));
+                tvBirthDay.setText(Common.f_ddmmy.format(calendar.getTime()));
             }
         };
 
         DatePickerDialog datePickerDialog=new DatePickerDialog(
                 SignUpActivity.this,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 callback,
                 calendar.get(calendar.YEAR),
                 calendar.get(calendar.MONTH),
