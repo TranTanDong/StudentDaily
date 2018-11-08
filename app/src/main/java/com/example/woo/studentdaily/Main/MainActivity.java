@@ -1,7 +1,7 @@
 package com.example.woo.studentdaily.Main;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -24,24 +24,29 @@ import com.example.woo.studentdaily.Main.Fragment.MoreFragment;
 import com.example.woo.studentdaily.Main.Fragment.PlanFragment;
 import com.example.woo.studentdaily.Main.Fragment.SubjectFragment;
 import com.example.woo.studentdaily.More.Model.User;
+import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
 import com.example.woo.studentdaily.Subject.AddSubjectActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.Gson;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private MaterialSearchView searchView;
 
+    public static ArrayList<Plan> mainPlans = new ArrayList<>();
+
     private User user;
     private FirebaseAuth mAuth;
+
 
     private BottomNavigationView mMainNav;
 
@@ -54,34 +59,22 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_subject:
                     setTitle("Môn học");
-                    toolbar.getMenu().findItem(R.id.search_subject).setVisible(true);
-                    toolbar.getMenu().findItem(R.id.search_diary).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.search_plan).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.add1).setVisible(true);
+                    setToolbar(true, false, false, true);
                     fragment = SubjectFragment.newInstance();
                     break;
                 case R.id.navigation_plan:
                     setTitle("Kế hoạch");
-                    toolbar.getMenu().findItem(R.id.search_subject).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.search_diary).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.search_plan).setVisible(true);
-                    toolbar.getMenu().findItem(R.id.add1).setVisible(false);
+                    setToolbar(false, false, true, false);
                     fragment = PlanFragment.newInstance();
                     break;
                 case R.id.navigation_diary:
                     setTitle("Nhật ký");
-                    toolbar.getMenu().findItem(R.id.search_subject).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.search_diary).setVisible(true);
-                    toolbar.getMenu().findItem(R.id.search_plan).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.add1).setVisible(false);
+                    setToolbar(false, true, false, false);
                     fragment = DiaryFragment.newInstance();
                     break;
                 case R.id.navigation_more:
                     setTitle("Xem thêm");
-                    toolbar.getMenu().findItem(R.id.search_subject).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.search_diary).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.search_plan).setVisible(false);
-                    toolbar.getMenu().findItem(R.id.add1).setVisible(false);
+                    setToolbar(false, false, false, false);
                     fragment = MoreFragment.newInstance();
                     break;
             }
@@ -90,13 +83,58 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private void setToolbar(boolean b, boolean b1, boolean b2, boolean b3) {
+        toolbar.getMenu().findItem(R.id.search_subject).setVisible(b);
+        toolbar.getMenu().findItem(R.id.search_diary).setVisible(b1);
+        toolbar.getMenu().findItem(R.id.search_plan).setVisible(b2);
+        toolbar.getMenu().findItem(R.id.add1).setVisible(b3);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addControls();
         loadDataUser();
+        loadDataMainPlan(getApplicationContext());
         addEvents();
+    }
+
+    public static void loadDataMainPlan(final Context context) {
+        mainPlans.clear();
+        final FirebaseAuth nAuth = FirebaseAuth.getInstance();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectPlan, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    String code = nAuth.getCurrentUser().getUid();
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("codeuser").equals(code)){
+                                Plan plan = new Plan();
+                                plan.setId(jsonObject.getInt("id"));
+                                plan.setCodeUser(jsonObject.getString("codeuser"));
+                                plan.setName(jsonObject.getString("name"));
+                                plan.setUpdateDay(jsonObject.getString("updateday"));
+                                mainPlans.add(plan);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Toast.makeText(context, "Oke loaded Plan", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Plan", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
     }
 
     private void addEvents() {
@@ -148,15 +186,13 @@ public class MainActivity extends AppCompatActivity {
                                 user.setName(jsonObject.getString("name"));
                                 user.setImage(jsonObject.getString("image"));
                                 user.setEmail(jsonObject.getString("email"));
-                                if (jsonObject.getString("gender").equals("1")){
-                                    user.setGender(true);
-                                }else user.setGender(false);
+                                user.setGender(jsonObject.getString("gender"));
                                 user.setBirthDay(jsonObject.getString("birthday"));
                                 MainActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         Common.setCurrentUser(getApplicationContext(), user);
-                                        Log.i("Checkdata", user.toString());
+                                        Log.i("CheckData", user.toString());
                                     }
                                 });
                                 Toast.makeText(getApplicationContext(), "Oke I'm here", Toast.LENGTH_SHORT).show();
@@ -170,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Volley", error.toString());
+                Log.e("Error User", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());

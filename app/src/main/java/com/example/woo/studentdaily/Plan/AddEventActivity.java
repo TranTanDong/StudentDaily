@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,16 +26,28 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Server.Server;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-public class AddPlanActivity extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private CardView cvStartDayEvent, cvStartTimeEvent, cvEndDayEvent, cvEndTimeEvent;
     private TextView tvStartDayEvent, tvStartTimeEvent, tvEndDayEvent, tvEndTimeEvent, tvRemindedEvent;
@@ -42,6 +55,10 @@ public class AddPlanActivity extends AppCompatActivity {
     private CheckBox cbFullDayEvent;
     private Spinner spnPlan;
     private ImageView btnAddNewPlan;
+
+    private FirebaseAuth mAuth;
+
+
     private ArrayList<String> plans;
     private ArrayAdapter<String> adapterPlan;
 
@@ -51,7 +68,7 @@ public class AddPlanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_plan);
+        setContentView(R.layout.activity_add_event);
         addToolbar();
         addControls();
         addEvents();
@@ -87,6 +104,8 @@ public class AddPlanActivity extends AppCompatActivity {
     }
 
     private void addControls() {
+        mAuth = FirebaseAuth.getInstance();
+
         cvStartDayEvent = findViewById(R.id.cv_start_day_event);
         cvEndDayEvent   = findViewById(R.id.cv_end_day_event);
 
@@ -110,6 +129,7 @@ public class AddPlanActivity extends AppCompatActivity {
         btnAddNewPlan    = findViewById(R.id.btn_add_new_plan);
 
         plans = new ArrayList<>();
+        loadDataPlan();
         spnPlan = findViewById(R.id.spn_event_plan);
 
         adapterPlan = new ArrayAdapter<String>(
@@ -120,7 +140,10 @@ public class AddPlanActivity extends AppCompatActivity {
         adapterPlan.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnPlan.setAdapter(adapterPlan);
 
-//        String s = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        setInfEvent();
+    }
+
+    private void setInfEvent() {
         //Gán giá trị mặt định
         String s = Common.f_eymmdd.format(calendar.getTime());
         tvStartDayEvent.setText(s);
@@ -142,33 +165,40 @@ public class AddPlanActivity extends AppCompatActivity {
         tvEndTimeEvent.setText(stf.format(calendar.getTime()));
     }
 
+    private void loadDataPlan() {
+        plans.clear();
+        for (int i = 0; i < MainActivity.mainPlans.size(); i++){
+            plans.add(MainActivity.mainPlans.get(i).getName());
+        }
+    }
+
     private void addEvents() {
         //Chọn ngày bắt đầu sự kiện
         cvStartDayEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processDay(tvStartDayEvent, AddPlanActivity.this);
+                processDay(tvStartDayEvent, AddEventActivity.this);
             }
         });
         //Chọn ngày kết thúc sự kiện
         cvEndDayEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processDay(tvEndDayEvent, AddPlanActivity.this);
+                processDay(tvEndDayEvent, AddEventActivity.this);
             }
         });
         //Chon thời gian bắt đầu
         cvStartTimeEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processTime(tvStartTimeEvent, AddPlanActivity.this);
+                processTime(tvStartTimeEvent, AddEventActivity.this);
             }
         });
         //Chon thời gian kết thúc
         cvEndTimeEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processTime(tvEndTimeEvent, AddPlanActivity.this);
+                processTime(tvEndTimeEvent, AddEventActivity.this);
             }
         });
         //Chọn mốc thời gian nhắc nhở
@@ -219,11 +249,13 @@ public class AddPlanActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String plan = edtAddNewPlan.getText().toString();
+                String updateDay = Common.moveSlashTo(tvDayAddNewPlan.getText().toString(), "/", "-");
                 if (!plan.trim().isEmpty() && !plan.equals(" ")){
                     plans.add(plan);
                     adapterPlan.notifyDataSetChanged();
+                    dialog.dismiss();
+                    //insertDataPlan(mAuth.getCurrentUser().getUid(), plan, updateDay, dialog);
                 }
-                dialog.dismiss();
             }
         });
 
@@ -238,8 +270,42 @@ public class AddPlanActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    private void insertDataPlan(final String code, final String name, final String updateDay, final DialogInterface dialog) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertPlan, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.i("DATA_PLAN", response+name);
+                AddEventActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MainActivity.loadDataMainPlan(getApplicationContext());
+                        loadDataPlan();
+                        adapterPlan.notifyDataSetChanged();
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("p_codeuser", code);
+                hashMap.put("p_name", name);
+                hashMap.put("p_updateday", updateDay);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
     private void processReminded() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlanActivity.this)
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddEventActivity.this)
                 .setTitle("Nhắc nhở")
                 .setMultiChoiceItems(R.array.ArrayReminded, null, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override

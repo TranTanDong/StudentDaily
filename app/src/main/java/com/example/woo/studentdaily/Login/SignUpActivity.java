@@ -94,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(SignUpActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
-                Log.i("DATA", response+name);
+                Log.i("DATA_USER", response+name);
             }
         }, new Response.ErrorListener() {
             @Override

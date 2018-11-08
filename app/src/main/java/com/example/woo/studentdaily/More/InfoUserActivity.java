@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.R;
@@ -19,6 +23,7 @@ public class InfoUserActivity extends AppCompatActivity {
     private TextView tvNameTopicUser, tvNameUser, tvGenderUser, tvBirthdayUser, tvEmailUser;
     private CircleImageView imgImageUser;
     private Button btnChangeUser;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,18 @@ public class InfoUserActivity extends AppCompatActivity {
         addToolbar();
         addControls();
         addEvents();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setInfUser();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void addControls() {
@@ -38,18 +55,30 @@ public class InfoUserActivity extends AppCompatActivity {
         tvEmailUser     = findViewById(R.id.tv_email_user);
         btnChangeUser   = findViewById(R.id.btn_change_user);
 
-        User user = Common.getUser(getApplicationContext());
+        setInfUser();
+
+    }
+
+    private void setInfUser() {
+        user = Common.getUser(getApplicationContext());
         tvNameTopicUser.setText(user.getName());
         tvNameUser.setText(user.getName());
         tvEmailUser.setText(user.getEmail());
         tvBirthdayUser.setText(Common.moveSlashTo(user.getBirthDay(), "-", "/"));
-        if (user.isGender()){
+        if (user.getGender().equals("1")){
             tvGenderUser.setText("Nam");
         }else tvGenderUser.setText("Nữ");
 
-        if (!user.getImage().isEmpty()){
-
-        }
+        //Load hình
+        Glide.with(getApplicationContext()).load(user.getImage())
+                .apply(RequestOptions
+                        .overrideOf(120, 120)
+                        .placeholder(R.drawable.ic_account_circle)
+                        .error(R.drawable.ic_account_circle)
+                        .formatOf(DecodeFormat.PREFER_RGB_565)
+                        .timeout(3000)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgImageUser);
+        //Picasso.get().load(dsFruit.get(position).getHinh()).into(holder.img_fImage);
     }
 
     private void addEvents() {
@@ -64,6 +93,7 @@ public class InfoUserActivity extends AppCompatActivity {
 
     private void processChangeUser() {
         startActivity(new Intent(this, SetInfAccountActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void addToolbar() {

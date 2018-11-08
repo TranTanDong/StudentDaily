@@ -7,14 +7,14 @@ public class User implements Serializable {
     private String name;
     private String image;
     private String email;
-    private boolean gender;
+    private String gender;
     private String birthDay;
 
     public User() {
 
     }
 
-    public User(String code, String name, String image, String email, boolean gender, String birthDay) {
+    public User(String code, String name, String image, String email, String gender, String birthDay) {
         this.code = code;
         this.name = name;
         this.image = image;
@@ -55,14 +55,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
-
     public String getBirthDay() {
         return birthDay;
     }
@@ -71,6 +63,13 @@ public class User implements Serializable {
         this.birthDay = birthDay;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
     @Override
     public String toString() {

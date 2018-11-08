@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -28,6 +29,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.R;
@@ -76,6 +81,12 @@ public class SetInfAccountActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
     private void addControls() {
         btnUpdateInf    = findViewById(R.id.btn_update_inf);
         edtNameSet      = findViewById(R.id.edt_name_set);
@@ -85,14 +96,29 @@ public class SetInfAccountActivity extends AppCompatActivity {
         tvBirthdaySet   = findViewById(R.id.tv_birthday_set);
         tvEmailSet      = findViewById(R.id.tv_email_set);
         imgImageSet     = findViewById(R.id.img_user_set);
+        bitmap          = ((BitmapDrawable) imgImageSet.getDrawable()).getBitmap();
 
         user = Common.getUser(getApplicationContext());
         edtNameSet.setText(user.getName());
         tvEmailSet.setText(user.getEmail());
         tvBirthdaySet.setText(Common.moveSlashTo(user.getBirthDay(), "-", "/"));
-        if (user.isGender()){
-            radioFemale.isChecked();
-        }else radioFemale.isChecked();
+        if (!user.getGender().equals("1")){
+            radioMale.setChecked(true);
+            radioFemale.setChecked(false);
+        }else {
+            radioFemale.setChecked(true);
+            radioMale.setChecked(false);
+        }
+        //Load hình
+        Glide.with(getApplicationContext()).load(user.getImage())
+                .apply(RequestOptions
+                        .overrideOf(120, 120)
+                        .placeholder(R.drawable.ic_account_circle)
+                        .error(R.drawable.ic_account_circle)
+                        .formatOf(DecodeFormat.PREFER_RGB_565)
+                        .timeout(3000)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgImageSet);
+
     }
 
     private void addEvents() {
@@ -122,7 +148,6 @@ public class SetInfAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Upload và lấy link avatar
                 excecute();
-                updateDataUser(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, gender, tvBirthdaySet.getText().toString());
             }
         });
 
@@ -222,12 +247,15 @@ public class SetInfAccountActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                     urlAvatar = downloadUri.toString();
-//                    SetInfAccountActivity.this.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Log.e("URLIMAGE", urlAvatar);
-//                        }
-//                    });
+                    SetInfAccountActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateDataUser(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, gender, tvBirthdaySet.getText().toString());
+                            User u1 = new User(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, user.getEmail(), gender, Common.moveSlashTo(tvBirthdaySet.getText().toString(), "/", "-"));
+                            Common.setCurrentUser(getApplicationContext(), u1);
+                            finish();
+                        }
+                    });
                 } else {
                     Toast.makeText(SetInfAccountActivity.this, "Upload image error", Toast.LENGTH_SHORT).show();
                 }

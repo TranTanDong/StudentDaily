@@ -17,7 +17,7 @@
         <activity
             android:name=".Main.MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".Plan.AddPlanActivity" />
+        <activity android:name=".Plan.AddEventActivity" />
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Login.SignUpActivity" />
         <activity android:name=".More.SetInfAccountActivity" />

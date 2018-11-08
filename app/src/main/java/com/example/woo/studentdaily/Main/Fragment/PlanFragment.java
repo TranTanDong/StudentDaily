@@ -3,17 +3,18 @@ package com.example.woo.studentdaily.Main.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.woo.studentdaily.Plan.Adapter.PagerAdapterPlan;
-import com.example.woo.studentdaily.Plan.AddPlanActivity;
+import com.example.woo.studentdaily.Plan.AddEventActivity;
 import com.example.woo.studentdaily.R;
+import com.github.clans.fab.FloatingActionButton;
 
 
 /**
@@ -22,7 +23,8 @@ import com.example.woo.studentdaily.R;
 public class PlanFragment extends Fragment {
     private ViewPager viewPagerPlan;
     private TabLayout tabLayoutPlan;
-    private FloatingActionButton btnAddPlan;
+    private FloatingActionButton btnAddEvent;
+    private FloatingActionButton btnAddPlann;
 
     public PlanFragment() {
         // Required empty public constructor
@@ -34,14 +36,31 @@ public class PlanFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_plan, container, false);
-        btnAddPlan = view.findViewById(R.id.btn_add_plan);
-        btnAddPlan.setOnClickListener(new View.OnClickListener() {
+        addControls(view);
+        addEvents();
+        return view;
+    }
+
+    private void addEvents() {
+        btnAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AddPlanActivity.class));
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), AddEventActivity.class));
             }
         });
 
+        btnAddPlann.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Từ từ sẽ có ^^", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void addControls(View view) {
+        btnAddEvent = view.findViewById(R.id.btn_add_event_floating);
+        btnAddPlann = view.findViewById(R.id.btn_add_new_plan);
         tabLayoutPlan = view.findViewById(R.id.tab_layout_plan);
         tabLayoutPlan.addTab(tabLayoutPlan.newTab().setText("SỰ KIỆN"));
         tabLayoutPlan.addTab(tabLayoutPlan.newTab().setText("KẾ HOẠCH"));
@@ -65,7 +84,6 @@ public class PlanFragment extends Fragment {
 
             }
         });
-        return view;
     }
 
     public static PlanFragment newInstance() {

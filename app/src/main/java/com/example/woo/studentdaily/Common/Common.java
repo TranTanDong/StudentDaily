@@ -29,8 +29,10 @@ public class Common {
     }
 
     public static String moveSlashTo(String s, String a, String b){
-        String arr[] = s.split(a);
-        return arr[2] + b + arr[1] + b + arr[0];
+        if (s.contains(a)){
+            String arr[] = s.split(a);
+            return arr[2] + b + arr[1] + b + arr[0];
+        }else return s;
     }
 
     public static void setCurrentUser(@NonNull Context context, User user){
