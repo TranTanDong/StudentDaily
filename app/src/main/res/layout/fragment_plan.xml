@@ -34,7 +34,7 @@
         app:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/btn_add_new_plan"
+            android:id="@+id/btn_add_plan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add_plan"

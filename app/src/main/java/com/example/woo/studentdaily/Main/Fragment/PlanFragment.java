@@ -6,25 +6,42 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.Adapter.PagerAdapterPlan;
 import com.example.woo.studentdaily.Plan.AddEventActivity;
+import com.example.woo.studentdaily.Plan.Fragment.AddPlanBottomDialogFragment;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Server.Server;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlanFragment extends Fragment {
+public class PlanFragment extends Fragment{
     private ViewPager viewPagerPlan;
     private TabLayout tabLayoutPlan;
     private FloatingActionButton btnAddEvent;
     private FloatingActionButton btnAddPlann;
+    private FirebaseAuth mAuth;
 
     public PlanFragment() {
         // Required empty public constructor
@@ -35,10 +52,10 @@ public class PlanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_plan, container, false);
-        addControls(view);
+        View v =  inflater.inflate(R.layout.fragment_plan, container, false);
+        addControls(v);
         addEvents();
-        return view;
+        return v;
     }
 
     private void addEvents() {
@@ -52,15 +69,17 @@ public class PlanFragment extends Fragment {
         btnAddPlann.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Từ từ sẽ có ^^", Toast.LENGTH_SHORT).show();
+                AddPlanBottomDialogFragment addPlanBottomDialogFragment = new AddPlanBottomDialogFragment();
+                addPlanBottomDialogFragment.show(getActivity().getSupportFragmentManager(), "Add Plan Fragment");
             }
         });
 
     }
 
     private void addControls(View view) {
+        mAuth   = FirebaseAuth.getInstance();
         btnAddEvent = view.findViewById(R.id.btn_add_event_floating);
-        btnAddPlann = view.findViewById(R.id.btn_add_new_plan);
+        btnAddPlann = view.findViewById(R.id.btn_add_plan);
         tabLayoutPlan = view.findViewById(R.id.tab_layout_plan);
         tabLayoutPlan.addTab(tabLayoutPlan.newTab().setText("SỰ KIỆN"));
         tabLayoutPlan.addTab(tabLayoutPlan.newTab().setText("KẾ HOẠCH"));
@@ -93,4 +112,5 @@ public class PlanFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 }

@@ -33,25 +33,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:background="@color/bgLightBlue"
                 android:orientation="horizontal">
                 <Spinner
                     android:id="@+id/spn_event_plan"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
-                    android:textAlignment="center"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/font_size_text"
                     android:textStyle="bold|italic" />
-                <ImageView
-                    android:id="@+id/btn_add_new_plan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_add_tab_plan"/>
             </LinearLayout>
 
 

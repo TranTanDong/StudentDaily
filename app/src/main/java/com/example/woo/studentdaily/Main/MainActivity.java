@@ -13,10 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Main.Fragment.DiaryFragment;
@@ -24,6 +27,7 @@ import com.example.woo.studentdaily.Main.Fragment.MoreFragment;
 import com.example.woo.studentdaily.Main.Fragment.PlanFragment;
 import com.example.woo.studentdaily.Main.Fragment.SubjectFragment;
 import com.example.woo.studentdaily.More.Model.User;
+import com.example.woo.studentdaily.Plan.Fragment.AddPlanBottomDialogFragment;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
@@ -36,9 +40,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddPlanBottomDialogFragment.BottomSheetListener {
     private Toolbar toolbar;
     private MaterialSearchView searchView;
 
@@ -211,5 +217,43 @@ public class MainActivity extends AppCompatActivity {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(jsonArrayRequest);
+    }
+
+    private void insertDataPlan(final String code, final String name, final String updateDay) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertPlan, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.i("DATA_PLAN", response+name);
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadDataMainPlan(getApplicationContext());
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("p_codeuser", code);
+                hashMap.put("p_name", name);
+                hashMap.put("p_updateday", Common.moveSlashTo(updateDay, "/", "-"));
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void sendDataPlan(String namePlan, String dayUpdate) {
+        String code = mAuth.getCurrentUser().getUid();
+        insertDataPlan(code, namePlan, dayUpdate);
     }
 }

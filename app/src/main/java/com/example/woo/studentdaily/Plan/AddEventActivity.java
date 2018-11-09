@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,17 +25,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.R;
-import com.example.woo.studentdaily.Server.Server;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
@@ -44,8 +35,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddEventActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -126,7 +115,7 @@ public class AddEventActivity extends AppCompatActivity {
 
         cbFullDayEvent   = findViewById(R.id.cb_full_day_event);
 
-        btnAddNewPlan    = findViewById(R.id.btn_add_new_plan);
+        btnAddNewPlan    = findViewById(R.id.btn_add_plan);
 
         plans = new ArrayList<>();
         loadDataPlan();
@@ -222,12 +211,12 @@ public class AddEventActivity extends AppCompatActivity {
             }
         });
         //Thêm kế hoạch mới
-        btnAddNewPlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                processAddNewPlan();
-            }
-        });
+//        btnAddNewPlan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //processAddNewPlan();
+//            }
+//        });
     }
 
     private void processAddNewPlan() {
@@ -268,40 +257,6 @@ public class AddEventActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-    private void insertDataPlan(final String code, final String name, final String updateDay, final DialogInterface dialog) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertPlan, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
-                Log.i("DATA_PLAN", response+name);
-                AddEventActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        MainActivity.loadDataMainPlan(getApplicationContext());
-                        loadDataPlan();
-                        adapterPlan.notifyDataSetChanged();
-                    }
-                });
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> hashMap = new HashMap<>();
-                hashMap.put("p_codeuser", code);
-                hashMap.put("p_name", name);
-                hashMap.put("p_updateday", updateDay);
-                return hashMap;
-            }
-        };
-        requestQueue.add(stringRequest);
     }
 
     private void processReminded() {
