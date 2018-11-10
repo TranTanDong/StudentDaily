@@ -31,8 +31,9 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PlanViewHolder holder, int position) {
+        String s = moveDay(plans.get(position).getUpdateDay());
         holder.tvContentPlan.setText(plans.get(position).getName());
-        holder.tvUpdateDay.setText(plans.get(position).getUpdateDay());
+        holder.tvUpdateDay.setText(s);
     }
 
     @Override
@@ -48,5 +49,13 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
             tvContentPlan = itemView.findViewById(R.id.tv_content_plan);
             tvUpdateDay   = itemView.findViewById(R.id.tv_update_day_plan);
         }
+    }
+
+    public String moveDay(String day){
+        if (day.contains("-")){
+            String arr[] = day.split("-");
+            return arr[2] + " thg " + arr[1];
+        }
+        return day;
     }
 }

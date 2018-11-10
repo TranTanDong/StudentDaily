@@ -58,6 +58,7 @@ public class PlanFragment extends Fragment{
         return v;
     }
 
+
     private void addEvents() {
         btnAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override

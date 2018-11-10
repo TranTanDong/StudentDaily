@@ -10,24 +10,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Server.Server;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
@@ -35,25 +47,27 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddEventActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private CardView cvStartDayEvent, cvStartTimeEvent, cvEndDayEvent, cvEndTimeEvent;
-    private TextView tvStartDayEvent, tvStartTimeEvent, tvEndDayEvent, tvEndTimeEvent, tvRemindedEvent;
+    private TextView tvStartDayEvent, tvStartTimeEvent, tvEndDayEvent, tvEndTimeEvent, tvRemindedEvent, tvPriorityPercent;
     private EditText edtNameEvent, edtPlaceEvent, edtDescribeEvent;
     private CheckBox cbFullDayEvent;
+    private SeekBar sbPriority;
     private Spinner spnPlan;
-    private ImageView btnAddNewPlan;
 
-    private FirebaseAuth mAuth;
+    private int position = 1; //Vị trí click nhắc nhở
 
-
+    private Map<String, Integer> mapPlan = new HashMap<String, Integer>();
     private ArrayList<String> plans;
     private ArrayAdapter<String> adapterPlan;
 
-    final boolean ArrayCheckedReminded[] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     private Calendar calendar = Calendar.getInstance();
-    private SimpleDateFormat stf = new SimpleDateFormat("hh:mm a");
+//    private SimpleDateFormat stf = new SimpleDateFormat("hh:mm a");
+    private SimpleDateFormat stf = new SimpleDateFormat("HH:mm");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +87,63 @@ public class AddEventActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.btn_save){
-            Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
+            processSaveEvent();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void processSaveEvent() {
+        String nameEvent = edtNameEvent.getText().toString();
+        int idPlan = mapPlan.get(spnPlan.getSelectedItem());
+        String placeEvent = edtPlaceEvent.getText().toString();
+        String dayStart = Common.moveSlashTo(tvStartDayEvent.getText().toString(), "/", "-");
+        String timeStart = tvStartTimeEvent.getText().toString();
+        String dayTimeStart = dayStart + " " + timeStart;
+        String dayEnd = Common.moveSlashTo(tvEndDayEvent.getText().toString(), "/", "-");
+        String timeEnd = tvEndTimeEvent.getText().toString();
+        String dayTimeEnd = dayEnd + " " + timeEnd;
+        int priority = this.sbPriority.getProgress();
+        String s = tvRemindedEvent.getText().toString();
+        int remind = Integer.parseInt(s.substring(0, s.indexOf(" ")));
+        String describe = edtDescribeEvent.getText().toString();
+        String ss = idPlan + "\n" + nameEvent + "\n" + placeEvent + "\n" + dayTimeStart + "\n" + dayTimeEnd + "\n" + priority + "\n" + remind + "\n" + describe;
+        if (TextUtils.isEmpty(nameEvent)){
+            Toast.makeText(this, "Hãy nhập tên sự kiện", Toast.LENGTH_SHORT).show();
+        }else {
+            Log.i("saveEvent", ss);
+            insertDataEvent(idPlan, nameEvent, placeEvent, dayTimeStart, dayTimeEnd, priority, remind, describe);
+        }
+    }
+
+    private void insertDataEvent(final int idPlan, final String nameEvent, final String placeEvent, final String dayTimeStart, final String dayTimeEnd, final int priority, final int remind, final String describe) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertEvent, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.i("DATA_EVENT", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("e_idplan", String.valueOf(idPlan));
+                hashMap.put("e_name", nameEvent);
+                hashMap.put("e_place", placeEvent);
+                hashMap.put("e_starttime", dayTimeStart);
+                hashMap.put("e_endtime", dayTimeEnd);
+                hashMap.put("e_priority", String.valueOf(priority));
+                hashMap.put("e_remind", String.valueOf(remind));
+                hashMap.put("e_describe", describe);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void addToolbar() {
@@ -93,8 +161,6 @@ public class AddEventActivity extends AppCompatActivity {
     }
 
     private void addControls() {
-        mAuth = FirebaseAuth.getInstance();
-
         cvStartDayEvent = findViewById(R.id.cv_start_day_event);
         cvEndDayEvent   = findViewById(R.id.cv_end_day_event);
 
@@ -114,14 +180,14 @@ public class AddEventActivity extends AppCompatActivity {
         edtDescribeEvent = findViewById(R.id.edt_describe_event);
 
         cbFullDayEvent   = findViewById(R.id.cb_full_day_event);
+        sbPriority       = findViewById(R.id.sb_priority);
+        tvPriorityPercent = findViewById(R.id.tv_priority_percent);
 
-        btnAddNewPlan    = findViewById(R.id.btn_add_plan);
-
-        plans = new ArrayList<>();
+        plans = new ArrayList<String>();
         loadDataPlan();
         spnPlan = findViewById(R.id.spn_event_plan);
 
-        adapterPlan = new ArrayAdapter<String>(
+        adapterPlan = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
                 plans
@@ -134,10 +200,11 @@ public class AddEventActivity extends AppCompatActivity {
 
     private void setInfEvent() {
         //Gán giá trị mặt định
-        String s = Common.f_eymmdd.format(calendar.getTime());
+        String s = Common.f_ddmmy.format(calendar.getTime());
         tvStartDayEvent.setText(s);
         tvEndDayEvent.setText(tvStartDayEvent.getText().toString());
         tvStartTimeEvent.setText(stf.format(calendar.getTime()));
+        tvPriorityPercent.setText("30 %");
 
         String currentDateandTime = stf.format(new Date());
 
@@ -156,12 +223,28 @@ public class AddEventActivity extends AppCompatActivity {
 
     private void loadDataPlan() {
         plans.clear();
+        mapPlan.clear();
         for (int i = 0; i < MainActivity.mainPlans.size(); i++){
+            mapPlan.put(MainActivity.mainPlans.get(i).getName(), MainActivity.mainPlans.get(i).getId());
             plans.add(MainActivity.mainPlans.get(i).getName());
         }
     }
 
     private void addEvents() {
+        //Chọn kế hoạch
+        spnPlan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String name = plans.get(i);
+                int id = mapPlan.get(name);
+                Toast.makeText(AddEventActivity.this, name + id, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         //Chọn ngày bắt đầu sự kiện
         cvStartDayEvent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,7 +277,7 @@ public class AddEventActivity extends AppCompatActivity {
         tvRemindedEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processReminded();
+                processReminded(position);
             }
         });
         //Xử lý checkbox
@@ -210,93 +293,46 @@ public class AddEventActivity extends AppCompatActivity {
                 }
             }
         });
-        //Thêm kế hoạch mới
-//        btnAddNewPlan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //processAddNewPlan();
-//            }
-//        });
-    }
+        //Xử lý seekbar
+        this.sbPriority.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progress = 0;
 
-    private void processAddNewPlan() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_add_new_plan, null);
-        builder.setView(dialogView);
-        builder.setCancelable(false);
-
-        final TextInputEditText edtAddNewPlan;
-        final TextView tvDayAddNewPlan;
-
-        edtAddNewPlan = dialogView.findViewById(R.id.edt_add_new_plan);
-        tvDayAddNewPlan = dialogView.findViewById(R.id.tv_day_add_new_plan);
-
-        tvDayAddNewPlan.setText(Common.f_ddmmy.format(calendar.getTime()));
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            // Khi giá trị progress thay đổi.
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String plan = edtAddNewPlan.getText().toString();
-                String updateDay = Common.moveSlashTo(tvDayAddNewPlan.getText().toString(), "/", "-");
-                if (!plan.trim().isEmpty() && !plan.equals(" ")){
-                    plans.add(plan);
-                    adapterPlan.notifyDataSetChanged();
-                    dialog.dismiss();
-                    //insertDataPlan(mAuth.getCurrentUser().getUid(), plan, updateDay, dialog);
-                }
+            public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
+                progress = progressValue;
+                tvPriorityPercent.setText(progressValue + " %");
+            }
+
+            // Khi người dùng bắt đầu cử chỉ kéo thanh gạt.
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            // Khi người dùng kết thúc cử chỉ kéo thanh gạt.
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                tvPriorityPercent.setText(progress + " %");
             }
         });
-
-        builder.setNegativeButton("HỦY", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 
-    private void processReminded() {
+
+    private void processReminded(int pos) {
         AlertDialog.Builder builder = new AlertDialog.Builder(AddEventActivity.this)
                 .setTitle("Nhắc nhở")
-                .setMultiChoiceItems(R.array.ArrayReminded, null, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        int tmp = 0;
-                        for (int i=0; i < ArrayCheckedReminded.length;i++){
-                            if (ArrayCheckedReminded[i] == true){
-                               tmp++;
-                            }
-                        }
-                        if (tmp>4){
-                            Toast.makeText(getApplicationContext(), "Đã chọn sô lượng nhắc nhỡ tối đa", Toast.LENGTH_SHORT).show();
-                            ArrayCheckedReminded[which] = false;
-                        }else {
-                            ArrayCheckedReminded[which] = isChecked;
-                        }
+                .setSingleChoiceItems(getResources().getStringArray(R.array.ArrayReminded), pos, new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        position = which;
                     }
                 })
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String s = "";
-                        for (int i=0; i < 14; i++){
-                            if (ArrayCheckedReminded[i] == true){
-                                s = s + getResources().getStringArray(R.array.ArrayReminded)[i] + ", ";
-                            }
-                        }
-                        tvRemindedEvent.setText(s.substring(0, s.length()-2));
-                        s = null;
-                        for (int i=0; i < ArrayCheckedReminded.length;i++){
-                            if (ArrayCheckedReminded[i] == true){
-                                ArrayCheckedReminded[i] = false;
-                            }
-                        }
-
+                        tvRemindedEvent.setText(getResources().getStringArray(R.array.ArrayReminded)[position]);
                         dialog.dismiss();
                     }
                 }).setNegativeButton("HỦY", new DialogInterface.OnClickListener() {
@@ -310,13 +346,13 @@ public class AddEventActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void processTime(final TextView tv_start_time_plan, Context context) {
+    private void processTime(final TextView tvStartTimePlan, Context context) {
         TimePickerDialog.OnTimeSetListener callback=new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 calendar.set(calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(calendar.MINUTE, minute);
-                tv_start_time_plan.setText(stf.format(calendar.getTime()));
+                tvStartTimePlan.setText(stf.format(calendar.getTime()));
             }
         };
 
@@ -325,21 +361,21 @@ public class AddEventActivity extends AppCompatActivity {
                 callback,
                 calendar.get(calendar.HOUR_OF_DAY),
                 calendar.get(calendar.MINUTE),
-                false
+                true
         );
         timePickerDialog.show();
     }
 
 
-    private void processDay(final TextView tv_start_day_plan, Context context) {
+    private void processDay(final TextView tvStartDayPlan, Context context) {
         DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 calendar.set(calendar.YEAR, year);
                 calendar.set(calendar.MONTH, month);
                 calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
-                String s = Common.f_eymmdd.format(calendar.getTime());
-                tv_start_day_plan.setText(s);
+                String s = Common.f_ddmmy.format(calendar.getTime());
+                tvStartDayPlan.setText(s);
             }
         };
 

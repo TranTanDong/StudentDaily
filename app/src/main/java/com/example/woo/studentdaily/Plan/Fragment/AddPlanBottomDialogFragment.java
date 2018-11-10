@@ -65,10 +65,8 @@ public class AddPlanBottomDialogFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 String namePlan = edtNameNewPlan.getText().toString();
-                String dayUpdate = tvDayAddNewPlan.getText().toString();
-                Toast.makeText(getActivity(), "LOL"+dayUpdate, Toast.LENGTH_SHORT).show();
                 if (!TextUtils.isEmpty(namePlan)){
-                    mListener.sendDataPlan(edtNameNewPlan.getText().toString(), tvDayAddNewPlan.getText().toString());
+                    mListener.sendDataPlan(edtNameNewPlan.getText().toString().trim(), tvDayAddNewPlan.getText().toString());
                     dismiss();
                 }else Toast.makeText(getActivity(), "Hãy nhập tên kế hoạch", Toast.LENGTH_SHORT).show();
             }

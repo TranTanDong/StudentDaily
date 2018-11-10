@@ -33,12 +33,6 @@
         <item>25 phút</item>
         <item>30 phút</item>
         <item>45 phút</item>
-        <item>1 tiếng</item>
-        <item>2 tiếng</item>
-        <item>3 tiếng</item>
-        <item>12 tiếng</item>
-        <item>24 tiếng</item>
-        <item>2 ngày</item>
-        <item>1 tuần</item>
+        <item>60 phút</item>
     </string-array>
 </resources>

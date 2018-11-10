@@ -28,6 +28,8 @@ import com.example.woo.studentdaily.Main.Fragment.PlanFragment;
 import com.example.woo.studentdaily.Main.Fragment.SubjectFragment;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.Plan.Fragment.AddPlanBottomDialogFragment;
+import com.example.woo.studentdaily.Plan.Fragment.TabPlanFragment;
+import com.example.woo.studentdaily.Plan.Fragment.TabPlanListFragment;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements AddPlanBottomDial
     }
 
     public static void loadDataMainPlan(final Context context) {
-        mainPlans.clear();
+        MainActivity.mainPlans.clear();
         final FirebaseAuth nAuth = FirebaseAuth.getInstance();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectPlan, new Response.Listener<JSONArray>() {
             @Override
