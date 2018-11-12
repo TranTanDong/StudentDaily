@@ -18,15 +18,10 @@ public class Common {
 
     public static SimpleDateFormat f_ddmmy = new SimpleDateFormat("dd/MM/yyyy");
     public static SimpleDateFormat f_ymmdd = new SimpleDateFormat("yyyy-MM-dd");
-    public static SimpleDateFormat f_ymd = new SimpleDateFormat("yyyy-M-d");
+    public static SimpleDateFormat f_dmy = new SimpleDateFormat("d/M/yyyy");
     public static SimpleDateFormat f_eymmdd = new SimpleDateFormat("EEE, yyyy-MM-dd");
     public static SimpleDateFormat f_ymmddhh = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-    public static boolean isEmptyOrNull(String s){
-        if (s == "" || s == null){
-            return true;
-        } else return false;
-    }
 
     public static String moveSlashTo(String s, String a, String b){
         if (s.contains(a)){

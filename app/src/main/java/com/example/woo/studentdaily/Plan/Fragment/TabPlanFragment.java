@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Plan.Adapter.EventAdapterPlan;
@@ -18,8 +19,10 @@ import com.example.woo.studentdaily.Plan.EventDetailsActivity;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.R;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class TabPlanFragment extends Fragment {
     private TextView tvEventToday;
@@ -73,12 +76,14 @@ public class TabPlanFragment extends Fragment {
         cldEvent.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int y, int m, int d) {
-                String toDay = y + "-" + (m+1) + "-" + d;
-                String getToDay = Common.f_ymd.format(Calendar.getInstance().getTime());
+                String toDay = d + "/" + (m+1) + "/" + y;
+                String getToDay = Common.f_dmy.format(Calendar.getInstance().getTime());
                 if (toDay.equals(getToDay)){
                     tvEventToday.setText("Hôm nay");
-                }else tvEventToday.setText(toDay);
-                //Toast.makeText(getActivity(), toDay + "=" +getToDay, Toast.LENGTH_SHORT).show();
+                } else tvEventToday.setText(toDay);
+
+
+
             }
         });
     }

@@ -38,7 +38,7 @@ public class TabPlanListFragment extends Fragment {
         addEvents();
         return v;
     }
-    
+
     private void addControls(View v) {
         rcvPlan = v.findViewById(R.id.rcv_plan);
 

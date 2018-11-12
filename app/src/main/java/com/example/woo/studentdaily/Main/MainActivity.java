@@ -3,6 +3,7 @@ package com.example.woo.studentdaily.Main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -28,8 +29,6 @@ import com.example.woo.studentdaily.Main.Fragment.PlanFragment;
 import com.example.woo.studentdaily.Main.Fragment.SubjectFragment;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.Plan.Fragment.AddPlanBottomDialogFragment;
-import com.example.woo.studentdaily.Plan.Fragment.TabPlanFragment;
-import com.example.woo.studentdaily.Plan.Fragment.TabPlanListFragment;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
@@ -42,8 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 public class MainActivity extends AppCompatActivity implements AddPlanBottomDialogFragment.BottomSheetListener {
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements AddPlanBottomDial
                                 plan.setCodeUser(jsonObject.getString("codeuser"));
                                 plan.setName(jsonObject.getString("name"));
                                 plan.setUpdateDay(jsonObject.getString("updateday"));
-                                mainPlans.add(plan);
+                                MainActivity.mainPlans.add(plan);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -161,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements AddPlanBottomDial
         toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
+
+        //Gửi dữ liệu mainPlan qua TabPlanListFragment
     }
 
     @Override
@@ -221,41 +221,7 @@ public class MainActivity extends AppCompatActivity implements AddPlanBottomDial
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void insertDataPlan(final String code, final String name, final String updateDay) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertPlan, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
-                Log.i("DATA_PLAN", response+name);
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadDataMainPlan(getApplicationContext());
-                    }
-                });
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> hashMap = new HashMap<>();
-                hashMap.put("p_codeuser", code);
-                hashMap.put("p_name", name);
-                hashMap.put("p_updateday", Common.moveSlashTo(updateDay, "/", "-"));
-                return hashMap;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
-
     @Override
     public void sendDataPlan(String namePlan, String dayUpdate) {
-        String code = mAuth.getCurrentUser().getUid();
-        insertDataPlan(code, namePlan, dayUpdate);
     }
 }

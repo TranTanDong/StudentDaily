@@ -23,6 +23,7 @@ import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.Adapter.PagerAdapterPlan;
 import com.example.woo.studentdaily.Plan.AddEventActivity;
+import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.Plan.Fragment.AddPlanBottomDialogFragment;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
@@ -70,8 +71,7 @@ public class PlanFragment extends Fragment{
         btnAddPlann.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddPlanBottomDialogFragment addPlanBottomDialogFragment = new AddPlanBottomDialogFragment();
-                addPlanBottomDialogFragment.show(getActivity().getSupportFragmentManager(), "Add Plan Fragment");
+                startActivity(new Intent(getActivity(), AddPlanActivity.class));
             }
         });
 
