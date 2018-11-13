@@ -11,6 +11,73 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Học kỳ"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:text="Học kỳ 1"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Năm học"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:text="2018"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Lớp"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:text="Công nghệ Thông tin A2"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif"/>
+        </LinearLayout>
+
+
         <com.github.florent37.expansionpanel.ExpansionHeader
             android:layout_height="?attr/actionBarSize"
             android:layout_width="match_parent"

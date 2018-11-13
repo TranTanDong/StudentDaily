@@ -101,7 +101,7 @@ public class PlanFragment extends Fragment{
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                viewPagerPlan.setCurrentItem(tab.getPosition());
             }
         });
     }

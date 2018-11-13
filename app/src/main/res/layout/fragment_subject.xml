@@ -11,12 +11,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/rcv_listSubject"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--tools:listitem="@layout/item_subject">-->
-        <!--</android.support.v7.widget.RecyclerView>-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcv_list_subject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_subject">
+        </android.support.v7.widget.RecyclerView>
 
         <include layout="@layout/item_subject"/>
         <include layout="@layout/item_subject"/>

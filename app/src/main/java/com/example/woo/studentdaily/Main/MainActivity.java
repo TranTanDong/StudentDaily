@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity implements AddPlanBottomDial
     private Toolbar toolbar;
     private MaterialSearchView searchView;
 
-    public static ArrayList<Plan> mainPlans = new ArrayList<>();
-
     private User user;
     private FirebaseAuth mAuth;
 
@@ -108,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements AddPlanBottomDial
     }
 
     public static void loadDataMainPlan(final Context context) {
-        MainActivity.mainPlans.clear();
+        final ArrayList<Plan> mainPlans = new ArrayList<>();
+        mainPlans.clear();
         final FirebaseAuth nAuth = FirebaseAuth.getInstance();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectPlan, new Response.Listener<JSONArray>() {
             @Override
@@ -124,13 +123,14 @@ public class MainActivity extends AppCompatActivity implements AddPlanBottomDial
                                 plan.setCodeUser(jsonObject.getString("codeuser"));
                                 plan.setName(jsonObject.getString("name"));
                                 plan.setUpdateDay(jsonObject.getString("updateday"));
-                                MainActivity.mainPlans.add(plan);
+                                mainPlans.add(plan);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                    Toast.makeText(context, "Oke loaded Plan", Toast.LENGTH_SHORT).show();
+                    Common.setListPlan(mainPlans, context);
+                    Toast.makeText(context, "Loaded plan success", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {

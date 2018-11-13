@@ -34,6 +34,7 @@
                     android:layout_marginBottom="@dimen/margin">
 
                     <EditText
+                        android:id="@+id/edt_name_subject"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:hint="Tên môn học"
@@ -48,6 +49,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/edt_name_class"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin"
@@ -62,8 +64,9 @@
                     android:weightSum="2">
 
                     <TextView
+                        android:id="@+id/tv_school_year"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
@@ -76,21 +79,23 @@
                         android:layout_gravity="center"
                         android:gravity="center"/>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@color/bgLightBlue"
-                        android:layout_marginLeft="10dp"
-                        android:text="Học kỳ"
-                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
-                        android:textSize="@dimen/font_size_text"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:gravity="center"/>
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:background="@color/bgLightBlue">
+
+                        <Spinner
+                            android:id="@+id/spn_semester"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:textSize="@dimen/font_size_topic"
+                            android:textStyle="bold|italic" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -121,6 +126,7 @@
                     android:layout_marginBottom="5dp">
 
                     <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edt_name_lecturer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_account"
@@ -141,6 +147,7 @@
                     android:layout_marginBottom="5dp">
 
                     <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edt_phone_lecturer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_phone_number"
@@ -161,6 +168,7 @@
                     android:layout_marginBottom="5dp">
 
                     <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edt_email_lecturer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_email"
@@ -181,6 +189,7 @@
                     android:layout_marginBottom="10dp">
 
                     <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edt_web_lecturer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_web_lecturers"

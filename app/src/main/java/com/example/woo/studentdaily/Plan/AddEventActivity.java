@@ -38,6 +38,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Main.MainActivity;
+import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
 import com.google.firebase.auth.FirebaseAuth;
@@ -224,9 +225,10 @@ public class AddEventActivity extends AppCompatActivity {
     private void loadDataPlan() {
         plans.clear();
         mapPlan.clear();
-        for (int i = 0; i < MainActivity.mainPlans.size(); i++){
-            mapPlan.put(MainActivity.mainPlans.get(i).getName(), MainActivity.mainPlans.get(i).getId());
-            plans.add(MainActivity.mainPlans.get(i).getName());
+        ArrayList<Plan> listPlan = Common.getListPlan(getApplicationContext());
+        for (int i = 0; i < listPlan.size(); i++){
+            mapPlan.put(listPlan.get(i).getName(), listPlan.get(i).getId());
+            plans.add(listPlan.get(i).getName());
         }
     }
 

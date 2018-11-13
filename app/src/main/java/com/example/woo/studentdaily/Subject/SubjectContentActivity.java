@@ -1,5 +1,6 @@
 package com.example.woo.studentdaily.Subject;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,10 @@ public class SubjectContentActivity extends AppCompatActivity {
 
             }
         });
+
+        Intent nIntent = getIntent();
+        String name = nIntent.getStringExtra("NAME_SUBJECT");
+        setTitle(name);
     }
 
     private void addEvents() {

@@ -20,10 +20,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Main.MainActivity;
+import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,6 +101,13 @@ public class AddPlanActivity extends AppCompatActivity {
                 AddPlanActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        Plan plan = new Plan();
+                        plan.setCodeUser(mAuth.getCurrentUser().getUid());
+                        plan.setName(edtNameNewPlan.getText().toString());
+                        plan.setUpdateDay(Common.moveSlashTo(Common.f_ddmmy.format(Calendar.getInstance().getTime()), "/", "-"));
+                        ArrayList<Plan> plans = Common.getListPlan(getApplicationContext());
+                        plans.add(plan);
+                        Common.setListPlan(plans, getApplicationContext());
                         MainActivity.loadDataMainPlan(getApplicationContext());
                         finish();
                     }

@@ -32,7 +32,8 @@
         <activity android:name=".Subject.SubjectContentActivity" />
         <activity android:name=".Plan.EventDetailsActivity" />
         <activity android:name=".More.InfoUserActivity" />
-        <activity android:name=".Plan.AddPlanActivity"></activity>
+        <activity android:name=".Plan.AddPlanActivity" />
+        <activity android:name=".Plan.PlanDetailsActivity"></activity>
     </application>
 
 </manifest>

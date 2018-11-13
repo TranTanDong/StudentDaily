@@ -7,12 +7,16 @@ import android.support.annotation.NonNull;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.example.woo.studentdaily.Login.SignUpActivity;
 import com.example.woo.studentdaily.More.Model.User;
+import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Common {
 
@@ -21,6 +25,10 @@ public class Common {
     public static SimpleDateFormat f_dmy = new SimpleDateFormat("d/M/yyyy");
     public static SimpleDateFormat f_eymmdd = new SimpleDateFormat("EEE, yyyy-MM-dd");
     public static SimpleDateFormat f_ymmddhh = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    public static final String PREFERENCE = "USER";
+    private static final String KEY_USER = "KEY_USER";
+    private static final String LIST_PLAN = "LIST_PLAN";
 
 
     public static String moveSlashTo(String s, String a, String b){
@@ -31,16 +39,36 @@ public class Common {
     }
 
     public static void setCurrentUser(@NonNull Context context, User user){
-        SharedPreferences sharedPref = context.getSharedPreferences("USER", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         Gson gson = new Gson();
-        editor.putString("U", gson.toJson(user));
+        editor.putString(KEY_USER, gson.toJson(user));
+        editor.apply();
+    }
+
+    public static ArrayList<Plan> getListPlan(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<Plan> listPlan = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_PLAN, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Plan>>(){}.getType();
+            listPlan = gson.fromJson(serializedObject, type);
+        }
+        return listPlan;
+    }
+
+    public static void setListPlan(ArrayList<Plan> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_PLAN, gson.toJson(list));
         editor.apply();
     }
 
     public static User getUser (@NonNull Context context){
-        SharedPreferences sharedPref = context.getSharedPreferences("USER", Context.MODE_PRIVATE);
-        String user = sharedPref.getString("U", "");
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        String user = sharedPref.getString(KEY_USER, "");
         if (user == ""){
             return null;
         }
@@ -51,7 +79,7 @@ public class Common {
     }
 
     public static void setPreferenceNull (@NonNull Context context){
-        SharedPreferences sharedPref = context.getSharedPreferences("USER", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
         editor.commit();
@@ -59,12 +87,6 @@ public class Common {
 
     }
 
-    public static void removeKey(Context context, String key) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("USER", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(key);
-        editor.apply();
-    }
 
     public static void processBirthDay(Context context, final TextView textView) {
         final Calendar calendar = Calendar.getInstance();
@@ -88,4 +110,5 @@ public class Common {
         );
         datePickerDialog.show();
     }
+
 }

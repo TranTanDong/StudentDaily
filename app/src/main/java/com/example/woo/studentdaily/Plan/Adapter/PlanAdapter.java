@@ -16,10 +16,12 @@ import java.util.ArrayList;
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder> {
     Context context;
     ArrayList<Plan> plans;
+    IPlan iPlan;
 
-    public PlanAdapter(Context context, ArrayList<Plan> plans) {
+    public PlanAdapter(Context context, ArrayList<Plan> plans, IPlan iPlan) {
         this.context = context;
         this.plans = plans;
+        this.iPlan = iPlan;
     }
 
     @NonNull
@@ -30,10 +32,17 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlanViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PlanViewHolder holder, final int position) {
         String s = moveDay(plans.get(position).getUpdateDay());
         holder.tvContentPlan.setText(plans.get(position).getName());
         holder.tvUpdateDay.setText(s);
+        holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iPlan.onItemClickPlan(Integer.parseInt(view.getTag().toString()));
+            }
+        });
     }
 
     @Override
@@ -57,5 +66,15 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
             return arr[2] + " thg " + arr[1];
         }
         return day;
+    }
+
+    public void refreshAdapter(ArrayList<Plan> planNew){
+        plans.clear();
+        plans.addAll(planNew);
+        notifyDataSetChanged();
+    }
+
+    public interface IPlan{
+        void onItemClickPlan(int position);
     }
 }

@@ -2,27 +2,33 @@ package com.example.woo.studentdaily.Plan.Fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.Adapter.PlanAdapter;
 import com.example.woo.studentdaily.Plan.Model.Plan;
+import com.example.woo.studentdaily.Plan.PlanDetailsActivity;
 import com.example.woo.studentdaily.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TabPlanListFragment extends Fragment {
+public class TabPlanListFragment extends Fragment implements PlanAdapter.IPlan{
     private RecyclerView rcvPlan;
-    public static PlanAdapter planAdapter;
+    private PlanAdapter planAdapter;
+    private ArrayList<Plan> listPlan;
 
     public TabPlanListFragment() {
         // Required empty public constructor
@@ -41,10 +47,10 @@ public class TabPlanListFragment extends Fragment {
 
     private void addControls(View v) {
         rcvPlan = v.findViewById(R.id.rcv_plan);
-
+        listPlan = Common.getListPlan(getActivity());
 
         rcvPlan.setLayoutManager(new LinearLayoutManager(getActivity()));
-        planAdapter = new PlanAdapter(getActivity(), MainActivity.mainPlans);
+        planAdapter = new PlanAdapter(getActivity(), listPlan, this);
         rcvPlan.setAdapter(planAdapter);
     }
 
@@ -52,4 +58,38 @@ public class TabPlanListFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.i("LOG_ATTACH", "LOG_ATTACH");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i("LOG_Start", "LOG_Start");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("LOG_Resume", "LOG_Resume");
+        listPlan.clear();
+        listPlan = Common.getListPlan(getActivity());
+        Log.i("listPlanSize", listPlan.size() + "");
+        planAdapter.refreshAdapter(listPlan);
+    }
+
+    @Override
+    public void onItemClickPlan(int position) {
+        Plan plan = new Plan(listPlan.get(position).getId(), listPlan.get(position).getCodeUser(), listPlan.get(position).getName(), listPlan.get(position).getUpdateDay());
+
+        Intent mIntent = new Intent(getActivity(), PlanDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ITEM_PLAN", plan);
+        mIntent.putExtra("BUNDLE_ITEMPLAN", bundle);
+        mIntent.putExtra("NAME_PLAN", listPlan.get(position).getName());
+        startActivity(mIntent);
+    }
 }
