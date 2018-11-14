@@ -1,5 +1,6 @@
 package com.example.woo.studentdaily.Subject;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +11,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.StudyAdapter;
@@ -75,6 +78,13 @@ public class AddSubjectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AddSubjectActivity.this, SubjectContentActivity.class));
+            }
+        });
+
+        tvSchoolYear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(AddSubjectActivity.this, "Working ...", Toast.LENGTH_SHORT).show();
             }
         });
     }
