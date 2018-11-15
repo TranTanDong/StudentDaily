@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     tools:context=".Diary.ContentDiaryActivity">
 
-    <include layout="@layout/toolbar_layout"></include>
+    <include
+        android:id="@+id/tb_toolbar"
+        layout="@layout/toolbar_layout"></include>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tb_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,4 +35,16 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-</LinearLayout>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/btn_add_diary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_add_diary"
+        app:fab_colorNormal="@color/colorPrimary"
+        app:fab_size="normal" />
+
+</RelativeLayout>

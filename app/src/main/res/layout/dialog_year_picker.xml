@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="@color/bgWhite">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NĂM HỌC"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_size_header"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"/>
+
+    <NumberPicker
+        android:id="@+id/np_school_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+    <Button
+        android:id="@+id/btn_set_sy"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:layout_alignBottom="@+id/btn_cancel_sy"
+        android:layout_alignParentRight="true"
+        android:text="OK"
+        android:textColor="@color/colorPrimary"
+        android:background="@color/bgWhite"/>
+
+    <Button
+        android:id="@+id/btn_cancel_sy"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/np_school_year"
+        android:layout_toLeftOf="@+id/btn_set_sy"
+        android:layout_marginTop="80dp"
+        android:text="HỦY"
+        android:textColor="@color/colorPrimary"
+        android:background="@color/bgWhite"/>
+
+
+
+</RelativeLayout>

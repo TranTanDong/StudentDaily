@@ -1,33 +1,30 @@
 package com.example.woo.studentdaily.Subject;
 
-import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.woo.studentdaily.R;
-import com.example.woo.studentdaily.Subject.Adapter.StudyAdapter;
-import com.example.woo.studentdaily.Subject.Model.Study;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class AddSubjectActivity extends AppCompatActivity {
+import static android.widget.NumberPicker.*;
+
+public class AddSubjectActivity extends AppCompatActivity implements OnValueChangeListener {
     private Toolbar toolbar;
     private ImageView btnColorSubject;
     private EditText edtNameSubject, edtNameClass;
@@ -84,7 +81,7 @@ public class AddSubjectActivity extends AppCompatActivity {
         tvSchoolYear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AddSubjectActivity.this, "Working ...", Toast.LENGTH_SHORT).show();
+                show(tvSchoolYear, Integer.parseInt(tvSchoolYear.getText().toString()));
             }
         });
     }
@@ -101,5 +98,44 @@ public class AddSubjectActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public void onValueChange(NumberPicker numberPicker, int oldVal, int newVal) {
+//        Log.i("value is",""+newVal);
+    }
+
+    public void show(final TextView tv, int setYear)
+    {
+
+        final Dialog d = new Dialog(AddSubjectActivity.this);
+        d.setTitle("Năm học");
+        d.setContentView(R.layout.dialog_year_picker);
+        Button btnSet = d.findViewById(R.id.btn_set_sy);
+        Button btnCancel = d.findViewById(R.id.btn_cancel_sy);
+        final NumberPicker np = d.findViewById(R.id.np_school_year);
+        np.setMaxValue(2100);
+        np.setMinValue(2000);
+        np.setValue(setYear);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(this);
+        btnSet.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                tv.setText(String.valueOf(np.getValue()));
+                d.dismiss();
+            }
+        });
+        btnCancel.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        d.show();
+
+
     }
 }

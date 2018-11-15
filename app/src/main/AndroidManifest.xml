@@ -35,7 +35,11 @@
         <activity android:name=".Plan.AddPlanActivity" />
         <activity android:name=".Plan.PlanDetailsActivity" />
         <activity android:name=".Diary.AddDiaryActivity" />
-        <activity android:name=".Diary.ContentDiaryActivity"></activity>
+        <activity android:name=".Diary.ContentDiaryActivity" />
+        <activity android:name=".Diary.AddContentDiaryActivity" />
+        <activity android:name=".More.HelpActivity" />
+        <activity android:name=".More.StatisticalPlanActivity" />
+        <activity android:name=".More.ScheduleActivity"></activity>
     </application>
 
 </manifest>

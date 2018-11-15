@@ -18,8 +18,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Login.LoginActivity;
+import com.example.woo.studentdaily.More.HelpActivity;
 import com.example.woo.studentdaily.More.InfoUserActivity;
 import com.example.woo.studentdaily.More.Model.User;
+import com.example.woo.studentdaily.More.ScheduleActivity;
+import com.example.woo.studentdaily.More.StatisticalPlanActivity;
 import com.example.woo.studentdaily.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -31,7 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class MoreFragment extends Fragment {
     private LinearLayout btnLogout;
-    private LinearLayout btnDetailAccount;
+    private LinearLayout btnDetailAccount, btnHelp, btnSchedule, btnStatisticalPlan;
     private CircleImageView imgImageMore;
     private TextView tvNameMore;
 
@@ -59,7 +62,10 @@ public class MoreFragment extends Fragment {
     private void addControls(View view) {
         btnLogout        = view.findViewById(R.id.btn_log_out);
         btnDetailAccount = view.findViewById(R.id.lnl_inf_account);
-        imgImageMore = view.findViewById(R.id.img_image_more);
+        btnHelp          = view.findViewById(R.id.btn_help);
+        btnStatisticalPlan = view.findViewById(R.id.btn_statistical_plan);
+        btnSchedule      = view.findViewById(R.id.btn_schedule);
+        imgImageMore     = view.findViewById(R.id.img_image_more);
         tvNameMore       = view.findViewById(R.id.tv_name_more);
 
 
@@ -81,19 +87,41 @@ public class MoreFragment extends Fragment {
     }
 
     private void addEvents() {
+       //Xem thông tin User
         btnDetailAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mIntent = new Intent(getActivity(), InfoUserActivity.class);
-                //mIntent.putExtra("USER", user);
                 startActivity(mIntent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+        //Đăng xuất tài khoản
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSigout();
+            }
+        });
+        //Xem thời khóa biểu
+        btnSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ScheduleActivity.class));
+            }
+        });
+        //Xem thống kê kế hoạch
+        btnStatisticalPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), StatisticalPlanActivity.class));
+            }
+        });
+        //Trợ giúp
+        btnHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), HelpActivity.class));
             }
         });
     }
@@ -102,9 +130,7 @@ public class MoreFragment extends Fragment {
     private void showSigout() {
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Đăng xuất");
         builder.setMessage("Bạn có muốn đăng xuất không?");
-        builder.setCancelable(false);
         builder.setNegativeButton("CÓ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

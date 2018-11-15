@@ -59,6 +59,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -80,6 +81,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_statistical_plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -101,6 +103,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"

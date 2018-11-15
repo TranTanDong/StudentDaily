@@ -25,11 +25,18 @@
             android:layout_gravity="center"/>
 
         <View
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="3dp"
             android:background="@color/colorPrimary"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"></View>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_more_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

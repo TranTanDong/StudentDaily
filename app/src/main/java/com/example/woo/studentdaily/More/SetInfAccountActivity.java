@@ -98,6 +98,11 @@ public class SetInfAccountActivity extends AppCompatActivity {
         imgImageSet     = findViewById(R.id.img_user_set);
         bitmap          = ((BitmapDrawable) imgImageSet.getDrawable()).getBitmap();
 
+        setInfUser();
+
+    }
+
+    private void setInfUser() {
         user = Common.getUser(getApplicationContext());
         edtNameSet.setText(user.getName());
         tvEmailSet.setText(user.getEmail());
@@ -118,7 +123,6 @@ public class SetInfAccountActivity extends AppCompatActivity {
                         .formatOf(DecodeFormat.PREFER_RGB_565)
                         .timeout(3000)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgImageSet);
-
     }
 
     private void addEvents() {

@@ -6,32 +6,17 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.woo.studentdaily.Common.Common;
-import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.Adapter.PagerAdapterPlan;
 import com.example.woo.studentdaily.Plan.AddEventActivity;
 import com.example.woo.studentdaily.Plan.AddPlanActivity;
-import com.example.woo.studentdaily.Plan.Fragment.AddPlanBottomDialogFragment;
 import com.example.woo.studentdaily.R;
-import com.example.woo.studentdaily.Server.Server;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -40,8 +25,9 @@ import java.util.Map;
 public class PlanFragment extends Fragment{
     private ViewPager viewPagerPlan;
     private TabLayout tabLayoutPlan;
+    private FloatingActionMenu btnMenuPlan;
     private FloatingActionButton btnAddEvent;
-    private FloatingActionButton btnAddPlann;
+    private FloatingActionButton btnAddPlan;
     private FirebaseAuth mAuth;
 
     public PlanFragment() {
@@ -68,7 +54,7 @@ public class PlanFragment extends Fragment{
             }
         });
 
-        btnAddPlann.setOnClickListener(new View.OnClickListener() {
+        btnAddPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), AddPlanActivity.class));
@@ -80,7 +66,8 @@ public class PlanFragment extends Fragment{
     private void addControls(View view) {
         mAuth   = FirebaseAuth.getInstance();
         btnAddEvent = view.findViewById(R.id.btn_add_event_floating);
-        btnAddPlann = view.findViewById(R.id.btn_add_plan);
+        btnAddPlan = view.findViewById(R.id.btn_add_plan);
+        btnMenuPlan = view.findViewById(R.id.floating_action_menu);
         tabLayoutPlan = view.findViewById(R.id.tab_layout_plan);
         tabLayoutPlan.addTab(tabLayoutPlan.newTab().setText("SỰ KIỆN"));
         tabLayoutPlan.addTab(tabLayoutPlan.newTab().setText("KẾ HOẠCH"));

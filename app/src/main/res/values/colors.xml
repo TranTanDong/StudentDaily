@@ -5,8 +5,8 @@
     <color name="colorAccent">#2699FB</color>
     <color name="startGradient">#2699FB</color>
     <color name="endGradient">#80BEF2</color>
-    <color name="startGradientFail">#FF1010</color>
-    <color name="endGradientFail">#EE5D5D</color>
+    <color name="colorRed">#FF1010</color>
+    <color name="colorLightRed">#EE5D5D</color>
     <!--background color-->
     <color name="bgWhite">#FFFFFF</color>
     <color name="bgLightBlue">#BCE0FD</color>

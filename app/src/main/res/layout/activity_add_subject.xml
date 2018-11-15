@@ -37,7 +37,7 @@
                         android:id="@+id/edt_name_subject"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:hint="Tên môn học"
+                        android:hint="Tên môn học *"
                         android:textSize="@dimen/font_size_text" />
                     <ImageView
                         android:id="@+id/btn_color_subject"
@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin"
-                    android:hint="Tên lớp"
+                    android:hint="Tên lớp *"
                     android:textSize="@dimen/font_size_text"/>
 
                 <LinearLayout
@@ -73,7 +73,8 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:background="@color/bgLightBlue"
-                        android:text="Năm học"
+                        android:text="2018"
+                        android:textColor="@color/textColorBlack"
                         android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
                         android:textSize="@dimen/font_size_text"
                         android:layout_gravity="center"
@@ -114,11 +115,12 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     android:text="GIẢNG VIÊN"
-                    android:textSize="@dimen/font_size_text"
+                    android:textSize="@dimen/font_size_header"
                     android:textColor="@color/colorAccent"
                     android:layout_gravity="center"
                     android:layout_marginBottom="@dimen/margin"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:textStyle="bold"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -132,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_account"
                         android:drawablePadding="@dimen/input_drawable_padding"
-                        android:hint="Tên giảng viên"
+                        android:hint="Tên giảng viên *"
                         android:inputType="textPersonName"
                         android:fontFamily="sans-serif"
                         android:textColorHint="@color/textColorHint"
@@ -203,6 +205,14 @@
                         android:textColor="@color/textColorBlack"
                         android:background="@color/textColorWhite"/>
                 </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(* là trường không được bỏ trống)"
+                    android:textColor="@color/colorRed"
+                    android:layout_marginBottom="10dp"
+                    android:textStyle="italic"/>
 
             </LinearLayout>
 
