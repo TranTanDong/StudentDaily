@@ -20,6 +20,6 @@ public class LoadingActivity extends AppCompatActivity {
                 startActivity(new Intent(LoadingActivity.this, LoginActivity.class));
                 finish();
             }
-        }, 2000); //Delay 2s
+        }, 1500); //Delay 1.5s
     }
 }

@@ -1,5 +1,6 @@
 package com.example.woo.studentdaily.Plan;
 
+import android.os.CountDownTimer;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
+import com.example.woo.studentdaily.Common.Popup;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
@@ -92,6 +95,9 @@ public class AddPlanActivity extends AppCompatActivity {
     }
 
     private void insertDataPlan(final String code, final String name, final String updateDay) {
+        final Popup popup = new Popup(AddPlanActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertPlan, new Response.Listener<String>() {
             @Override
@@ -101,15 +107,30 @@ public class AddPlanActivity extends AppCompatActivity {
                 AddPlanActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Plan plan = new Plan();
-                        plan.setCodeUser(mAuth.getCurrentUser().getUid());
-                        plan.setName(edtNameNewPlan.getText().toString());
-                        plan.setUpdateDay(Common.moveSlashTo(Common.f_ddmmy.format(Calendar.getInstance().getTime()), "/", "-"));
-                        ArrayList<Plan> plans = Common.getListPlan(getApplicationContext());
-                        plans.add(plan);
-                        Common.setListPlan(plans, getApplicationContext());
-                        MainActivity.loadDataMainPlan(getApplicationContext());
-                        finish();
+//                        Plan plan = new Plan();
+//                        plan.setCodeUser(mAuth.getCurrentUser().getUid());
+//                        plan.setName(edtNameNewPlan.getText().toString());
+//                        plan.setUpdateDay(Common.moveSlashTo(Common.f_ddmmy.format(Calendar.getInstance().getTime()), "/", "-"));
+//                        ArrayList<Plan> plans = Common.getListPlan(getApplicationContext());
+//                        plans.add(plan);
+//                        Common.setListPlan(plans, getApplicationContext());
+//                        MainActivity.loadDataMainPlan(getApplicationContext());
+                        ArrayList<Plan> plans = new ArrayList<>();
+                        LoadData.loadDataPlan(AddPlanActivity.this, plans);
+                        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                popup.hide();
+                                finish();
+                            }
+                        };
+                        timer.start();
+
                     }
                 });
             }

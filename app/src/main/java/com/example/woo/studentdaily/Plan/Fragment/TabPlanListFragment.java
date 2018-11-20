@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.Adapter.PlanAdapter;
 import com.example.woo.studentdaily.Plan.Model.Plan;
@@ -47,6 +48,8 @@ public class TabPlanListFragment extends Fragment implements PlanAdapter.IPlan{
 
     private void addControls(View v) {
         rcvPlan = v.findViewById(R.id.rcv_plan);
+        listPlan = new ArrayList<>();
+        LoadData.loadDataPlan(getActivity(), listPlan);
         listPlan = Common.getListPlan(getActivity());
 
         rcvPlan.setLayoutManager(new LinearLayoutManager(getActivity()));

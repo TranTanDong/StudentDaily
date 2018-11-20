@@ -31,6 +31,19 @@
         <item name="android:textSize">@dimen/font_size_toolbar</item>
     </style>
 
+    <style name="translucentDialog" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:gravity">bottom</item>
+        <item name="android:layout_marginBottom">@dimen/margin_item_horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+
+    </style>
+
     <!--<style name="error" parent="@android:style/TextAppearance">-->
         <!--<item name="android:textColor">@color/endGradientFail</item>-->
         <!--<item name="android:textSize">12dp</item>-->

@@ -9,23 +9,30 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.PagerAdapterSubject;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 public class SubjectContentActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewPager viewPagerSubject;
     private TabLayout tabLayoutSubject;
+    private FloatingActionMenu btnMenu;
+    private FloatingActionButton btnAddScore, btnAddScheduleStudy, btnAddScheduleTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subject_content);
+        setContentView(R.layout.activity_content_subject);
         addToolbar();
         addControls();
         addEvents();
     }
 
     private void addControls() {
-
+        btnMenu = findViewById(R.id.floating_action_menu_subject);
+        btnAddScore = findViewById(R.id.btn_add_score);
+        btnAddScheduleStudy = findViewById(R.id.btn_add_schedule_study);
+        btnAddScheduleTest = findViewById(R.id.btn_add_schedule_test);
 
         tabLayoutSubject = findViewById(R.id.tab_layout_subject);
         tabLayoutSubject.addTab(tabLayoutSubject.newTab().setText("TÀI LIỆU"));
@@ -58,7 +65,26 @@ public class SubjectContentActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+        btnAddScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SubjectContentActivity.this, AddScoreActivity.class));
+            }
+        });
 
+        btnAddScheduleStudy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SubjectContentActivity.this, AddScheduleStudyActivity.class));
+            }
+        });
+
+        btnAddScheduleTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SubjectContentActivity.this, AddScheduleTestActivity.class));
+            }
+        });
     }
 
     private void addToolbar() {

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Subject.AddScoreActivity">
+
+    <include layout="@layout/toolbar_layout"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:background="@color/bgWhite"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edt_score"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:maxLength="4"
+            android:hint="Điểm số"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/font_size_text"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bgLightBlue"
+            android:layout_marginBottom="@dimen/margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Môn học"
+                android:layout_gravity="center"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+
+            <Spinner
+                android:id="@+id/spn_subject_score"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="@dimen/font_size_topic"
+                android:textAlignment="center"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bgLightBlue"
+            android:layout_marginBottom="@dimen/margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Loại điểm"
+                android:layout_gravity="center"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+
+            <Spinner
+                android:id="@+id/spn_tyle_score"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="@dimen/font_size_topic"
+                android:textAlignment="center"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bgLightBlue"
+            android:layout_marginBottom="@dimen/margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="76dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Hình thức"
+                android:layout_gravity="center"
+                android:textSize="@dimen/font_size_text"
+                android:fontFamily="sans-serif-black"/>
+
+            <Spinner
+                android:id="@+id/spn_form_score"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="@dimen/font_size_topic"
+                android:textAlignment="center"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

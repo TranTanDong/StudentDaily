@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -86,6 +88,21 @@ public class AddSubjectActivity extends AppCompatActivity implements OnValueChan
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_save, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.btn_save){
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void addToolbar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_close);
@@ -105,8 +122,7 @@ public class AddSubjectActivity extends AppCompatActivity implements OnValueChan
 //        Log.i("value is",""+newVal);
     }
 
-    public void show(final TextView tv, int setYear)
-    {
+    public void show(final TextView tv, int setYear) {
 
         final Dialog d = new Dialog(AddSubjectActivity.this);
         d.setTitle("Năm học");

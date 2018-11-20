@@ -34,6 +34,7 @@ import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.Popup;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
@@ -232,6 +233,9 @@ public class SetInfAccountActivity extends AppCompatActivity {
     }
 
     private void excecute(){
+        final Popup popup = new Popup(SetInfAccountActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
         final StorageReference storageR = storageReference.child("User/" + Common.getUser(getApplicationContext()).getCode() + ".png");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 5, baos);
@@ -258,6 +262,7 @@ public class SetInfAccountActivity extends AppCompatActivity {
                             User u1 = new User(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, user.getEmail(), gender, Common.moveSlashTo(tvBirthdaySet.getText().toString(), "/", "-"));
                             Common.setCurrentUser(getApplicationContext(), u1);
                             finish();
+                            popup.hide();
                         }
                     });
                 } else {
