@@ -100,4 +100,19 @@ public class Event implements Serializable {
     public void setDescribe(String describe) {
         this.describe = describe;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", idPlan=" + idPlan +
+                ", name='" + name + '\'' +
+                ", place='" + place + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", priority=" + priority +
+                ", remind=" + remind +
+                ", describe='" + describe + '\'' +
+                '}';
+    }
 }

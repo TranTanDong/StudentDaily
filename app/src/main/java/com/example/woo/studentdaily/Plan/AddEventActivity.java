@@ -123,6 +123,7 @@ public class AddEventActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Toast.makeText(AddEventActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
                 Log.i("DATA_EVENT", response);
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override

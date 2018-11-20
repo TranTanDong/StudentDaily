@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.R;
 
@@ -16,10 +17,12 @@ import java.util.ArrayList;
 public class EventAdapterPlan extends RecyclerView.Adapter<EventAdapterPlan.EventViewHolder>  {
     Context context;
     ArrayList<Event> events;
+    IEvent iEvent;
 
-    public EventAdapterPlan(Context context, ArrayList<Event> events) {
+    public EventAdapterPlan(Context context, ArrayList<Event> events, IEvent iEvent) {
         this.context = context;
         this.events = events;
+        this.iEvent = iEvent;
     }
 
     @NonNull
@@ -31,10 +34,22 @@ public class EventAdapterPlan extends RecyclerView.Adapter<EventAdapterPlan.Even
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
-        holder.tvSubTimeEvent.setText("BÂY GIỜ");
-        holder.tvTimeEvent.setText(events.get(position).getStartTime());
+        String startTime = events.get(position).getStartTime();
+        String day = Common.moveSlashTo(startTime.substring(0, 10), "-", "/");
+        String time = startTime.substring(11, 16);
+
+        holder.tvSubTimeEvent.setText(day);
+        holder.tvTimeEvent.setText(time);
         holder.tvContentEvent.setText(events.get(position).getName());
         holder.tvPlaceEvent.setText(events.get(position).getPlace());
+
+        holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iEvent.onItemClickEvent(Integer.parseInt(view.getTag().toString()));
+            }
+        });
     }
 
     @Override
@@ -56,5 +71,9 @@ public class EventAdapterPlan extends RecyclerView.Adapter<EventAdapterPlan.Even
             tvPlaceEvent   = itemView.findViewById(R.id.tv_place_event);
         }
 
+    }
+
+    public interface IEvent{
+        void onItemClickEvent(int position);
     }
 }

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TabPlanFragment extends Fragment {
+public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent {
     private TextView tvEventToday;
     private RecyclerView rcvEvent;
     private CalendarView cldEvent;
@@ -43,7 +43,6 @@ public class TabPlanFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tab_plan, container, false);
         addControls(v);
         addEvents();
-
         return v;
     }
 
@@ -53,14 +52,14 @@ public class TabPlanFragment extends Fragment {
         rcvEvent     = v.findViewById(R.id.rcv_event);
 
         events = new ArrayList<>();
-        events.add(new Event(1, 1, "Hack Camp", "Đoàn 30 Hotel", "07:00 SA", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
-        events.add(new Event(1, 1, "Go home", "ST", "10:00 SA", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
-        events.add(new Event(1, 1, "Picnic Camp", "586 Park", "03:00 CH", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
-        events.add(new Event(1, 1, "Shopping", "Coopmart Center", "07:00 CH", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
-        events.add(new Event(1, 1, "Cafe with friends", "Happy 4", "08:00 CH", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
+        events.add(new Event(1, 1, "Hack Camp", "Đoàn 30 Hotel", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
+        events.add(new Event(1, 1, "Go home", "ST", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
+        events.add(new Event(1, 1, "Picnic Camp", "586 Park", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
+        events.add(new Event(1, 1, "Shopping", "Coopmart Center", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
+        events.add(new Event(1, 1, "Cafe with friends", "Happy 4", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
 
         rcvEvent.setLayoutManager(new LinearLayoutManager(getActivity()));
-        eventAdapterPlan = new EventAdapterPlan(getActivity(), events);
+        eventAdapterPlan = new EventAdapterPlan(getActivity(), events, this);
         rcvEvent.setAdapter(eventAdapterPlan);
     }
 
@@ -89,5 +88,8 @@ public class TabPlanFragment extends Fragment {
     }
 
 
+    @Override
+    public void onItemClickEvent(int position) {
 
+    }
 }

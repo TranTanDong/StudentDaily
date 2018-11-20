@@ -22,10 +22,11 @@
                 android:id="@+id/tv_sub_time_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BÂY GIỜ"
+                android:text="20/11/2018"
                 android:layout_marginLeft="4dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="9sp"/>
+
             <TextView
                 android:id="@+id/tv_time_event"
                 android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
                 android:textSize="16sp"
                 android:layout_marginLeft="4dp"
                 android:fontFamily="sans-serif-black"/>
+
 
         </LinearLayout>
 

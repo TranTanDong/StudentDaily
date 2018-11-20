@@ -86,12 +86,8 @@ public class TabPlanListFragment extends Fragment implements PlanAdapter.IPlan{
 
     @Override
     public void onItemClickPlan(int position) {
-        Plan plan = new Plan(listPlan.get(position).getId(), listPlan.get(position).getCodeUser(), listPlan.get(position).getName(), listPlan.get(position).getUpdateDay());
-
         Intent mIntent = new Intent(getActivity(), PlanDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("ITEM_PLAN", plan);
-        mIntent.putExtra("BUNDLE_ITEMPLAN", bundle);
+        mIntent.putExtra("ID_PLAN", listPlan.get(position).getId());
         mIntent.putExtra("NAME_PLAN", listPlan.get(position).getName());
         startActivity(mIntent);
     }

@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity{
                                         Log.i("CheckData", user.toString());
                                     }
                                 });
-                                Toast.makeText(getApplicationContext(), "Oke I'm here", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Load User Ok", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -8,6 +8,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.example.woo.studentdaily.More.Model.User;
+import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,6 +30,7 @@ public class Common {
     public static final String PREFERENCE = "USER";
     private static final String KEY_USER = "KEY_USER";
     private static final String LIST_PLAN = "LIST_PLAN";
+    private static final String LIST_EVENT = "LIST_EVENT";
 
 
     public static String moveSlashTo(String s, String a, String b){
@@ -64,6 +66,26 @@ public class Common {
         Gson gson = new Gson();
         editor.putString(LIST_PLAN, gson.toJson(list));
         editor.apply();
+    }
+
+    public static void setListEvent(ArrayList<Event> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_EVENT, gson.toJson(list));
+        editor.apply();
+    }
+
+    public static ArrayList<Event> getListEvent(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<Event> listEvent = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_EVENT, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Event>>(){}.getType();
+            listEvent = gson.fromJson(serializedObject, type);
+        }
+        return listEvent;
     }
 
     public static User getUser (@NonNull Context context){

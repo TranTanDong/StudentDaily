@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Server.Server;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,4 +56,44 @@ public class LoadData {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(jsonArrayRequest);
     }
+
+    public static void loadDataEvent(final Context context, final ArrayList<Event> events) {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectEvent, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            Event event = new Event();
+                            event.setId(jsonObject.getInt("id"));
+                            event.setIdPlan(jsonObject.getInt("idplan"));
+                            event.setName(jsonObject.getString("name"));
+                            event.setPlace(jsonObject.getString("place"));
+                            event.setStartTime(jsonObject.getString("starttime"));
+                            event.setEndTime(jsonObject.getString("endtime"));
+                            event.setPriority(jsonObject.getInt("priority"));
+                            event.setRemind(jsonObject.getInt("remind"));
+                            event.setDescribe(jsonObject.getString("describe"));
+                            events.add(event);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Common.setListEvent(events, context);
+                    Toast.makeText(context, "Loaded event success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Event", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+
 }
