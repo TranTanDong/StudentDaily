@@ -48,7 +48,7 @@ public class PlanDetailsActivity extends AppCompatActivity implements EventAdapt
         Intent pIntent = getIntent();
         String name = pIntent.getStringExtra("NAME_PLAN");
         idPlan = pIntent.getIntExtra("ID_PLAN", -1);
-        setTitle("Sự kiện: " + name);
+        setTitle("KH: " + name);
 
         listEvent = new ArrayList<>();
 //        LoadData.loadDataEvent(getApplicationContext(), listEvent);

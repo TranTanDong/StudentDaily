@@ -17,24 +17,32 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_start_day_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Thứ 3, ngày 16 tháng 10 năm 2018"
             android:textSize="@dimen/font_size_text"
             android:fontFamily="sans-serif-black"/>
         <TextView
+            android:id="@+id/tv_end_day_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="10:00 - 12:00 SA"
             android:textSize="@dimen/font_size_text"
             android:fontFamily="sans-serif-black"/>
         <TextView
+            android:id="@+id/tv_name_event_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:text="Tên sự kiện"
-            android:textSize="@dimen/font_size_text"
+            android:textSize="@dimen/font_size_header"
             android:fontFamily="sans-serif-black"/>
         <TextView
+            android:id="@+id/tv_place_event_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -46,10 +54,13 @@
             android:drawablePadding="10dp"/>
 
         <TextView
+            android:id="@+id/tv_describe_event_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:text="Mô tả"
             android:fontFamily="sans-serif"
             android:textSize="@dimen/font_size_text"
@@ -57,6 +68,7 @@
             android:drawablePadding="10dp"/>
 
         <TextView
+            android:id="@+id/tv_remind_event_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -67,16 +79,38 @@
             android:drawableLeft="@drawable/ic_notifications"
             android:drawablePadding="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Độ ưu tiên"
-            android:fontFamily="sans-serif"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="@dimen/margin"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Độ ưu tiên"
+                android:fontFamily="sans-serif"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_priority_event_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="30 %"
+                android:gravity="end"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:fontFamily="sans-serif"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:textSize="16sp" />
+
+        </LinearLayout>
 
         <SeekBar
+            android:id="@+id/sb_priority_event_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"

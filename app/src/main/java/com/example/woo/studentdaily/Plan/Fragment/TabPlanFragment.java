@@ -18,6 +18,7 @@ import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Plan.Adapter.EventAdapterPlan;
 import com.example.woo.studentdaily.Plan.EventDetailsActivity;
 import com.example.woo.studentdaily.Plan.Model.Event;
+import com.example.woo.studentdaily.Plan.PlanDetailsActivity;
 import com.example.woo.studentdaily.R;
 
 import java.text.ParseException;
@@ -26,7 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent {
-    private TextView tvEventToday;
+    private TextView tvEventToday, tvNoEvent;
     private RecyclerView rcvEvent;
     private CalendarView cldEvent;
     private EventAdapterPlan eventAdapterPlan;
@@ -49,10 +50,13 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
 
     private void addControls(View v) {
         tvEventToday = v.findViewById(R.id.tv_event_today);
+        tvNoEvent    = v.findViewById(R.id.tv_no_event);
         cldEvent     = v.findViewById(R.id.cld_event);
         rcvEvent     = v.findViewById(R.id.rcv_event);
         arrayListEvent = new ArrayList<>();
-        LoadData.loadDataEvent(getActivity(), arrayListEvent);
+        if (arrayListEvent.size() <= 0){
+            LoadData.loadDataEvent(getActivity(), arrayListEvent);
+        }
         arrayListEvent = Common.getListEvent(getActivity());
 
         events = new ArrayList<>();
@@ -106,12 +110,19 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
                 arrayList.add(event);
             }
         }
+        if (arrayList.size() > 0){
+            tvNoEvent.setVisibility(View.INVISIBLE);
+        }else {
+            tvNoEvent.setVisibility(View.VISIBLE);
+        }
         eventAdapterPlan.refreshAdapter(arrayList);
     }
 
 
     @Override
     public void onItemClickEvent(int position) {
-
+        Intent mIntent = new Intent(getActivity(), EventDetailsActivity.class);
+        mIntent.putExtra("ITEM_EVENT", events.get(position));
+        startActivity(mIntent);
     }
 }
