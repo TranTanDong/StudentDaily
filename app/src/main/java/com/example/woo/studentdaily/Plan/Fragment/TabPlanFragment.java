@@ -6,14 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Plan.Adapter.EventAdapterPlan;
 import com.example.woo.studentdaily.Plan.EventDetailsActivity;
 import com.example.woo.studentdaily.Plan.Model.Event;
@@ -29,7 +30,7 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
     private RecyclerView rcvEvent;
     private CalendarView cldEvent;
     private EventAdapterPlan eventAdapterPlan;
-    private ArrayList<Event> events;
+    private ArrayList<Event> events, arrayListEvent;
 
     public TabPlanFragment() {
         // Required empty public constructor
@@ -50,17 +51,16 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
         tvEventToday = v.findViewById(R.id.tv_event_today);
         cldEvent     = v.findViewById(R.id.cld_event);
         rcvEvent     = v.findViewById(R.id.rcv_event);
+        arrayListEvent = new ArrayList<>();
+        LoadData.loadDataEvent(getActivity(), arrayListEvent);
+        arrayListEvent = Common.getListEvent(getActivity());
 
         events = new ArrayList<>();
-        events.add(new Event(1, 1, "Hack Camp", "Đoàn 30 Hotel", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
-        events.add(new Event(1, 1, "Go home", "ST", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
-        events.add(new Event(1, 1, "Picnic Camp", "586 Park", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
-        events.add(new Event(1, 1, "Shopping", "Coopmart Center", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
-        events.add(new Event(1, 1, "Cafe with friends", "Happy 4", "2010-11-20 11:00:11", "05:00 CH", 100, 10, "Đi cùng đám bạn"));
 
         rcvEvent.setLayoutManager(new LinearLayoutManager(getActivity()));
         eventAdapterPlan = new EventAdapterPlan(getActivity(), events, this);
         rcvEvent.setAdapter(eventAdapterPlan);
+        setListEventInDate(Calendar.getInstance());
     }
 
     private void addEvents() {
@@ -75,16 +75,38 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
         cldEvent.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int y, int m, int d) {
-                String toDay = d + "/" + (m+1) + "/" + y;
-                String getToDay = Common.f_dmy.format(Calendar.getInstance().getTime());
-                if (toDay.equals(getToDay)){
-                    tvEventToday.setText("Hôm nay");
-                } else tvEventToday.setText(toDay);
-
-
-
+                Calendar cal = Calendar.getInstance();
+                cal.set(y, m, d);
+                setListEventInDate(cal);
             }
         });
+    }
+
+    private void setListEventInDate(Calendar cal) {
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        String toDay = Common.f_ddmmy.format(cal.getTime());
+        String getToDay = Common.f_dmy.format(Calendar.getInstance().getTime());
+        if (toDay.equals(getToDay)){
+            tvEventToday.setText("Hôm nay");
+        } else tvEventToday.setText(toDay);
+
+        ArrayList<Event> arrayList = new ArrayList<>();
+        arrayListEvent = Common.getListEvent(getActivity());
+        for (Event event : arrayListEvent){
+            Date dateStart = null;
+            try {
+                dateStart = Common.f_ymmdd.parse(event.getStartTime().substring(0, 10));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if(cal.getTime().compareTo(dateStart) == 0) {
+                arrayList.add(event);
+            }
+        }
+        eventAdapterPlan.refreshAdapter(arrayList);
     }
 
 

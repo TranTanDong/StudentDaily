@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.CountDownTimer;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,7 +38,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
+import com.example.woo.studentdaily.Common.Popup;
 import com.example.woo.studentdaily.Main.MainActivity;
+import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
@@ -67,6 +71,10 @@ public class AddEventActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapterPlan;
 
     private Calendar calendar = Calendar.getInstance();
+
+    private Calendar calTo = Calendar.getInstance();
+    private Calendar calFrom = Calendar.getInstance();
+
 //    private SimpleDateFormat stf = new SimpleDateFormat("hh:mm a");
     private SimpleDateFormat stf = new SimpleDateFormat("HH:mm");
     @Override
@@ -117,13 +125,31 @@ public class AddEventActivity extends AppCompatActivity {
     }
 
     private void insertDataEvent(final int idPlan, final String nameEvent, final String placeEvent, final String dayTimeStart, final String dayTimeEnd, final int priority, final int remind, final String describe) {
+        final Popup popup = new Popup(AddEventActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertEvent, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
                 Log.i("DATA_EVENT", response);
-                finish();
+
+                ArrayList<Event> events = new ArrayList<>();
+                LoadData.loadDataEvent(AddEventActivity.this, events);
+                CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                    @Override
+                    public void onTick(long l) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        popup.hide();
+                        finish();
+                    }
+                };
+                timer.start();
+                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -202,25 +228,26 @@ public class AddEventActivity extends AppCompatActivity {
 
     private void setInfEvent() {
         //Gán giá trị mặt định
+        calFrom.add(Calendar.HOUR_OF_DAY, 1);
         String s = Common.f_ddmmy.format(calendar.getTime());
         tvStartDayEvent.setText(s);
         tvEndDayEvent.setText(tvStartDayEvent.getText().toString());
         tvStartTimeEvent.setText(stf.format(calendar.getTime()));
         tvPriorityPercent.setText("30 %");
 
-        String currentDateandTime = stf.format(new Date());
+//        String currentDateandTime = stf.format(new Date());
+//
+//        Date date = null;
+//        try {
+//            date = stf.parse(currentDateandTime);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(date);
+//        calendar.add(Calendar.HOUR_OF_DAY, 1);
 
-        Date date = null;
-        try {
-            date = stf.parse(currentDateandTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.HOUR, 1);
-
-        tvEndTimeEvent.setText(stf.format(calendar.getTime()));
+        tvEndTimeEvent.setText(stf.format(calFrom.getTime()));
     }
 
     private void loadDataPlan() {
@@ -252,28 +279,28 @@ public class AddEventActivity extends AppCompatActivity {
         cvStartDayEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processDay(tvStartDayEvent, AddEventActivity.this);
+                processDay(tvStartDayEvent, AddEventActivity.this, calTo);
             }
         });
         //Chọn ngày kết thúc sự kiện
         cvEndDayEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processDay(tvEndDayEvent, AddEventActivity.this);
+                processDay(tvEndDayEvent, AddEventActivity.this, calFrom);
             }
         });
         //Chon thời gian bắt đầu
         cvStartTimeEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processTime(tvStartTimeEvent, AddEventActivity.this);
+                processTime(tvStartTimeEvent, AddEventActivity.this, calTo);
             }
         });
         //Chon thời gian kết thúc
         cvEndTimeEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processTime(tvEndTimeEvent, AddEventActivity.this);
+                processTime(tvEndTimeEvent, AddEventActivity.this, calFrom);
             }
         });
         //Chọn mốc thời gian nhắc nhở
@@ -349,35 +376,36 @@ public class AddEventActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void processTime(final TextView tvStartTimePlan, Context context) {
+    private void processTime(final TextView tvStartTimePlan, Context context, final Calendar cal) {
         TimePickerDialog.OnTimeSetListener callback=new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                calendar.set(calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(calendar.MINUTE, minute);
-                tvStartTimePlan.setText(stf.format(calendar.getTime()));
+                cal.set(calendar.HOUR_OF_DAY, hourOfDay);
+                cal.set(calendar.MINUTE, minute);
+                tvStartTimePlan.setText(stf.format(cal.getTime()));
             }
         };
 
         TimePickerDialog timePickerDialog=new TimePickerDialog(
                 context,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 callback,
-                calendar.get(calendar.HOUR_OF_DAY),
-                calendar.get(calendar.MINUTE),
+                cal.get(calendar.HOUR_OF_DAY),
+                cal.get(calendar.MINUTE),
                 true
         );
         timePickerDialog.show();
     }
 
 
-    private void processDay(final TextView tvStartDayPlan, Context context) {
+    private void processDay(final TextView tvStartDayPlan, Context context, final Calendar cal) {
         DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(calendar.YEAR, year);
-                calendar.set(calendar.MONTH, month);
-                calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
-                String s = Common.f_ddmmy.format(calendar.getTime());
+                cal.set(calendar.YEAR, year);
+                cal.set(calendar.MONTH, month);
+                cal.set(calendar.DAY_OF_MONTH, dayOfMonth);
+                String s = Common.f_ddmmy.format(cal.getTime());
                 tvStartDayPlan.setText(s);
             }
         };
@@ -385,9 +413,9 @@ public class AddEventActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog=new DatePickerDialog(
                 context,
                 callback,
-                calendar.get(calendar.YEAR),
-                calendar.get(calendar.MONTH),
-                calendar.get(calendar.DAY_OF_MONTH)
+                cal.get(calendar.YEAR),
+                cal.get(calendar.MONTH),
+                cal.get(calendar.DAY_OF_MONTH)
         );
         datePickerDialog.show();
     }

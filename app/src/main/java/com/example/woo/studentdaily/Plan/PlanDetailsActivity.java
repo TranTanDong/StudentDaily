@@ -51,7 +51,7 @@ public class PlanDetailsActivity extends AppCompatActivity implements EventAdapt
         setTitle("Sự kiện: " + name);
 
         listEvent = new ArrayList<>();
-        LoadData.loadDataEvent(getApplicationContext(), listEvent);
+//        LoadData.loadDataEvent(getApplicationContext(), listEvent);
         listEvent = Common.getListEvent(getApplicationContext());
 
         tvEventEmpty = findViewById(R.id.tv_event_empty);

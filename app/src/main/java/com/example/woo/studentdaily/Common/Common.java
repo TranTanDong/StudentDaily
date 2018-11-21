@@ -25,7 +25,7 @@ public class Common {
     public static SimpleDateFormat f_ymmdd = new SimpleDateFormat("yyyy-MM-dd");
     public static SimpleDateFormat f_dmy = new SimpleDateFormat("d/M/yyyy");
     public static SimpleDateFormat f_eymmdd = new SimpleDateFormat("EEE, yyyy-MM-dd");
-    public static SimpleDateFormat f_ymmddhh = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    public static SimpleDateFormat f_ymmddhh = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static final String PREFERENCE = "USER";
     private static final String KEY_USER = "KEY_USER";

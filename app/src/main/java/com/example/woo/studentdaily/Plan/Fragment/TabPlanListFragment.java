@@ -49,7 +49,7 @@ public class TabPlanListFragment extends Fragment implements PlanAdapter.IPlan{
     private void addControls(View v) {
         rcvPlan = v.findViewById(R.id.rcv_plan);
         listPlan = new ArrayList<>();
-        LoadData.loadDataPlan(getActivity(), listPlan);
+//        LoadData.loadDataPlan(getActivity(), listPlan);
         listPlan = Common.getListPlan(getActivity());
 
         rcvPlan.setLayoutManager(new LinearLayoutManager(getActivity()));

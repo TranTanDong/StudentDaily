@@ -3,6 +3,7 @@ package com.example.woo.studentdaily.Plan.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class EventAdapterPlan extends RecyclerView.Adapter<EventAdapterPlan.Even
 
     @Override
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
+        Log.e("LOG_EVENT", events.get(position).toString());
         String startTime = events.get(position).getStartTime();
         String day = Common.moveSlashTo(startTime.substring(0, 10), "-", "/");
         String time = startTime.substring(11, 16);
@@ -71,6 +73,12 @@ public class EventAdapterPlan extends RecyclerView.Adapter<EventAdapterPlan.Even
             tvPlaceEvent   = itemView.findViewById(R.id.tv_place_event);
         }
 
+    }
+
+    public void refreshAdapter(ArrayList<Event> eventNew){
+        events.clear();
+        events.addAll(eventNew);
+        notifyDataSetChanged();
     }
 
     public interface IEvent{
