@@ -16,10 +16,10 @@ import java.util.List;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder> {
     private Context context;
-    private List<Subject> subjects;
+    private ArrayList<Subject> subjects;
     private ISubject iSubject;
 
-    public SubjectAdapter(Context context, List<Subject> subjects, ISubject iSubject) {
+    public SubjectAdapter(Context context, ArrayList<Subject> subjects, ISubject iSubject) {
         this.context = context;
         this.subjects = subjects;
         this.iSubject = iSubject;
@@ -34,8 +34,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
     @Override
     public void onBindViewHolder(@NonNull SubjectViewHolder holder, int position) {
+        String day = moveDay(subjects.get(position).getCreateDay());
         holder.tvNameSubject.setText(subjects.get(position).getName());
-        holder.tvCreateDay.setText(subjects.get(position).getCreateDay());
+        holder.tvCreateDay.setText(day);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +44,11 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
                 iSubject.onItemClickSubject(Integer.parseInt(view.getTag().toString()));
             }
         });
+    }
+
+    private String moveDay(String createDay) {
+        String arr[] = createDay.split("-");
+        return arr[2] + " thg " + arr[1] + " " + arr[0];
     }
 
     @Override
@@ -61,9 +67,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     }
 
 
-    public void refreshAdapter(ArrayList<Subject> planNew){
+    public void refreshAdapter(ArrayList<Subject> subjectNew){
         subjects.clear();
-        subjects.addAll(planNew);
+        subjects.addAll(subjectNew);
         notifyDataSetChanged();
     }
 

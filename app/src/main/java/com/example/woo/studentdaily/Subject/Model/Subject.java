@@ -1,6 +1,8 @@
 package com.example.woo.studentdaily.Subject.Model;
 
-public class Subject {
+import java.io.Serializable;
+
+public class Subject implements Serializable {
     private int id;
     private String name;
     private String createDay;

@@ -12,4 +12,7 @@ public class Server {
 
     public static String patchInsertEvent = "http://" + localhost + "/server/insert_event.php";
     public static String patchSelectEvent = "http://" + localhost + "/server/select_event.php";
+
+    public static String patchInsertSubject = "http://" + localhost + "/server/insert_schoolyear_semester_class_subject_lecturer_study.php";
+    public static String patchSelectSubject = "http://" + localhost + "/server/select_subject.php";
 }

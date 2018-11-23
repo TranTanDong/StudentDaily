@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toolbar;
 
+import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.SubjectAdapter;
 import com.example.woo.studentdaily.Subject.Model.Subject;
@@ -50,16 +53,25 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     private void addControls(View v) {
         rcvListSubject = v.findViewById(R.id.rcv_list_subject);
         listSubject = new ArrayList<>();
-        listSubject.add(new Subject(1, "Toán rời rạc", "01 thg 11"));
-        listSubject.add(new Subject(1, "Cơ sở dữ liệu", "07 thg 11"));
-        listSubject.add(new Subject(1, "An toàn hệ thống", "11 thg 11"));
-        listSubject.add(new Subject(1, "Điện toán đám mây", "20 thg 11"));
-
-
+        if (listSubject.size() <= 0){
+            LoadData.loadDataSubject(getActivity());
+        }
+        listSubject = Common.getListSubject(getActivity());
+        //Log.e("SUBJECTSIZE", listSubject.size()+"");
 
         rcvListSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
         subjectAdapter = new SubjectAdapter(getActivity(), listSubject, this);
         rcvListSubject.setAdapter(subjectAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("LOG_Resume", "LOG_Resume");
+        listSubject.clear();
+        listSubject = Common.getListSubject(getActivity());
+        Log.e("listSubjectSize", listSubject.size() + "");
+        subjectAdapter.refreshAdapter(listSubject);
     }
 
     private void addEvents() {

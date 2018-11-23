@@ -107,16 +107,7 @@ public class AddPlanActivity extends AppCompatActivity {
                 AddPlanActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//                        Plan plan = new Plan();
-//                        plan.setCodeUser(mAuth.getCurrentUser().getUid());
-//                        plan.setName(edtNameNewPlan.getText().toString());
-//                        plan.setUpdateDay(Common.moveSlashTo(Common.f_ddmmy.format(Calendar.getInstance().getTime()), "/", "-"));
-//                        ArrayList<Plan> plans = Common.getListPlan(getApplicationContext());
-//                        plans.add(plan);
-//                        Common.setListPlan(plans, getApplicationContext());
-//                        MainActivity.loadDataMainPlan(getApplicationContext());
-                        ArrayList<Plan> plans = new ArrayList<>();
-                        LoadData.loadDataPlan(AddPlanActivity.this, plans);
+                        LoadData.loadDataPlan(AddPlanActivity.this);
                         CountDownTimer timer = new CountDownTimer(3000, 1000) {
                             @Override
                             public void onTick(long l) {
@@ -130,7 +121,6 @@ public class AddPlanActivity extends AppCompatActivity {
                             }
                         };
                         timer.start();
-
                     }
                 });
             }

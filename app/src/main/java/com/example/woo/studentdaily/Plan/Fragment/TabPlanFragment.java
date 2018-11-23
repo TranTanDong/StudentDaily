@@ -55,7 +55,7 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
         rcvEvent     = v.findViewById(R.id.rcv_event);
         arrayListEvent = new ArrayList<>();
         if (arrayListEvent.size() <= 0){
-            LoadData.loadDataEvent(getActivity(), arrayListEvent);
+            LoadData.loadDataEvent(getActivity());
         }
         arrayListEvent = Common.getListEvent(getActivity());
 

@@ -134,8 +134,7 @@ public class AddEventActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.i("DATA_EVENT", response);
 
-                ArrayList<Event> events = new ArrayList<>();
-                LoadData.loadDataEvent(AddEventActivity.this, events);
+                LoadData.loadDataEvent(AddEventActivity.this);
                 CountDownTimer timer = new CountDownTimer(3000, 1000) {
                     @Override
                     public void onTick(long l) {
