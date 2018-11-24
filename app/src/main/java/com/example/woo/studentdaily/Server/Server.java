@@ -15,4 +15,6 @@ public class Server {
 
     public static String patchInsertSubject = "http://" + localhost + "/server/insert_schoolyear_semester_class_subject_lecturer_study.php";
     public static String patchSelectSubject = "http://" + localhost + "/server/select_subject.php";
+
+    public static String patchSelectLecturer = "http://" + localhost + "/server/select_lecturer.php";
 }

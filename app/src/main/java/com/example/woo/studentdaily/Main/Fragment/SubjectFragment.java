@@ -21,6 +21,7 @@ import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.SubjectAdapter;
+import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.example.woo.studentdaily.Subject.SubjectContentActivity;
 
@@ -34,6 +35,7 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     RecyclerView rcvListSubject;
     private SubjectAdapter subjectAdapter;
     private ArrayList<Subject> listSubject;
+    private ArrayList<Lecturer> listLecturer;
 
 
     public SubjectFragment() {
@@ -55,9 +57,12 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
         listSubject = new ArrayList<>();
         if (listSubject.size() <= 0){
             LoadData.loadDataSubject(getActivity());
+            LoadData.loadDataLecturer(getActivity());
         }
         listSubject = Common.getListSubject(getActivity());
-        //Log.e("SUBJECTSIZE", listSubject.size()+"");
+        listLecturer = Common.getListLecturer(getActivity());
+        Log.e("SUBJECT_SIZE", listSubject.size()+"");
+        Log.e("LECTURER_SIZE", listLecturer.size()+"");
 
         rcvListSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
         subjectAdapter = new SubjectAdapter(getActivity(), listSubject, this);
@@ -91,6 +96,7 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     public void onItemClickSubject(int position) {
         Intent mIntent = new Intent(getActivity(), SubjectContentActivity.class);
         mIntent.putExtra("NAME_SUBJECT", listSubject.get(position).getName());
+        mIntent.putExtra("ID_ST", listSubject.get(position).getIdst());
         startActivity(mIntent);
     }
 }

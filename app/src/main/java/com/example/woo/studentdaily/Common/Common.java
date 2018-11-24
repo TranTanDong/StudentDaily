@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
+import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,6 +34,7 @@ public class Common {
     private static final String LIST_PLAN = "LIST_PLAN";
     private static final String LIST_EVENT = "LIST_EVENT";
     private static final String LIST_SUBJECT = "LIST_SUBJECT";
+    private static final String LIST_LECTURER = "LIST_LECTURER";
 
 
     public static String moveSlashTo(String s, String a, String b){
@@ -47,6 +49,26 @@ public class Common {
         SharedPreferences.Editor editor = sharedPref.edit();
         Gson gson = new Gson();
         editor.putString(KEY_USER, gson.toJson(user));
+        editor.apply();
+    }
+
+    public static ArrayList<Lecturer> getListLecturer(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<Lecturer> listLecturer = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_LECTURER, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Lecturer>>(){}.getType();
+            listLecturer = gson.fromJson(serializedObject, type);
+        }
+        return listLecturer;
+    }
+
+    public static void setListLecturer(ArrayList<Lecturer> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_LECTURER, gson.toJson(list));
         editor.apply();
     }
 

@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Server.Server;
+import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -114,6 +115,7 @@ public class LoadData {
                                 subject.setId(jsonObject.getInt("id"));
                                 subject.setName(jsonObject.getString("name"));
                                 subject.setCreateDay(jsonObject.getString("createday"));
+                                subject.setIdst(jsonObject.getInt("idst"));
                                 subjects.add(0, subject);
                             }
                         } catch (JSONException e) {
@@ -128,6 +130,45 @@ public class LoadData {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Subject", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public static void loadDataLecturer(final Context context) {
+        final ArrayList<Lecturer> lecturers = new ArrayList<>();
+        final FirebaseAuth nAuth = FirebaseAuth.getInstance();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectLecturer, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    String code = nAuth.getCurrentUser().getUid();
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("codeuser").equals(code)){
+                                Lecturer lecturer = new Lecturer();
+                                lecturer.setId(jsonObject.getInt("id"));
+                                lecturer.setName(jsonObject.getString("name"));
+                                lecturer.setPhone(jsonObject.getString("phone"));
+                                lecturer.setEmail(jsonObject.getString("email"));
+                                lecturer.setWeb(jsonObject.getString("web"));
+                                lecturer.setIdst(jsonObject.getInt("idst"));
+                                lecturers.add(lecturer);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Common.setListLecturer(lecturers, context);
+                    Toast.makeText(context, "Load Lecturer success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Lecturer", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
