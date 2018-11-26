@@ -12,7 +12,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.woo.studentdaily.Common.Common;
-import com.example.woo.studentdaily.Common.Popup;
-import com.example.woo.studentdaily.Login.LoginActivity;
-import com.example.woo.studentdaily.Manifest;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Subject.EditLecturerActivity;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
 
 import java.util.ArrayList;
@@ -37,7 +34,7 @@ public class LecturerFragment extends Fragment {
     private Button btnUpdate;
     private int idST;
     private ArrayList<Lecturer> lecturers;
-
+    private Lecturer lec;
     private int REQUEST_CALL_PHONE = 0;
 
     public LecturerFragment() {
@@ -62,6 +59,7 @@ public class LecturerFragment extends Fragment {
         tvEmail = v.findViewById(R.id.tv_email_lecturer);
         tvWeb = v.findViewById(R.id.tv_web_lecturer);
         btnUpdate = v.findViewById(R.id.btn_update_lecturer);
+        lec = new Lecturer();
         lecturers = new ArrayList<>();
 
         setInfLecturer();
@@ -71,6 +69,7 @@ public class LecturerFragment extends Fragment {
         lecturers = Common.getListLecturer(getActivity());
         for (Lecturer lecturer:lecturers){
             if (lecturer.getIdst() == idST){
+                lec = lecturer;
                 tvName.setText(lecturer.getName());
                 if (lecturer.getPhone().isEmpty()){
                     tvPhone.setText("<Chưa có SĐT>");
@@ -129,6 +128,19 @@ public class LecturerFragment extends Fragment {
                 }
             });
         }
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processUpdate();
+            }
+        });
+    }
+
+    private void processUpdate() {
+        Intent mIntent = new Intent(getActivity(), EditLecturerActivity.class);
+        mIntent.putExtra("LEC", lec);
+        startActivity(mIntent);
     }
 
     private void popupEmail() {

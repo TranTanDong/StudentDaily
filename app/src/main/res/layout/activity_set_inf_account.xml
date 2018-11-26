@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bgGray"
-    tools:context=".More.SetInfAccountActivity">
+    tools:context=".More.EditInfAccountActivity">
 
     <include layout="@layout/toolbar_layout"/>
 

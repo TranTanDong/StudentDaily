@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bgWhite"
+    tools:context=".Subject.EditLecturerActivity">
+    <include layout="@layout/toolbar_layout"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bgWhite"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_name_lecturer_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_account"
+                android:drawablePadding="@dimen/input_drawable_padding"
+                android:hint="Tên giảng viên *"
+                android:inputType="textPersonName"
+                android:fontFamily="sans-serif"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="@dimen/font_size_input"
+                android:textColor="@color/textColorBlack"
+                android:background="@color/textColorWhite"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_phone_lecturer_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_phone_number"
+                android:drawablePadding="@dimen/input_drawable_padding"
+                android:hint="Số điện thoại"
+                android:inputType="phone"
+                android:fontFamily="sans-serif"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="@dimen/font_size_input"
+                android:textColor="@color/textColorBlack"
+                android:background="@color/textColorWhite"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_email_lecturer_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_email"
+                android:drawablePadding="@dimen/input_drawable_padding"
+                android:hint="Email giảng viên"
+                android:inputType="textEmailAddress"
+                android:fontFamily="sans-serif"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="@dimen/font_size_input"
+                android:textColor="@color/textColorBlack"
+                android:background="@color/textColorWhite"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_web_lecturer_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_web_lecturers"
+                android:drawablePadding="@dimen/input_drawable_padding"
+                android:hint="Web giảng viên"
+                android:inputType="textWebEditText"
+                android:fontFamily="sans-serif"
+                android:textColorHint="@color/textColorHint"
+                android:textSize="@dimen/font_size_input"
+                android:textColor="@color/textColorBlack"
+                android:background="@color/textColorWhite"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(* là trường không được bỏ trống)"
+            android:textColor="@color/colorRed"
+            android:layout_marginBottom="10dp"
+            android:textStyle="italic"/>
+
+    </LinearLayout>
+
+</LinearLayout>

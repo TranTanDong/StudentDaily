@@ -92,7 +92,7 @@ public class InfoUserActivity extends AppCompatActivity {
     }
 
     private void processChangeUser() {
-        startActivity(new Intent(this, SetInfAccountActivity.class));
+        startActivity(new Intent(this, EditInfAccountActivity.class));
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 

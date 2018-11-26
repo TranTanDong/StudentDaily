@@ -17,4 +17,5 @@ public class Server {
     public static String patchSelectSubject = "http://" + localhost + "/server/select_subject.php";
 
     public static String patchSelectLecturer = "http://" + localhost + "/server/select_lecturer.php";
+    public static String patchUpdateLecturer = "http://" + localhost + "/server/update_lecturer.php";
 }

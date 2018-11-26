@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +21,7 @@
         <activity android:name=".Plan.AddEventActivity" />
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Login.SignUpActivity" />
-        <activity android:name=".More.SetInfAccountActivity" />
+        <activity android:name=".More.EditInfAccountActivity" />
         <activity android:name=".Login.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +43,9 @@
         <activity android:name=".More.ScheduleActivity" />
         <activity android:name=".Subject.AddScoreActivity" />
         <activity android:name=".Subject.AddScheduleStudyActivity" />
-        <activity android:name=".Subject.AddScheduleTestActivity"></activity>
+        <activity android:name=".Subject.AddScheduleTestActivity" />
+        <activity android:name=".Subject.EditLecturerActivity" />
+        <activity android:name=".Subject.EditClassSemesterYearActivity"></activity>
     </application>
 
 </manifest>

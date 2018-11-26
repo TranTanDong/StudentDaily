@@ -51,7 +51,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SetInfAccountActivity extends AppCompatActivity {
+public class EditInfAccountActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Button btnUpdateInf;
     private RadioGroup radioGroupSet;
@@ -109,9 +109,11 @@ public class SetInfAccountActivity extends AppCompatActivity {
         tvEmailSet.setText(user.getEmail());
         tvBirthdaySet.setText(Common.moveSlashTo(user.getBirthDay(), "-", "/"));
         if (!user.getGender().equals("1")){
+            gender = "0";
             radioMale.setChecked(true);
             radioFemale.setChecked(false);
         }else {
+            gender = "1";
             radioFemale.setChecked(true);
             radioMale.setChecked(false);
         }
@@ -124,6 +126,7 @@ public class SetInfAccountActivity extends AppCompatActivity {
                         .formatOf(DecodeFormat.PREFER_RGB_565)
                         .timeout(3000)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgImageSet);
+        urlAvatar = user.getImage();
     }
 
     private void addEvents() {
@@ -144,7 +147,7 @@ public class SetInfAccountActivity extends AppCompatActivity {
         tvBirthdaySet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Common.processBirthDay(SetInfAccountActivity.this, tvBirthdaySet);
+                Common.processBirthDay(EditInfAccountActivity.this, tvBirthdaySet);
             }
         });
 
@@ -152,25 +155,31 @@ public class SetInfAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Upload và lấy link avatar
-                excecute();
+                String name = edtNameSet.getText().toString();
+                String birthday = Common.moveSlashTo(tvBirthdaySet.getText().toString(), "/", "-").trim();
+                if (name.trim().equals(user.getName()) && birthday.equals(user.getBirthDay()) && gender.equals(user.getGender()) && urlAvatar.equals(user.getImage())){
+                    finish();
+                }else {
+                    excecute();
+                }
+
             }
         });
 
     }
 
     private void updateDataUser(final String code, final String name, final String image, final String isFemale, final String birthDay) {
-        Log.i("BUGLOL", code+name+image+isFemale+birthDay);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchUpdateUser, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(SetInfAccountActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
-                Log.i("UPDATE_USER", response+image);
+                Toast.makeText(EditInfAccountActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.e("UPDATE_USER", response+image);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SetInfAccountActivity.this, getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditInfAccountActivity.this, getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -233,7 +242,7 @@ public class SetInfAccountActivity extends AppCompatActivity {
     }
 
     private void excecute(){
-        final Popup popup = new Popup(SetInfAccountActivity.this);
+        final Popup popup = new Popup(EditInfAccountActivity.this);
         popup.createLoadingDialog();
         popup.show();
         final StorageReference storageR = storageReference.child("User/" + Common.getUser(getApplicationContext()).getCode() + ".png");
@@ -255,7 +264,7 @@ public class SetInfAccountActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                     urlAvatar = downloadUri.toString();
-                    SetInfAccountActivity.this.runOnUiThread(new Runnable() {
+                    EditInfAccountActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             updateDataUser(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, gender, tvBirthdaySet.getText().toString());
@@ -266,7 +275,7 @@ public class SetInfAccountActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(SetInfAccountActivity.this, "Upload image error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditInfAccountActivity.this, "Upload image error", Toast.LENGTH_SHORT).show();
                 }
             }
         });
