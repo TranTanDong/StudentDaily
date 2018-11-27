@@ -61,7 +61,6 @@ public class LecturerFragment extends Fragment {
         btnUpdate = v.findViewById(R.id.btn_update_lecturer);
         lec = new Lecturer();
         lecturers = new ArrayList<>();
-
         setInfLecturer();
     }
 

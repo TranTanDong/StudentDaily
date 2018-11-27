@@ -210,7 +210,7 @@ public class AddEventActivity extends AppCompatActivity {
         sbPriority       = findViewById(R.id.sb_priority);
         tvPriorityPercent = findViewById(R.id.tv_priority_percent);
 
-        plans = new ArrayList<String>();
+        plans = new ArrayList<>();
         loadDataPlan();
         spnPlan = findViewById(R.id.spn_event_plan);
 
@@ -233,18 +233,6 @@ public class AddEventActivity extends AppCompatActivity {
         tvEndDayEvent.setText(tvStartDayEvent.getText().toString());
         tvStartTimeEvent.setText(stf.format(calendar.getTime()));
         tvPriorityPercent.setText("30 %");
-
-//        String currentDateandTime = stf.format(new Date());
-//
-//        Date date = null;
-//        try {
-//            date = stf.parse(currentDateandTime);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(date);
-//        calendar.add(Calendar.HOUR_OF_DAY, 1);
 
         tvEndTimeEvent.setText(stf.format(calFrom.getTime()));
     }

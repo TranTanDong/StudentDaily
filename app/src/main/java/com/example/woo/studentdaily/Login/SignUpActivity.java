@@ -154,7 +154,8 @@ public class SignUpActivity extends AppCompatActivity {
         tvBirthDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processBirthDay();
+                Common.processBirthDay(SignUpActivity.this, tvBirthDay, tvBirthDay.getText().toString());
+                //processBirthDay();
             }
         });
 

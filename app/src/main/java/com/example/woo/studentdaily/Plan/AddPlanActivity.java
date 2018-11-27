@@ -135,7 +135,7 @@ public class AddPlanActivity extends AppCompatActivity {
                 Map<String, String> hashMap = new HashMap<>();
                 hashMap.put("p_codeuser", code);
                 hashMap.put("p_name", name);
-                hashMap.put("p_updateday", Common.moveSlashTo(updateDay, "/", "-"));
+                hashMap.put("p_updateday", Common.f_ymmddhh.format(Calendar.getInstance().getTime()));
                 return hashMap;
             }
         };

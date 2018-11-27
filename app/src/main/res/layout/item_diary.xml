@@ -40,17 +40,20 @@
                 android:fontFamily="sans-serif-black"
                 android:textSize="20sp" />
 
+
             <TextView
                 android:id="@+id/tv_create_day_diary"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_marginRight="10dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/colorAccent"
-                android:text="07/10/2018"
-                android:textSize="14sp"
-                android:textStyle="italic"/>
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:drawableLeft="@drawable/ic_history_black_24dp"
+                android:drawablePadding="2dp"
+                android:paddingRight="10dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorChipText"
+                android:text="Cập nhật: 20/11/2018 12:20:20"
+                android:textSize="14sp"/>
 
         </LinearLayout>
 

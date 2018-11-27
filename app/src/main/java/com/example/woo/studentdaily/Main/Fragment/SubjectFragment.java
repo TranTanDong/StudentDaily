@@ -21,6 +21,7 @@ import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.SubjectAdapter;
+import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.example.woo.studentdaily.Subject.SubjectContentActivity;
@@ -36,6 +37,7 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     private SubjectAdapter subjectAdapter;
     private ArrayList<Subject> listSubject;
     private ArrayList<Lecturer> listLecturer;
+    private ArrayList<ClassYear> listClassYear;
 
 
     public SubjectFragment() {
@@ -58,11 +60,14 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
         if (listSubject.size() <= 0){
             LoadData.loadDataSubject(getActivity());
             LoadData.loadDataLecturer(getActivity());
+            LoadData.loadDataClassYear(getActivity());
         }
         listSubject = Common.getListSubject(getActivity());
         listLecturer = Common.getListLecturer(getActivity());
+        listClassYear = Common.getListClassYear(getActivity());
         Log.e("SUBJECT_SIZE", listSubject.size()+"");
         Log.e("LECTURER_SIZE", listLecturer.size()+"");
+        Log.e("CLASS_YEAR_SIZE", listClassYear.size()+"");
 
         rcvListSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
         subjectAdapter = new SubjectAdapter(getActivity(), listSubject, this);
@@ -95,8 +100,8 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     @Override
     public void onItemClickSubject(int position) {
         Intent mIntent = new Intent(getActivity(), SubjectContentActivity.class);
-        mIntent.putExtra("NAME_SUBJECT", listSubject.get(position).getName());
-        mIntent.putExtra("ID_ST", listSubject.get(position).getIdst());
+        Subject subject = listSubject.get(position);
+        mIntent.putExtra("SUBJECT", subject);
         startActivity(mIntent);
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 
@@ -34,9 +35,12 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
     @Override
     public void onBindViewHolder(@NonNull SubjectViewHolder holder, int position) {
-        String day = moveDay(subjects.get(position).getCreateDay());
+//        String startTime[] = subjects.get(position).getCreateDay().split(" ");
+//        String day = Common.moveSlashTo(startTime[0], "-", "/");
+        //String time = startTime[1];
+
         holder.tvNameSubject.setText(subjects.get(position).getName());
-        holder.tvCreateDay.setText(day);
+        holder.tvCreateDay.setText(subjects.get(position).getCreateDay());
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

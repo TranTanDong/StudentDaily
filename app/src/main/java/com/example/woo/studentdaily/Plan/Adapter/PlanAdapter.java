@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 
@@ -33,9 +34,13 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PlanViewHolder holder, final int position) {
-        String s = moveDay(plans.get(position).getUpdateDay());
+//        String startTime[] = plans.get(position).getUpdateDay().split(" ");
+//        String day = Common.moveSlashTo(startTime[0], "-", "/");
+        //String time = startTime[1];
+
+        //String s = moveDay(plans.get(position).getUpdateDay());
         holder.tvContentPlan.setText(plans.get(position).getName());
-        holder.tvUpdateDay.setText(s);
+        holder.tvUpdateDay.setText(plans.get(position).getUpdateDay());
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

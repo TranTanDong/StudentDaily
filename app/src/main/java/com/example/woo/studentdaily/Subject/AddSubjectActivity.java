@@ -94,7 +94,7 @@ public class AddSubjectActivity extends AppCompatActivity implements OnValueChan
         btnColorSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddSubjectActivity.this, SubjectContentActivity.class));
+
             }
         });
 
@@ -116,26 +116,30 @@ public class AddSubjectActivity extends AppCompatActivity implements OnValueChan
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.btn_save){
-            String code = mAuth.getCurrentUser().getUid();
-            String nameSJ = edtNameSubject.getText().toString();
-            String nameClass = edtNameClass.getText().toString();
-            String year = tvSchoolYear.getText().toString();
-            String nameSemester = spnSemester.getSelectedItem().toString();
-            String nameLec = edtNameLecturer.getText().toString();
-            String phoneLec = edtPhoneLecturer.getText().toString();
-            String emailLec = edtEmailLecturer.getText().toString();
-            String webLec = edtWebLecturer.getText().toString();
-            if (TextUtils.isEmpty(nameSJ)){
-                Toast.makeText(this, "Chưa nhập tên môn học", Toast.LENGTH_SHORT).show();
-            }else if (TextUtils.isEmpty(nameClass)){
-                Toast.makeText(this, "Chưa nhập tên lớp", Toast.LENGTH_SHORT).show();
-            }else if (TextUtils.isEmpty(nameLec)){
-                Toast.makeText(this, "Chưa nhập tên giảng viên", Toast.LENGTH_SHORT).show();
-            }else {
-                insertDataSubject(code, nameSJ, Common.f_ymmdd.format(Calendar.getInstance().getTime()), year, nameSemester, nameLec, phoneLec, emailLec, webLec, nameClass);
-            }
+            processSave();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void processSave() {
+        String code = mAuth.getCurrentUser().getUid();
+        String nameSJ = edtNameSubject.getText().toString();
+        String nameClass = edtNameClass.getText().toString();
+        String year = tvSchoolYear.getText().toString();
+        String nameSemester = spnSemester.getSelectedItem().toString();
+        String nameLec = edtNameLecturer.getText().toString();
+        String phoneLec = edtPhoneLecturer.getText().toString();
+        String emailLec = edtEmailLecturer.getText().toString();
+        String webLec = edtWebLecturer.getText().toString();
+        if (TextUtils.isEmpty(nameSJ)){
+            Toast.makeText(this, "Chưa nhập tên môn học", Toast.LENGTH_SHORT).show();
+        }else if (TextUtils.isEmpty(nameClass)){
+            Toast.makeText(this, "Chưa nhập tên lớp", Toast.LENGTH_SHORT).show();
+        }else if (TextUtils.isEmpty(nameLec)){
+            Toast.makeText(this, "Chưa nhập tên giảng viên", Toast.LENGTH_SHORT).show();
+        }else {
+            insertDataSubject(code, nameSJ, Common.f_ymmddhh.format(Calendar.getInstance().getTime()), year, nameSemester, nameLec, phoneLec, emailLec, webLec, nameClass);
+        }
     }
 
     private void addToolbar() {

@@ -35,20 +35,24 @@
                 android:layout_marginLeft="10dp"
                 android:text="Kế hoạch 5 năm"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:fontFamily="sans-serif-black"
                 android:textSize="20sp"
                 />
 
             <TextView
                 android:id="@+id/tv_create_day"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:paddingRight="20dp"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:drawableLeft="@drawable/ic_history_black_24dp"
+                android:drawablePadding="2dp"
+                android:paddingRight="10dp"
                 android:layout_marginLeft="5dp"
-                android:textColor="@color/colorAccent"
-                android:text="07 thg 10"
+                android:textStyle="italic"
+                android:textColor="@color/colorChipText"
+                android:text="Cập nhật: 20/11/2018 12:20:20"
                 android:textSize="14sp"/>
         </LinearLayout>
 

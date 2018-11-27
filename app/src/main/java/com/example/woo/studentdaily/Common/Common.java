@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
+import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.google.gson.Gson;
@@ -35,6 +36,7 @@ public class Common {
     private static final String LIST_EVENT = "LIST_EVENT";
     private static final String LIST_SUBJECT = "LIST_SUBJECT";
     private static final String LIST_LECTURER = "LIST_LECTURER";
+    private static final String LIST_CLASS_YEAR = "LIST_CLASS_YEAR";
 
 
     public static String moveSlashTo(String s, String a, String b){
@@ -50,6 +52,18 @@ public class Common {
         Gson gson = new Gson();
         editor.putString(KEY_USER, gson.toJson(user));
         editor.apply();
+    }
+
+    public static User getUser (@NonNull Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        String user = sharedPref.getString(KEY_USER, "");
+        if (user == ""){
+            return null;
+        }
+        else {
+            Gson gson = new Gson();
+            return gson.fromJson(user, User.class);
+        }
     }
 
     public static ArrayList<Lecturer> getListLecturer(Context context) {
@@ -69,6 +83,26 @@ public class Common {
         SharedPreferences.Editor editor = sharedPref.edit();
         Gson gson = new Gson();
         editor.putString(LIST_LECTURER, gson.toJson(list));
+        editor.apply();
+    }
+
+    public static ArrayList<ClassYear> getListClassYear(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<ClassYear> listClassYear = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_CLASS_YEAR, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<ClassYear>>(){}.getType();
+            listClassYear = gson.fromJson(serializedObject, type);
+        }
+        return listClassYear;
+    }
+
+    public static void setListClassYear(ArrayList<ClassYear> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_CLASS_YEAR, gson.toJson(list));
         editor.apply();
     }
 
@@ -132,18 +166,6 @@ public class Common {
         return listEvent;
     }
 
-    public static User getUser (@NonNull Context context){
-        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
-        String user = sharedPref.getString(KEY_USER, "");
-        if (user == ""){
-            return null;
-        }
-        else {
-            Gson gson = new Gson();
-            return gson.fromJson(user, User.class);
-        }
-    }
-
     public static void setPreferenceNull (@NonNull Context context){
         SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -154,8 +176,10 @@ public class Common {
     }
 
 
-    public static void processBirthDay(Context context, final TextView textView) {
+    public static void processBirthDay(Context context, final TextView textView, final String birthDay) {
+        String arr[] = birthDay.split("/");
         final Calendar calendar = Calendar.getInstance();
+        calendar.set(Integer.parseInt(arr[2]), Integer.parseInt(arr[1]),Integer.parseInt(arr[0]));
         DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

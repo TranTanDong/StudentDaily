@@ -147,7 +147,7 @@ public class EditInfAccountActivity extends AppCompatActivity {
         tvBirthdaySet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Common.processBirthDay(EditInfAccountActivity.this, tvBirthdaySet);
+                Common.processBirthDay(EditInfAccountActivity.this, tvBirthdaySet, tvBirthdaySet.getText().toString());
             }
         });
 
@@ -264,6 +264,7 @@ public class EditInfAccountActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
                     urlAvatar = downloadUri.toString();
+                    Log.e("URL_IMAGE", urlAvatar);
                     EditInfAccountActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

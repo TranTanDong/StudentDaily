@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Server.Server;
+import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.google.firebase.auth.FirebaseAuth;
@@ -169,6 +170,45 @@ public class LoadData {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Lecturer", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public static void loadDataClassYear(final Context context) {
+        final ArrayList<ClassYear> classYears = new ArrayList<>();
+        final FirebaseAuth nAuth = FirebaseAuth.getInstance();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectClassYear, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    String code = nAuth.getCurrentUser().getUid();
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("codeuser").equals(code)){
+                                ClassYear classYear = new ClassYear();
+                                classYear.setIdClass(jsonObject.getInt("idclass"));
+                                classYear.setNameClass(jsonObject.getString("nameclass"));
+                                classYear.setIdSemester(jsonObject.getInt("idsemester"));
+                                classYear.setNameSemester(jsonObject.getString("namesemester"));
+                                classYear.setYear(jsonObject.getInt("year"));
+                                classYear.setIdst(jsonObject.getInt("idst"));
+                                classYears.add(classYear);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Common.setListClassYear(classYears, context);
+                    Toast.makeText(context, "Load Class Year success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Class Year", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);

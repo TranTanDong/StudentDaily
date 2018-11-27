@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.PagerAdapterSubject;
+import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -20,7 +23,7 @@ public class SubjectContentActivity extends AppCompatActivity {
     private TabLayout tabLayoutSubject;
     private FloatingActionMenu btnMenu;
     private FloatingActionButton btnAddScore, btnAddScheduleStudy, btnAddScheduleTest;
-
+    private Subject subject;
     private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,30 @@ public class SubjectContentActivity extends AppCompatActivity {
         addToolbar();
         addControls();
         addEvents();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_delete_update, menu);
+        MenuItem item =menu.findItem(R.id.btn_edit);
+        item.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.btn_delete:
+                processDelete();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void processDelete() {
+
     }
 
     private void addControls() {
@@ -40,13 +67,13 @@ public class SubjectContentActivity extends AppCompatActivity {
         receiveDataIntent();
         tabLayoutSubject = findViewById(R.id.tab_layout_subject);
         viewPagerSubject = findViewById(R.id.view_pager_subject);
-//        setupViewPager(viewPagerSubject);
 
         tabLayoutSubject.addTab(tabLayoutSubject.newTab().setText("TÀI LIỆU"));
         tabLayoutSubject.addTab(tabLayoutSubject.newTab().setText("ĐIỂM"));
         tabLayoutSubject.addTab(tabLayoutSubject.newTab().setText("GIẢNG VIÊN"));
         Bundle bundle = new Bundle();
         bundle.putInt("ID_ST", id);
+        bundle.putSerializable("OB_SUBJECT", subject);
 
         viewPagerSubject.setAdapter(new PagerAdapterSubject(getSupportFragmentManager(), tabLayoutSubject.getTabCount(), bundle));
         viewPagerSubject.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayoutSubject));
@@ -66,37 +93,15 @@ public class SubjectContentActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-//    private void setupViewPager(final ViewPager viewPager) {
-//        PagerAdapterSubject adapter = new PagerAdapterSubject(getSupportFragmentManager());
-//
-//        Bundle bundle =new Bundle();
-//        bundle.putInt("ID_ST", id);
-//
-//        DocumentFragment documentFragment = new DocumentFragment();
-//        ScoreFragment scoreFragment = new ScoreFragment();
-//        LecturerFragment lecturerFragment = new LecturerFragment();
-//
-//        documentFragment.setArguments(bundle);
-//        scoreFragment.setArguments(bundle);
-//        lecturerFragment.setArguments(bundle);
-//
-//        adapter.addFrag(documentFragment,"TÀI LIỆU");
-//        adapter.addFrag(scoreFragment,"ĐIỂM");
-//        adapter.addFrag(lecturerFragment, "GIẢNG VIÊN");
-//        viewPager.setAdapter(adapter);
-//
-//    }
 
     private void receiveDataIntent() {
         Intent nIntent = getIntent();
-        String name = nIntent.getStringExtra("NAME_SUBJECT");
-        id = nIntent.getIntExtra("ID_ST", -1);
-        setTitle(name);
-        Log.e("IDST", id+"");
+        subject = (Subject) nIntent.getSerializableExtra("SUBJECT");
+        id = subject.getIdst();
+        setTitle(subject.getName());
+        Log.e("ID_ST", subject.getIdst()+"");
     }
 
     private void addEvents() {
