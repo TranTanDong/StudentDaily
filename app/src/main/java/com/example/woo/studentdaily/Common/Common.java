@@ -12,7 +12,9 @@ import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
+import com.example.woo.studentdaily.Subject.Model.Study;
 import com.example.woo.studentdaily.Subject.Model.Subject;
+import com.example.woo.studentdaily.Subject.Model.Test;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,6 +39,8 @@ public class Common {
     private static final String LIST_SUBJECT = "LIST_SUBJECT";
     private static final String LIST_LECTURER = "LIST_LECTURER";
     private static final String LIST_CLASS_YEAR = "LIST_CLASS_YEAR";
+    private static final String LIST_STUDY = "LIST_STUDY";
+    private static final String LIST_TEST = "LIST_TEST";
 
 
     public static String moveSlashTo(String s, String a, String b){
@@ -83,6 +87,46 @@ public class Common {
         SharedPreferences.Editor editor = sharedPref.edit();
         Gson gson = new Gson();
         editor.putString(LIST_LECTURER, gson.toJson(list));
+        editor.apply();
+    }
+
+    public static ArrayList<Study> getListStudy(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<Study> listStudy = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_STUDY, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Study>>(){}.getType();
+            listStudy = gson.fromJson(serializedObject, type);
+        }
+        return listStudy;
+    }
+
+    public static void setListStudy(ArrayList<Study> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_STUDY, gson.toJson(list));
+        editor.apply();
+    }
+
+    public static ArrayList<Test> getListTest(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<Test> listTest = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_TEST, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Test>>(){}.getType();
+            listTest = gson.fromJson(serializedObject, type);
+        }
+        return listTest;
+    }
+
+    public static void setListTest(ArrayList<Test> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_TEST, gson.toJson(list));
         editor.apply();
     }
 

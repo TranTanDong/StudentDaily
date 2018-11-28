@@ -4,21 +4,23 @@ import java.io.Serializable;
 
 public class Study implements Serializable {
     private int id;
-    private int idHoc;
-    private String thu;
-    private String tiet;
-    private String phongHoc;
+    private int idSubject;
+    private String dayOfWeek;
+    private String lesson;
+    private String place;
+    private int idst;
 
     public Study() {
 
     }
 
-    public Study(int id, int idHoc, String thu, String tiet, String phongHoc) {
+    public Study(int id, int idSubject, String dayOfWeek, String lesson, String place, int idst) {
         this.id = id;
-        this.idHoc = idHoc;
-        this.thu = thu;
-        this.tiet = tiet;
-        this.phongHoc = phongHoc;
+        this.idSubject = idSubject;
+        this.dayOfWeek = dayOfWeek;
+        this.lesson = lesson;
+        this.place = place;
+        this.idst = idst;
     }
 
     public int getId() {
@@ -29,35 +31,55 @@ public class Study implements Serializable {
         this.id = id;
     }
 
-    public int getIdHoc() {
-        return idHoc;
+    public int getIdSubject() {
+        return idSubject;
     }
 
-    public void setIdHoc(int idHoc) {
-        this.idHoc = idHoc;
+    public void setIdSubject(int idSubject) {
+        this.idSubject = idSubject;
     }
 
-    public String getThu() {
-        return thu;
+    public String getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setThu(String thu) {
-        this.thu = thu;
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
-    public String getTiet() {
-        return tiet;
+    public String getLesson() {
+        return lesson;
     }
 
-    public void setTiet(String tiet) {
-        this.tiet = tiet;
+    public void setLesson(String lesson) {
+        this.lesson = lesson;
     }
 
-    public String getPhongHoc() {
-        return phongHoc;
+    public String getPlace() {
+        return place;
     }
 
-    public void setPhongHoc(String phongHoc) {
-        this.phongHoc = phongHoc;
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public int getIdst() {
+        return idst;
+    }
+
+    public void setIdst(int idst) {
+        this.idst = idst;
+    }
+
+    @Override
+    public String toString() {
+        return "Study{" +
+                "id=" + id +
+                ", idSubject=" + idSubject +
+                ", dayOfWeek='" + dayOfWeek + '\'' +
+                ", lesson='" + lesson + '\'' +
+                ", place='" + place + '\'' +
+                ", idst=" + idst +
+                '}';
     }
 }

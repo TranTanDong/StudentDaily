@@ -35,12 +35,10 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
 
     @Override
     public void onBindViewHolder(@NonNull SubjectViewHolder holder, int position) {
-//        String startTime[] = subjects.get(position).getCreateDay().split(" ");
-//        String day = Common.moveSlashTo(startTime[0], "-", "/");
-        //String time = startTime[1];
+        String day = moveDay(subjects.get(position).getCreateDay());
 
         holder.tvNameSubject.setText(subjects.get(position).getName());
-        holder.tvCreateDay.setText(subjects.get(position).getCreateDay());
+        holder.tvCreateDay.setText(day);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,8 +49,12 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
     }
 
     private String moveDay(String createDay) {
-        String arr[] = createDay.split("-");
-        return arr[2] + " thg " + arr[1] + " " + arr[0];
+        if (createDay.contains(" ")){
+            String startTime[] = createDay.split(" ");
+            String day = Common.moveSlashTo(startTime[0], "-", "/");
+            String time = startTime[1];
+            return day + " " + time;
+        }else return createDay;
     }
 
     @Override

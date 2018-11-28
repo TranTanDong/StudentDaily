@@ -23,6 +23,7 @@ import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.SubjectAdapter;
 import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
+import com.example.woo.studentdaily.Subject.Model.Study;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.example.woo.studentdaily.Subject.SubjectContentActivity;
 
@@ -38,6 +39,7 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     private ArrayList<Subject> listSubject;
     private ArrayList<Lecturer> listLecturer;
     private ArrayList<ClassYear> listClassYear;
+    private ArrayList<Study> listStudy;
 
 
     public SubjectFragment() {
@@ -61,13 +63,16 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
             LoadData.loadDataSubject(getActivity());
             LoadData.loadDataLecturer(getActivity());
             LoadData.loadDataClassYear(getActivity());
+            LoadData.loadDataStudy(getActivity());
         }
         listSubject = Common.getListSubject(getActivity());
         listLecturer = Common.getListLecturer(getActivity());
         listClassYear = Common.getListClassYear(getActivity());
+        listStudy = Common.getListStudy(getActivity());
         Log.e("SUBJECT_SIZE", listSubject.size()+"");
         Log.e("LECTURER_SIZE", listLecturer.size()+"");
         Log.e("CLASS_YEAR_SIZE", listClassYear.size()+"");
+        Log.e("STUDY_SIZE", listStudy.size()+"");
 
         rcvListSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
         subjectAdapter = new SubjectAdapter(getActivity(), listSubject, this);

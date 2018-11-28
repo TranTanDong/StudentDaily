@@ -14,6 +14,7 @@ import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Server.Server;
 import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
+import com.example.woo.studentdaily.Subject.Model.Study;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -209,6 +210,45 @@ public class LoadData {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Class Year", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public static void loadDataStudy(final Context context) {
+        final ArrayList<Study> studies = new ArrayList<>();
+        final FirebaseAuth nAuth = FirebaseAuth.getInstance();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectStudy, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    String code = nAuth.getCurrentUser().getUid();
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("codeuser").equals(code)){
+                                Study study = new Study();
+                                study.setId(jsonObject.getInt("id"));
+                                study.setDayOfWeek(jsonObject.getString("dayofweek"));
+                                study.setPlace(jsonObject.getString("place"));
+                                study.setLesson(jsonObject.getString("lesson"));
+                                study.setIdSubject(jsonObject.getInt("idsubject"));
+                                study.setIdst(jsonObject.getInt("idst"));
+                                studies.add(study);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Common.setListStudy(studies, context);
+                    Toast.makeText(context, "Load Study success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Study", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);

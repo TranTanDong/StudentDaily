@@ -2,10 +2,12 @@ package com.example.woo.studentdaily.Subject;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +19,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.woo.studentdaily.Common.LoadData;
+import com.example.woo.studentdaily.Common.Popup;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Server.Server;
+import com.example.woo.studentdaily.Subject.Fragment.DocumentFragment;
 import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EditClassSemesterYearActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
     private Toolbar toolbar;
@@ -60,8 +75,13 @@ public class EditClassSemesterYearActivity extends AppCompatActivity implements 
     }
 
     private void processEdit() {
+        String idSubject = String.valueOf(subject.getId());
         String nameSubject = edtNameSubject.getText().toString();
+
+        String idClass = String.valueOf(classYear.getIdClass());
         String nameClass = edtNameClass.getText().toString();
+
+        String idSemester = String.valueOf(classYear.getIdSemester());
         String year = tvYear.getText().toString();
         String nameSemester = spnSemester.getSelectedItem().toString();
         if (nameSubject.trim().equals(subject.getName()) && nameClass.trim().equals(classYear.getNameClass()) && year.equals(classYear.getYear()+"") && nameSemester.equals(classYear.getNameSemester())){
@@ -71,8 +91,65 @@ public class EditClassSemesterYearActivity extends AppCompatActivity implements 
         }else if (TextUtils.isEmpty(nameClass)){
             Toast.makeText(this, "Chưa nhập tên lớp", Toast.LENGTH_SHORT).show();
         }else {
-
+            updateClassSemesterYear(idSubject, nameSubject, year, idSemester, nameSemester, idClass, nameClass);
         }
+    }
+
+    private void updateClassSemesterYear(final String idSubject, final String nameSubject, final String year, final String idSemester, final String nameSemester, final String idClass, final String nameClass) {
+        final Popup popup = new Popup(EditClassSemesterYearActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchUpdateClassYear, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("UPDATE_CLASS_YEAR", response);
+                if (response.equals("Success")){
+                    LoadData.loadDataSubject(getApplicationContext());
+                    LoadData.loadDataClassYear(getApplicationContext());
+
+                    Intent data = new Intent();
+                    data.putExtra("TITLE", nameSubject);
+                    setResult(DocumentFragment.CODE_RESULT_EDIT, data);
+
+                    CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                        @Override
+                        public void onTick(long l) {
+
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            popup.hide();
+                            finish();
+                        }
+                    };
+                    timer.start();
+                    Toast.makeText(EditClassSemesterYearActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(EditClassSemesterYearActivity.this, "Lỗi Server", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(EditClassSemesterYearActivity.this, getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("s_id", idSubject);
+                hashMap.put("s_name", nameSubject);
+                hashMap.put("sy_id", year);
+                hashMap.put("sm_id", idSemester);
+                hashMap.put("sm_name", nameSemester);
+                hashMap.put("c_id", idClass);
+                hashMap.put("c_name", nameClass);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void addControls() {

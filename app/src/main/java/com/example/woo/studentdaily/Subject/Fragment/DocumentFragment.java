@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.StudyAdapter;
 import com.example.woo.studentdaily.Subject.Adapter.TestAdapter;
@@ -32,12 +33,17 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class DocumentFragment extends Fragment {
-    private TextView tvSemester, tvYear, tvClass;
+    private TextView tvSemester, tvYear, tvClass, tvNoStudy;
     private ImageView btnEdit;
     private int idST;
     private ArrayList<ClassYear> classYears;
     private ClassYear classYear;
     private Subject subject;
+    private ArrayList<Study> studies;
+    private ArrayList<Study> listStudy;
+    private StudyAdapter studyAdapter;
+    public static int CODE_REQUEST_EDIT = 1;
+    public static int CODE_RESULT_EDIT = 2;
     public DocumentFragment() {
         // Required empty public constructor
     }
@@ -68,29 +74,36 @@ public class DocumentFragment extends Fragment {
         Intent mIntent = new Intent(getActivity(), EditClassSemesterYearActivity.class);
         mIntent.putExtra("CLASS_YEAR", classYear);
         mIntent.putExtra("EDIT_SUBJECT", subject);
-        startActivity(mIntent);
+        startActivityForResult(mIntent, CODE_REQUEST_EDIT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CODE_REQUEST_EDIT && resultCode == CODE_RESULT_EDIT){
+            String title = data.getStringExtra("TITLE");
+            getActivity().setTitle(title);
+        }
     }
 
     private void addControls(View v) {
         tvSemester = v.findViewById(R.id.tv_semester);
         tvYear = v.findViewById(R.id.tv_year);
         tvClass = v.findViewById(R.id.tv_class);
+        tvNoStudy = v.findViewById(R.id.tv_no_study);
         btnEdit = v.findViewById(R.id.btn_edit_class_year);
+
         classYear = new ClassYear();
         classYears = new ArrayList<>();
+        studies = new ArrayList<>();
+        listStudy = new ArrayList<>();
         setInfClassYear();
         //Add data Study
-        ArrayList<Study> studies = new ArrayList<Study>();
-        studies.add(new Study(1, 1, "Thứ 2", "Tiết 1", "202/C1"));
-        studies.add(new Study(2, 2, "Thứ 3", "Tiết 1", "203/C1"));
-        studies.add(new Study(3, 3, "Thứ 4", "Tiết 1", "204/C1"));
-        studies.add(new Study(4, 4, "Thứ 5", "Tiết 1", "205/C1"));
-
-        Log.e("LOG", studies.get(0).getPhongHoc());
+        setDataListStudy();
 
         RecyclerView rcvStudy = v.findViewById(R.id.rcv_study);
         rcvStudy.setLayoutManager(new LinearLayoutManager(getActivity()));
-        StudyAdapter studyAdapter = new StudyAdapter(getActivity(), studies);
+        studyAdapter = new StudyAdapter(getActivity(), studies);
         rcvStudy.setAdapter(studyAdapter);
 
         //Add data "Lịch thi"
@@ -116,6 +129,19 @@ public class DocumentFragment extends Fragment {
 
     }
 
+    private void setDataListStudy() {
+        listStudy = Common.getListStudy(getContext());
+
+        for (Study i : listStudy){
+            if (i.getIdst() == idST){
+                studies.add(i);
+            }
+        }
+        if (studies.size() > 0){
+            tvNoStudy.setVisibility(View.INVISIBLE);
+        }else tvNoStudy.setVisibility(View.VISIBLE);
+    }
+
     private void setInfClassYear() {
         classYears = Common.getListClassYear(getActivity());
         for (ClassYear i:classYears) {
@@ -132,5 +158,6 @@ public class DocumentFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setInfClassYear();
+
     }
 }

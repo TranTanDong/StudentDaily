@@ -34,13 +34,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull PlanViewHolder holder, final int position) {
-//        String startTime[] = plans.get(position).getUpdateDay().split(" ");
-//        String day = Common.moveSlashTo(startTime[0], "-", "/");
-        //String time = startTime[1];
+        String day = moveDay(plans.get(position).getUpdateDay());
 
-        //String s = moveDay(plans.get(position).getUpdateDay());
         holder.tvContentPlan.setText(plans.get(position).getName());
-        holder.tvUpdateDay.setText(plans.get(position).getUpdateDay());
+        holder.tvUpdateDay.setText(day);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,12 +62,13 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
         }
     }
 
-    public String moveDay(String day){
-        if (day.contains("-")){
-            String arr[] = day.split("-");
-            return arr[2] + " thg " + arr[1];
-        }
-        return day;
+    private String moveDay(String createDay) {
+        if (createDay.contains(" ")){
+            String startTime[] = createDay.split(" ");
+            String day = Common.moveSlashTo(startTime[0], "-", "/");
+            String time = startTime[1];
+            return day + " " + time;
+        }else return createDay;
     }
 
     public void refreshAdapter(ArrayList<Plan> planNew){

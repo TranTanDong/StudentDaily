@@ -33,9 +33,9 @@ public class StudyAdapter extends RecyclerView.Adapter<StudyAdapter.StudyViewHol
 
     @Override
     public void onBindViewHolder(@NonNull StudyViewHolder holder, int position) {
-        holder.tvDayOfWeek.setText(studyList.get(position).getThu());
-        holder.tvTimeOfDay.setText(studyList.get(position).getTiet());
-        holder.tvPlace.setText(studyList.get(position).getPhongHoc());
+        holder.tvDayOfWeek.setText(studyList.get(position).getDayOfWeek());
+        holder.tvTimeOfDay.setText("Tiết " + studyList.get(position).getLesson());
+        holder.tvPlace.setText("Phòng " + studyList.get(position).getPlace());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,5 +63,11 @@ public class StudyAdapter extends RecyclerView.Adapter<StudyAdapter.StudyViewHol
             tvPlace     = itemView.findViewById(R.id.tv_place);
         }
 
+    }
+
+    public void refreshAdapter(ArrayList<Study> studyNew){
+        studyList.clear();
+        studyList.addAll(studyNew);
+        notifyDataSetChanged();
     }
 }

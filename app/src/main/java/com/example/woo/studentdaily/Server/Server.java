@@ -20,5 +20,8 @@ public class Server {
     public static String patchUpdateLecturer = "http://" + localhost + "/server/update_lecturer.php";
 
     public static String patchSelectClassYear = "http://" + localhost + "/server/select_class_year.php";
-    public static String patchUpdateClassYear = "http://" + localhost + "/server/update_class_year.php";
+    public static String patchUpdateClassYear = "http://" + localhost + "/server/update_subject_schoolyear_semester_class.php";
+
+    public static String patchSelectStudy = "http://" + localhost + "/server/select_study.php";
+    public static String patchUpdateStudy = "http://" + localhost + "/server/update_study.php";
 }
