@@ -25,6 +25,7 @@ import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Study;
 import com.example.woo.studentdaily.Subject.Model.Subject;
+import com.example.woo.studentdaily.Subject.Model.Test;
 import com.example.woo.studentdaily.Subject.SubjectContentActivity;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     private ArrayList<Lecturer> listLecturer;
     private ArrayList<ClassYear> listClassYear;
     private ArrayList<Study> listStudy;
-
+    private ArrayList<Test> listTest;
 
     public SubjectFragment() {
         // Required empty public constructor
@@ -64,15 +65,18 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
             LoadData.loadDataLecturer(getActivity());
             LoadData.loadDataClassYear(getActivity());
             LoadData.loadDataStudy(getActivity());
+            LoadData.loadDataTest(getActivity());
         }
         listSubject = Common.getListSubject(getActivity());
         listLecturer = Common.getListLecturer(getActivity());
         listClassYear = Common.getListClassYear(getActivity());
         listStudy = Common.getListStudy(getActivity());
+        listTest = Common.getListTest(getActivity());
         Log.e("SUBJECT_SIZE", listSubject.size()+"");
         Log.e("LECTURER_SIZE", listLecturer.size()+"");
         Log.e("CLASS_YEAR_SIZE", listClassYear.size()+"");
         Log.e("STUDY_SIZE", listStudy.size()+"");
+        Log.e("TEST_SIZE", listTest.size()+"");
 
         rcvListSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
         subjectAdapter = new SubjectAdapter(getActivity(), listSubject, this);

@@ -4,24 +4,24 @@ import java.io.Serializable;
 
 public class Test implements Serializable {
     private int id;
-    private int idHoc;
-    private int idHinhThuc;
-    private String ten;
-    private String ngay;
-    private String diaDiem;
-    private String ghiChu;
+    private int idSubject;
+    private int idForm;
+    private String dayTest;
+    private String place;
+    private String note;
+    private int idst;
 
     public Test() {
     }
 
-    public Test(int id, int idHoc, int idHinhThuc, String ten, String ngay, String diaDiem, String ghiChu) {
+    public Test(int id, int idSubject, int idForm, String dayTest, String place, String note, int idst) {
         this.id = id;
-        this.idHoc = idHoc;
-        this.idHinhThuc = idHinhThuc;
-        this.ten = ten;
-        this.ngay = ngay;
-        this.diaDiem = diaDiem;
-        this.ghiChu = ghiChu;
+        this.idSubject = idSubject;
+        this.idForm = idForm;
+        this.dayTest = dayTest;
+        this.place = place;
+        this.note = note;
+        this.idst = idst;
     }
 
     public int getId() {
@@ -32,51 +32,64 @@ public class Test implements Serializable {
         this.id = id;
     }
 
-    public int getIdHoc() {
-        return idHoc;
+    public int getIdSubject() {
+        return idSubject;
     }
 
-    public void setIdHoc(int idHoc) {
-        this.idHoc = idHoc;
+    public void setIdSubject(int idSubject) {
+        this.idSubject = idSubject;
     }
 
-    public int getIdHinhThuc() {
-        return idHinhThuc;
+    public int getIdForm() {
+        return idForm;
     }
 
-    public void setIdHinhThuc(int idHinhThuc) {
-        this.idHinhThuc = idHinhThuc;
+    public void setIdForm(int idForm) {
+        this.idForm = idForm;
     }
 
-    public String getTen() {
-        return ten;
+    public String getDayTest() {
+        return dayTest;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setDayTest(String dayTest) {
+        this.dayTest = dayTest;
     }
 
-    public String getNgay() {
-        return ngay;
+    public String getPlace() {
+        return place;
     }
 
-    public void setNgay(String ngay) {
-        this.ngay = ngay;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
-    public String getDiaDiem() {
-        return diaDiem;
+    public String getNote() {
+        return note;
     }
 
-    public void setDiaDiem(String diaDiem) {
-        this.diaDiem = diaDiem;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    public String getGhiChu() {
-        return ghiChu;
+    public int getIdst() {
+        return idst;
     }
 
-    public void setGhiChu(String ghiChu) {
-        this.ghiChu = ghiChu;
+    public void setIdst(int idst) {
+        this.idst = idst;
+    }
+
+    @Override
+    public String toString() {
+        return "Test{" +
+                "id=" + id +
+                ", idSubject=" + idSubject +
+                ", idForm=" + idForm +
+                ", dayTest='" + dayTest + '\'' +
+                ", place='" + place + '\'' +
+                ", note='" + note + '\'' +
+                ", idst=" + idst +
+                '}';
     }
 }

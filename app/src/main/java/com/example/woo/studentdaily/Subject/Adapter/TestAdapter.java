@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.example.woo.studentdaily.Subject.Model.Test;
 
 import java.util.ArrayList;
@@ -17,10 +19,12 @@ import java.util.ArrayList;
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> {
     Context context;
     ArrayList<Test> tests;
+    ArrayList<Subject> listSubject;
 
-    public TestAdapter(Context context, ArrayList<Test> tests) {
+    public TestAdapter(Context context, ArrayList<Test> tests, ArrayList<Subject> listSubject) {
         this.context = context;
         this.tests = tests;
+        this.listSubject = listSubject;
     }
 
     @NonNull
@@ -32,9 +36,16 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
-        holder.tvDayTest.setText(tests.get(position).getNgay());
-        holder.tvTitleTest.setText(tests.get(position).getTen());
-        holder.tvPlaceTest.setText(tests.get(position).getDiaDiem());
+        String nameSubject = "";
+        for (Subject i : listSubject){
+            if (i.getId() == tests.get(position).getIdSubject()){
+                nameSubject = i.getName();
+            }
+        }
+
+        holder.tvDayTest.setText(moveDay(tests.get(position).getDayTest()));
+        holder.tvTitleTest.setText(nameSubject);
+        holder.tvPlaceTest.setText("Phòng "+tests.get(position).getPlace());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,5 +72,14 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             tvPlaceTest     = itemView.findViewById(R.id.tv_place_test);
         }
 
+    }
+
+    private String moveDay(String createDay) {
+        if (createDay.contains(" ")){
+            String startTime[] = createDay.split(" ");
+            String day = Common.moveSlashTo(startTime[0], "-", "/");
+            String time = startTime[1];
+            return day + " " + time;
+        }else return createDay;
     }
 }

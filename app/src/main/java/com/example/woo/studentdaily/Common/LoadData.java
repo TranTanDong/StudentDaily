@@ -16,6 +16,7 @@ import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Study;
 import com.example.woo.studentdaily.Subject.Model.Subject;
+import com.example.woo.studentdaily.Subject.Model.Test;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
@@ -249,6 +250,46 @@ public class LoadData {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Study", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public static void loadDataTest(final Context context) {
+        final ArrayList<Test> tests = new ArrayList<>();
+        final FirebaseAuth nAuth = FirebaseAuth.getInstance();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectTest, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    String code = nAuth.getCurrentUser().getUid();
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("codeuser").equals(code)){
+                                Test test = new Test();
+                                test.setId(jsonObject.getInt("id"));
+                                test.setDayTest(jsonObject.getString("daytest"));
+                                test.setPlace(jsonObject.getString("place"));
+                                test.setIdForm(jsonObject.getInt("idform"));
+                                test.setNote(jsonObject.getString("note"));
+                                test.setIdSubject(jsonObject.getInt("idsubject"));
+                                test.setIdst(jsonObject.getInt("idst"));
+                                tests.add(test);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Common.setListTest(tests, context);
+                    Toast.makeText(context, "Load Test success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Test", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);

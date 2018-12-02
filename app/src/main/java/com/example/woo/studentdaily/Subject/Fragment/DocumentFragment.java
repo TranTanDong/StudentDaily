@@ -42,6 +42,11 @@ public class DocumentFragment extends Fragment {
     private ArrayList<Study> studies;
     private ArrayList<Study> listStudy;
     private StudyAdapter studyAdapter;
+
+    private ArrayList<Test> tests;
+    private ArrayList<Test> listTest;
+    private TestAdapter testAdapter;
+
     public static int CODE_REQUEST_EDIT = 1;
     public static int CODE_RESULT_EDIT = 2;
     public DocumentFragment() {
@@ -95,8 +100,13 @@ public class DocumentFragment extends Fragment {
 
         classYear = new ClassYear();
         classYears = new ArrayList<>();
+
         studies = new ArrayList<>();
         listStudy = new ArrayList<>();
+
+        tests = new ArrayList<>();
+        listTest = new ArrayList<>();
+
         setInfClassYear();
         //Add data Study
         setDataListStudy();
@@ -106,17 +116,12 @@ public class DocumentFragment extends Fragment {
         studyAdapter = new StudyAdapter(getActivity(), studies);
         rcvStudy.setAdapter(studyAdapter);
 
-        //Add data "Lịch thi"
-        ArrayList<Test> testList = new ArrayList<>();
-        testList.add(new Test(1, 1, 1, "Thi Toán", "22/10/2018", "Đâu cũng được", "Thi tốt nha"));
-        testList.add(new Test(2, 2, 2, "Thi Lý", "23/10/2018", "Đâu cũng được", "Thi tốt nha"));
-        testList.add(new Test(3, 3, 3, "Thi Hóa", "24/10/2018", "Đâu cũng được", "Thi tốt nha"));
-        testList.add(new Test(4, 4, 4, "Thi Sinh", "25/10/2018", "Đâu cũng được", "Thi tốt nha"));
-        testList.add(new Test(5, 5, 5, "Thi Sử", "26/10/2018", "Đâu cũng được", "Thi tốt nha"));
+        //Add data Test
+        setDataListTest();
 
         RecyclerView rcvTest = v.findViewById(R.id.rcv_test);
         rcvTest.setLayoutManager(new LinearLayoutManager(getActivity()));
-        TestAdapter testAdapter = new TestAdapter(getActivity(), testList);
+        testAdapter = new TestAdapter(getActivity(), tests, Common.getListSubject(getActivity()));
         rcvTest.setAdapter(testAdapter);
 
         //Add data "Loại tài liệu"
@@ -131,7 +136,7 @@ public class DocumentFragment extends Fragment {
 
     private void setDataListStudy() {
         listStudy = Common.getListStudy(getContext());
-
+        studies.clear();
         for (Study i : listStudy){
             if (i.getIdst() == idST){
                 studies.add(i);
@@ -140,6 +145,21 @@ public class DocumentFragment extends Fragment {
         if (studies.size() > 0){
             tvNoStudy.setVisibility(View.INVISIBLE);
         }else tvNoStudy.setVisibility(View.VISIBLE);
+    }
+
+    private void setDataListTest() {
+        listTest = Common.getListTest(getContext());
+        tests.clear();
+        for (Test i : listTest){
+            if (i.getIdst() == idST){
+                tests.add(i);
+            }
+        }
+        if (tests.size() > 0){
+           // tvNoStudy.setVisibility(View.INVISIBLE);
+        }else {
+            //tvNoStudy.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setInfClassYear() {
@@ -158,6 +178,7 @@ public class DocumentFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setInfClassYear();
-
+        setDataListStudy();
+        studyAdapter.notifyDataSetChanged();
     }
 }

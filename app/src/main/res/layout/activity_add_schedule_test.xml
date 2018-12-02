@@ -107,7 +107,7 @@
                     android:layout_width="76dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Địa điểm"
+                    android:text="Phòng"
                     android:layout_gravity="center"
                     android:textSize="@dimen/font_size_text"
                     android:fontFamily="sans-serif-black"/>
