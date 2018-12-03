@@ -84,17 +84,17 @@ public class MainActivity extends AppCompatActivity{
             switch (item.getItemId()) {
                 case R.id.navigation_subject:
                     setTitle("Môn học");
-                    setToolbar(true, false, false, true);
+                    setToolbar(false, false, false, true);
                     fragment = SubjectFragment.newInstance();
                     break;
                 case R.id.navigation_plan:
                     setTitle("Kế hoạch");
-                    setToolbar(false, false, true, false);
+                    setToolbar(false, false, false, false);
                     fragment = PlanFragment.newInstance();
                     break;
                 case R.id.navigation_diary:
                     setTitle("Nhật ký");
-                    setToolbar(false, true, false, false);
+                    setToolbar(false, false, false, true);
                     fragment = DiaryFragment.newInstance();
                     break;
                 case R.id.navigation_more:

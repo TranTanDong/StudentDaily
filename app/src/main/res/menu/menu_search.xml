@@ -30,14 +30,5 @@
         android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="always"/>
 
-    <group android:checkableBehavior="none">
-        <item
-            android:title="Thêm môn học"
-            android:id="@+id/nav_gallery"/>
-
-        <item
-            android:title="Thêm nhật ký"
-            android:id="@+id/nav_slideshow"/>
-    </group>
 
 </menu>

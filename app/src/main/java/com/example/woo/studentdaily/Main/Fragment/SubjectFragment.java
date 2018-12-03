@@ -15,6 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
 import android.widget.Toolbar;
 
 import com.example.woo.studentdaily.Common.Common;
@@ -34,7 +36,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject {
+public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject, SearchView.OnQueryTextListener {
     RecyclerView rcvListSubject;
     private SubjectAdapter subjectAdapter;
     private ArrayList<Subject> listSubject;
@@ -42,6 +44,8 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     private ArrayList<ClassYear> listClassYear;
     private ArrayList<Study> listStudy;
     private ArrayList<Test> listTest;
+
+    private SearchView searchView;
 
     public SubjectFragment() {
         // Required empty public constructor
@@ -59,6 +63,8 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
 
     private void addControls(View v) {
         rcvListSubject = v.findViewById(R.id.rcv_list_subject);
+        searchView = v.findViewById(R.id.sv_subject);
+
         listSubject = new ArrayList<>();
         if (listSubject.size() <= 0){
             LoadData.loadDataSubject(getActivity());
@@ -81,6 +87,10 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
         rcvListSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
         subjectAdapter = new SubjectAdapter(getActivity(), listSubject, this);
         rcvListSubject.setAdapter(subjectAdapter);
+
+
+        searchView.setOnQueryTextListener(this);
+        searchView.setVisibility(View.GONE);
     }
 
     @Override
@@ -112,5 +122,16 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
         Subject subject = listSubject.get(position);
         mIntent.putExtra("SUBJECT", subject);
         startActivity(mIntent);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        subjectAdapter.getFilter().filter(s);
+        return false;
     }
 }

@@ -68,14 +68,6 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
     }
 
     private void addEvents() {
-
-        tvEventToday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), EventDetailsActivity.class));
-            }
-        });
-
         cldEvent.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int y, int m, int d) {
@@ -84,6 +76,7 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
                 setListEventInDate(cal);
             }
         });
+
     }
 
     private void setListEventInDate(Calendar cal) {

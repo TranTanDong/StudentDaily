@@ -50,4 +50,14 @@ public class Diary implements Serializable {
     public void setCreateDay(String createDay) {
         this.createDay = createDay;
     }
+
+    @Override
+    public String toString() {
+        return "Diary{" +
+                "id=" + id +
+                ", codeUser='" + codeUser + '\'' +
+                ", name='" + name + '\'' +
+                ", createDay='" + createDay + '\'' +
+                '}';
+    }
 }

@@ -33,7 +33,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class DocumentFragment extends Fragment {
-    private TextView tvSemester, tvYear, tvClass, tvNoStudy;
+    private TextView tvSemester, tvYear, tvClass, tvNoStudy, tvNoTest;
     private ImageView btnEdit;
     private int idST;
     private ArrayList<ClassYear> classYears;
@@ -96,6 +96,7 @@ public class DocumentFragment extends Fragment {
         tvYear = v.findViewById(R.id.tv_year);
         tvClass = v.findViewById(R.id.tv_class);
         tvNoStudy = v.findViewById(R.id.tv_no_study);
+        tvNoTest = v.findViewById(R.id.tv_no_test);
         btnEdit = v.findViewById(R.id.btn_edit_class_year);
 
         classYear = new ClassYear();
@@ -156,9 +157,9 @@ public class DocumentFragment extends Fragment {
             }
         }
         if (tests.size() > 0){
-           // tvNoStudy.setVisibility(View.INVISIBLE);
+            tvNoTest.setVisibility(View.INVISIBLE);
         }else {
-            //tvNoStudy.setVisibility(View.VISIBLE);
+            tvNoTest.setVisibility(View.VISIBLE);
         }
     }
 
@@ -180,5 +181,6 @@ public class DocumentFragment extends Fragment {
         setInfClassYear();
         setDataListStudy();
         studyAdapter.notifyDataSetChanged();
+        testAdapter.notifyDataSetChanged();
     }
 }

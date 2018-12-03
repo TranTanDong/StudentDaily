@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Diary.Adapter.DiaryAdapter;
 import com.example.woo.studentdaily.Diary.ContentDiaryActivity;
 import com.example.woo.studentdaily.Diary.Model.Diary;
@@ -45,15 +48,29 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.IDiary{
     private void addControls(View v) {
         rcvDiary = v.findViewById(R.id.rcv_diary);
         listDiary = new ArrayList<>();
-        listDiary.add(new Diary(1, "", "Đã biết sẽ có ngày hôm qua", "11/11/2018"));
-        listDiary.add(new Diary(2, "", "Đã lâu không gặp", "01/11/2018"));
-        listDiary.add(new Diary(3, "", "Ai đằng sau lưng em", "12/11/2018"));
-        listDiary.add(new Diary(4, "", "Anh chẳng phải người em yêu", "13/11/2018"));
-        listDiary.add(new Diary(5, "", "Sắp tới sẽ là ai", "14/11/2018"));
+        if (listDiary.size() <= 0){
+            LoadData.loadDataDiary(getActivity());
+        }
+        listDiary = Common.getListDiary(getActivity());
+
+//        listDiary.add(new Diary(1, "", "Đã biết sẽ có ngày hôm qua", "11/11/2018"));
+//        listDiary.add(new Diary(2, "", "Đã lâu không gặp", "01/11/2018"));
+//        listDiary.add(new Diary(3, "", "Ai đằng sau lưng em", "12/11/2018"));
+//        listDiary.add(new Diary(4, "", "Anh chẳng phải người em yêu", "13/11/2018"));
+//        listDiary.add(new Diary(5, "", "Sắp tới sẽ là ai", "14/11/2018"));
 
         rcvDiary.setLayoutManager(new LinearLayoutManager(getActivity()));
         diaryAdapter = new DiaryAdapter(getActivity(), listDiary, this);
         rcvDiary.setAdapter(diaryAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listDiary.clear();
+        listDiary = Common.getListDiary(getActivity());
+        Log.i("listDiarySize", listDiary.size() + "");
+        diaryAdapter.refreshAdapter(listDiary);
     }
 
     private void addEvents() {

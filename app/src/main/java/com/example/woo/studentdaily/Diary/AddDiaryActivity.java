@@ -1,9 +1,11 @@
 package com.example.woo.studentdaily.Diary;
 
+import android.os.CountDownTimer;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
+import com.example.woo.studentdaily.Common.Popup;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.R;
@@ -55,7 +59,23 @@ public class AddDiaryActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+        btnCancelDiary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
+        btnOkDiary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String nameDiary = edtNameNewDiary.getText().toString();
+                String codeUser = mAuth.getCurrentUser().getUid();
+                if (!TextUtils.isEmpty(nameDiary)){
+                    insertDataDiary(codeUser, nameDiary);
+                }else Toast.makeText(getApplicationContext(), "Hãy nhập tên nhật ký", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void addToolbar() {
@@ -72,25 +92,33 @@ public class AddDiaryActivity extends AppCompatActivity {
         });
     }
 
-    private void insertDataDiary(final String code, final String name, final String updateDay) {
+    private void insertDataDiary(final String code, final String name) {
+        final Popup popup = new Popup(AddDiaryActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertDiary, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
-                Log.i("DATA_DIARY", response+name);
+                Log.i("DATA_DIARY", response);
                 AddDiaryActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//                        Plan plan = new Plan();
-//                        plan.setCodeUser(mAuth.getCurrentUser().getUid());
-//                        plan.setName(edtNameNewPlan.getText().toString());
-//                        plan.setUpdateDay(Common.moveSlashTo(Common.f_ddmmy.format(Calendar.getInstance().getTime()), "/", "-"));
-//                        ArrayList<Plan> plans = Common.getListPlan(getApplicationContext());
-//                        plans.add(plan);
-//                        Common.setListPlan(plans, getApplicationContext());
-//                        MainActivity.loadDataMainPlan(getApplicationContext());
-                        finish();
+                        LoadData.loadDataDiary(AddDiaryActivity.this);
+                        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                popup.hide();
+                                finish();
+                            }
+                        };
+                        timer.start();
                     }
                 });
             }
@@ -105,7 +133,7 @@ public class AddDiaryActivity extends AppCompatActivity {
                 Map<String, String> hashMap = new HashMap<>();
                 hashMap.put("d_codeuser", code);
                 hashMap.put("d_name", name);
-                hashMap.put("d_updateday", Common.moveSlashTo(updateDay, "/", "-"));
+                hashMap.put("d_dayupdate", Common.f_ymmddhh.format(Calendar.getInstance().getTime()));
                 return hashMap;
             }
         };

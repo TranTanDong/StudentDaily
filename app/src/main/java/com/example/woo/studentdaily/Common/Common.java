@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.example.woo.studentdaily.Diary.Model.Diary;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
@@ -41,6 +42,7 @@ public class Common {
     private static final String LIST_CLASS_YEAR = "LIST_CLASS_YEAR";
     private static final String LIST_STUDY = "LIST_STUDY";
     private static final String LIST_TEST = "LIST_TEST";
+    private static final String LIST_DIARY = "LIST_DIARY";
 
 
     public static String moveSlashTo(String s, String a, String b){
@@ -48,6 +50,26 @@ public class Common {
             String arr[] = s.split(a);
             return arr[2] + b + arr[1] + b + arr[0];
         }else return s;
+    }
+
+    public static ArrayList<Diary> getListDiary(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<Diary> listDiary = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_DIARY, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Diary>>(){}.getType();
+            listDiary = gson.fromJson(serializedObject, type);
+        }
+        return listDiary;
+    }
+
+    public static void setListDiary(ArrayList<Diary> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_DIARY, gson.toJson(list));
+        editor.apply();
     }
 
     public static void setCurrentUser(@NonNull Context context, User user){
