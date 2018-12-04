@@ -84,7 +84,7 @@ public class AddPlanActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_close);
         setSupportActionBar(toolbar);
-        setTitle("Kế hoạch mới");
+        setTitle("Sửa kế hoạch");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

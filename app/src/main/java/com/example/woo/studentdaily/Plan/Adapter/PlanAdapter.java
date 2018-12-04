@@ -45,6 +45,13 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
                 iPlan.onItemClickPlan(Integer.parseInt(view.getTag().toString()));
             }
         });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                iPlan.onItemLongClickPlan(Integer.parseInt(view.getTag().toString()));
+                return true;
+            }
+        });
     }
 
     @Override
@@ -79,5 +86,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
 
     public interface IPlan{
         void onItemClickPlan(int position);
+        void onItemLongClickPlan(int position);
     }
 }

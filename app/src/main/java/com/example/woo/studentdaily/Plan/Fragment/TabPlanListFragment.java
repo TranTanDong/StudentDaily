@@ -1,7 +1,9 @@
 package com.example.woo.studentdaily.Plan.Fragment;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,11 +16,14 @@ import android.view.ViewGroup;
 
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Common.LoadData;
+import com.example.woo.studentdaily.Diary.AddDiaryActivity;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.Adapter.PlanAdapter;
+import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Plan.PlanDetailsActivity;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Subject.AddSubjectActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -92,5 +97,44 @@ public class TabPlanListFragment extends Fragment implements PlanAdapter.IPlan{
         mIntent.putExtra("ID_PLAN", listPlan.get(position).getId());
         mIntent.putExtra("NAME_PLAN", listPlan.get(position).getName());
         startActivity(mIntent);
+    }
+
+    @Override
+    public void onItemLongClickPlan(int position) {
+        final String listAdd[] = {"Sửa kế hoạch", "Xóa kế hoạch"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(listPlan.get(position).getName())
+                .setItems(listAdd, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (listAdd[i].equals("Sửa kế hoạch")){
+                            Intent mIntent = new Intent(getActivity(), AddPlanActivity.class);
+                            startActivity(mIntent);
+                        }else if (listAdd[i].equals("Xóa kế hoạch")){
+                            confirmDeletion();
+                        }
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void confirmDeletion() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Bạn có thật sự muốn xóa?");
+        builder.setNegativeButton("CÓ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.setPositiveButton("KHÔNG", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

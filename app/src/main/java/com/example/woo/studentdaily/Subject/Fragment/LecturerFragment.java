@@ -98,6 +98,7 @@ public class LecturerFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setInfLecturer();
+        addEvents();
     }
 
     private void addEvents() {

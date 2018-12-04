@@ -48,12 +48,13 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_edit_blue_24dp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="..."
+                android:text="Lịch thi"
                 android:textSize="@dimen/font_size_topic"
                 android:fontFamily="sans-serif"/>
         </LinearLayout>
@@ -92,12 +93,12 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_equalizer_black_24dp"/>
+                android:src="@drawable/ic_lecturer"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Thống kê kế hoạch"
+                android:text="Giảng viên"
                 android:textSize="@dimen/font_size_topic"
                 android:fontFamily="sans-serif"/>
         </LinearLayout>

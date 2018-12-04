@@ -84,7 +84,7 @@ public class TabPlanFragment extends Fragment implements EventAdapterPlan.IEvent
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        String toDay = Common.f_ddmmy.format(cal.getTime());
+        String toDay = Common.f_dmy.format(cal.getTime());
         String getToDay = Common.f_dmy.format(Calendar.getInstance().getTime());
         if (toDay.equals(getToDay)){
             tvEventToday.setText("Hôm nay");

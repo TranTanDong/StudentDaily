@@ -208,6 +208,8 @@ public class AddSubjectActivity extends AppCompatActivity implements OnValueChan
                     @Override
                     public void run() {
                         LoadData.loadDataSubject(getApplicationContext());
+                        LoadData.loadDataClassYear(getApplicationContext());
+                        LoadData.loadDataLecturer(getApplicationContext());
                         CountDownTimer timer = new CountDownTimer(3000, 1000) {
                             @Override
                             public void onTick(long l) {
