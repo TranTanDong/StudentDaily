@@ -31,8 +31,6 @@ public class EventDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_delete_update, menu);
-//        MenuItem item =menu.findItem(R.id.btn_edit);
-//        item.setVisible(false);
         return true;
     }
 

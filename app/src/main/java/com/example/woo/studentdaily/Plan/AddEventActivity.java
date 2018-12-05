@@ -76,7 +76,7 @@ public class AddEventActivity extends AppCompatActivity {
     private Calendar calFrom = Calendar.getInstance();
 
 //    private SimpleDateFormat stf = new SimpleDateFormat("hh:mm a");
-    private SimpleDateFormat stf = new SimpleDateFormat("HH:mm");
+    public static SimpleDateFormat stf = new SimpleDateFormat("HH:mm");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -404,6 +404,7 @@ public class AddEventActivity extends AppCompatActivity {
                 cal.get(calendar.MONTH),
                 cal.get(calendar.DAY_OF_MONTH)
         );
+        datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
         datePickerDialog.show();
     }
 }

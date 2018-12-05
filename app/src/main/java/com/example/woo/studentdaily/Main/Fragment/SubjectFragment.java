@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.example.woo.studentdaily.Common.Common;
@@ -36,8 +37,9 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject, SearchView.OnQueryTextListener {
-    RecyclerView rcvListSubject;
+public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject {
+    private RecyclerView rcvListSubject;
+    private TextView tvNoSubject;
     private SubjectAdapter subjectAdapter;
     private ArrayList<Subject> listSubject;
     private ArrayList<Lecturer> listLecturer;
@@ -45,7 +47,6 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     private ArrayList<Study> listStudy;
     private ArrayList<Test> listTest;
 
-    private SearchView searchView;
 
     public SubjectFragment() {
         // Required empty public constructor
@@ -62,8 +63,8 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     }
 
     private void addControls(View v) {
+        tvNoSubject = v.findViewById(R.id.tv_no_subject);
         rcvListSubject = v.findViewById(R.id.rcv_list_subject);
-        searchView = v.findViewById(R.id.sv_subject);
 
         listSubject = new ArrayList<>();
         if (listSubject.size() <= 0){
@@ -83,14 +84,14 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
         Log.e("CLASS_YEAR_SIZE", listClassYear.size()+"");
         Log.e("STUDY_SIZE", listStudy.size()+"");
         Log.e("TEST_SIZE", listTest.size()+"");
+        if (listSubject.size() > 0){
+            tvNoSubject.setVisibility(View.INVISIBLE);
+        }else tvNoSubject.setVisibility(View.VISIBLE);
 
         rcvListSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
         subjectAdapter = new SubjectAdapter(getActivity(), listSubject, this);
         rcvListSubject.setAdapter(subjectAdapter);
 
-
-        searchView.setOnQueryTextListener(this);
-        searchView.setVisibility(View.GONE);
     }
 
     @Override
@@ -124,14 +125,4 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
         startActivity(mIntent);
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String s) {
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        subjectAdapter.getFilter().filter(s);
-        return false;
-    }
 }

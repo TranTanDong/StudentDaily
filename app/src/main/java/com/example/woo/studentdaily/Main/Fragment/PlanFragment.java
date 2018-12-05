@@ -57,7 +57,9 @@ public class PlanFragment extends Fragment{
         btnAddPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddPlanActivity.class));
+                Intent mIntent = new Intent(getActivity(), AddPlanActivity.class);
+                mIntent.putExtra("FLAG_PLAN", "ADD_PLAN");
+                startActivity(mIntent);
             }
         });
 

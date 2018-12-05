@@ -1,5 +1,6 @@
 package com.example.woo.studentdaily.Plan;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,9 @@ public class AddPlanActivity extends AppCompatActivity {
     private Button btnOk, btnCancel;
     private FirebaseAuth mAuth;
 
+    private String Flag = "";
+    private Plan plan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,9 +60,18 @@ public class AddPlanActivity extends AppCompatActivity {
                 String namePlan = edtNameNewPlan.getText().toString();
                 String codeUser = mAuth.getCurrentUser().getUid();
                 String dayUpdate = tvDayAddNewPlan.getText().toString();
-                if (!TextUtils.isEmpty(namePlan)){
-                    insertDataPlan(codeUser, namePlan, dayUpdate);
-                }else Toast.makeText(getApplicationContext(), "Hãy nhập tên kế hoạch", Toast.LENGTH_SHORT).show();
+                if (Flag.equals("ADD_PLAN")){
+                    if (!TextUtils.isEmpty(namePlan)){
+                        insertDataPlan(codeUser, namePlan, dayUpdate);
+                    }else Toast.makeText(getApplicationContext(), "Hãy nhập tên kế hoạch", Toast.LENGTH_SHORT).show();
+                }else if (Flag.equals("EDIT_PLAN")){
+                    if (namePlan.equals(plan.getName())){
+                        finish();
+                    }else if (!TextUtils.isEmpty(namePlan)){
+                        editDataPlan(String.valueOf(plan.getId()), namePlan, dayUpdate);
+                    }else Toast.makeText(getApplicationContext(), "Hãy nhập tên kế hoạch", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -70,6 +83,10 @@ public class AddPlanActivity extends AppCompatActivity {
         });
     }
 
+    private void editDataPlan(String s, String namePlan, String dayUpdate) {
+
+    }
+
     private void addControls() {
         mAuth = FirebaseAuth.getInstance();
         edtNameNewPlan = findViewById(R.id.edt_add_new_plan);
@@ -78,6 +95,16 @@ public class AddPlanActivity extends AppCompatActivity {
         btnCancel   = findViewById(R.id.btnCancel);
 
         tvDayAddNewPlan.setText(Common.f_ddmmy.format(Calendar.getInstance().getTime()));
+
+        Intent mIntent = getIntent();
+        Flag = mIntent.getStringExtra("FLAG_PLAN");
+        if (Flag.equals("EDIT_PLAN")){
+            setTitle("Sửa kế hoạch");
+            plan = (Plan) mIntent.getSerializableExtra("PLAN");
+            edtNameNewPlan.setText(plan.getName());
+        }else if (Flag.equals("ADD_PLAN")){
+            setTitle("Kế hoạch mới");
+        }
     }
 
     private void addToolbar() {

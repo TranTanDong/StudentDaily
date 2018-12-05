@@ -23,7 +23,7 @@ public class SubjectContentActivity extends AppCompatActivity {
     private TabLayout tabLayoutSubject;
     private FloatingActionMenu btnMenu;
     private FloatingActionButton btnAddScore, btnAddScheduleStudy, btnAddScheduleTest;
-    private Subject subject;
+    private Subject subject = new Subject();
     private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +116,7 @@ public class SubjectContentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent mIntent = new Intent(SubjectContentActivity.this, AddScheduleStudyActivity.class);
+                mIntent.putExtra("FLAG", "ADD_STUDY");
                 mIntent.putExtra("NAME_SUBJECT", subject.getName());
                 startActivity(mIntent);
             }

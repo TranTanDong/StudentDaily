@@ -78,7 +78,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         if (createDay.contains(" ")){
             String startTime[] = createDay.split(" ");
             String day = Common.moveSlashTo(startTime[0], "-", "/");
-            String time = startTime[1];
+            String time = startTime[1].substring(0, 5);
             return day + " " + time;
         }else return createDay;
     }

@@ -21,12 +21,12 @@
         </android.support.v7.widget.RecyclerView>
 
         <TextView
-            android:id="@+id/tv_event_empty"
+            android:id="@+id/tv_no_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            android:text="Chưa có sự kiện nào ^^"
-            android:textSize="@dimen/font_size_topic"
+            android:text="Chưa có sự kiện nào"
+            android:textSize="@dimen/font_size_header"
             android:textColor="@color/colorRed"
             android:layout_gravity="center"
             android:gravity="center"/>

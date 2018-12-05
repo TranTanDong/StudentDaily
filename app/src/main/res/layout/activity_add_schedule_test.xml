@@ -84,17 +84,44 @@
                     android:textSize="@dimen/font_size_text"
                     android:fontFamily="sans-serif-black"/>
 
-                <TextView
-                    android:id="@+id/tv_time_test"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="20/11/2018 14:00"
-                    android:textColor="@color/textColorBlack"
-                    android:textAlignment="center"
-                    android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/font_size_text" />
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/tv_day_test"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:text="20/11/2018"
+                        android:background="@color/bgGray"
+                        android:textColor="@color/textColorBlack"
+                        android:textAlignment="center"
+                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:textSize="@dimen/font_size_text" />
+
+                    <TextView
+                        android:id="@+id/tv_time_test"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/bgGray"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center"
+                        android:text="14:00"
+                        android:textColor="@color/textColorBlack"
+                        android:textAlignment="center"
+                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:paddingRight="10dp"
+                        android:textSize="@dimen/font_size_text" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout

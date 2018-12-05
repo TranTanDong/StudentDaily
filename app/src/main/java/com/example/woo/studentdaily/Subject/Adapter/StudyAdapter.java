@@ -18,10 +18,12 @@ import java.util.ArrayList;
 public class StudyAdapter extends RecyclerView.Adapter<StudyAdapter.StudyViewHolder> {
     Context context;
     ArrayList<Study> studyList;
+    IStudy iStudy;
 
-    public StudyAdapter(Context context, ArrayList<Study> studyList) {
+    public StudyAdapter(Context context, ArrayList<Study> studyList, IStudy iStudy) {
         this.context = context;
         this.studyList = studyList;
+        this.iStudy = iStudy;
     }
 
     @NonNull
@@ -36,11 +38,12 @@ public class StudyAdapter extends RecyclerView.Adapter<StudyAdapter.StudyViewHol
         holder.tvDayOfWeek.setText(studyList.get(position).getDayOfWeek());
         holder.tvTimeOfDay.setText("Tiết " + studyList.get(position).getLesson());
         holder.tvPlace.setText("Phòng " + studyList.get(position).getPlace());
+        holder.itemView.setTag(position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Kkkk", Toast.LENGTH_SHORT).show();
+                iStudy.onClickItemStudy(Integer.parseInt(v.getTag().toString()));
             }
         });
 
@@ -69,5 +72,9 @@ public class StudyAdapter extends RecyclerView.Adapter<StudyAdapter.StudyViewHol
         studyList.clear();
         studyList.addAll(studyNew);
         notifyDataSetChanged();
+    }
+
+    public interface IStudy{
+        void onClickItemStudy(int position);
     }
 }

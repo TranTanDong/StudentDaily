@@ -1,5 +1,9 @@
 package com.example.woo.studentdaily.Subject;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -7,28 +11,44 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
+import com.example.woo.studentdaily.Common.Popup;
+import com.example.woo.studentdaily.Plan.AddEventActivity;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Server.Server;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddScheduleTestActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Spinner spnSubjectTest, spnFormTest;
-    private TextView tvTimeTest;
+    private TextView tvDayTest, tvTimeTest;
     private EditText edtPlaceTest, edtNoteTest;
     private ArrayList<String> listFormTest, listSubject;
     private ArrayAdapter<String> adapterFormTest, adapterSubject;
     private ArrayList<Subject> arrayListSubject;
 
+    private Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +75,109 @@ public class AddScheduleTestActivity extends AppCompatActivity {
     }
 
     private void processSave() {
+        int idst = 0;
+        int idform = 0;
+        String nameSubject = spnSubjectTest.getSelectedItem().toString();
+        for (Subject i : arrayListSubject){
+            if (i.getName().equals(nameSubject)){
+                idst = i.getIdst();
+            }
+        }
+        Log.e("ID_ST_ADD", idst+"");
+        String form = spnFormTest.getSelectedItem().toString();
+        switch (form){
+            case "Trắc nghiệm":
+                idform = 1;
+                break;
+            case "Tự luận":
+                idform = 2;
+                break;
+            case "Thực hành":
+                idform = 3;
+                break;
+            case "Trắc nghiệm và tự luận":
+                idform = 4;
+                break;
+            case "Khác":
+                idform = 5;
+                break;
+            default:
+                idform = -1;
+                break;
+        }
 
+        String daytest = tvDayTest.getText().toString();
+        String timetest = tvTimeTest.getText().toString();
+        String date = Common.moveSlashTo(daytest, "/", "-") + " " + timetest;
+        String place = edtPlaceTest.getText().toString();
+        String note = edtNoteTest.getText().toString();
+        if (place.isEmpty()){
+            Toast.makeText(this, "Chưa nhập phòng", Toast.LENGTH_SHORT).show();
+        }else {
+            insertScheduleTest(String.valueOf(idst), String.valueOf(idform), date, place, note);
+        }
+    }
+
+    private void insertScheduleTest(final String s, final String idform, final String daytest, final String place, final String note) {
+        final Popup popup = new Popup(AddScheduleTestActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchInsertTest, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.e("DATA_SCHEDULE_TEST", response);
+                AddScheduleTestActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoadData.loadDataTest(getApplicationContext());
+                        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                popup.hide();
+                                finish();
+                            }
+                        };
+                        timer.start();
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("ts_idstudy", s);
+                hashMap.put("ts_idform", idform);
+                hashMap.put("ts_daytest", daytest);
+                hashMap.put("ts_place", place);
+                hashMap.put("ts_note", note);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void addControls() {
         spnFormTest = findViewById(R.id.spn_form_test);
         spnSubjectTest = findViewById(R.id.spn_subject_test);
+        tvDayTest = findViewById(R.id.tv_day_test);
         tvTimeTest = findViewById(R.id.tv_time_test);
         edtPlaceTest = findViewById(R.id.edt_place_test);
         edtNoteTest = findViewById(R.id.edt_note_test);
+
+        tvDayTest.setText(Common.f_ddmmy.format(calendar.getTime()));
+        tvTimeTest.setText(AddEventActivity.stf.format(calendar.getTime()));
 
         listFormTest = new ArrayList<>();
         listFormTest.add("Trắc nghiệm");
@@ -102,7 +216,19 @@ public class AddScheduleTestActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+        tvDayTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processDay(tvDayTest, AddScheduleTestActivity.this, calendar);
+            }
+        });
 
+        tvTimeTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processTime(tvTimeTest, AddScheduleTestActivity.this, calendar);
+            }
+        });
     }
 
     private void addToolbar() {
@@ -117,5 +243,51 @@ public class AddScheduleTestActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    private void processTime(final TextView tvStartTimePlan, Context context, final Calendar cal) {
+        TimePickerDialog.OnTimeSetListener callback=new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                cal.set(cal.HOUR_OF_DAY, hourOfDay);
+                cal.set(cal.MINUTE, minute);
+                tvStartTimePlan.setText(AddEventActivity.stf.format(cal.getTime()));
+            }
+        };
+
+        TimePickerDialog timePickerDialog=new TimePickerDialog(
+                context,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                callback,
+                cal.get(cal.HOUR_OF_DAY),
+                cal.get(cal.MINUTE),
+                true
+        );
+        timePickerDialog.show();
+    }
+
+
+    private void processDay(final TextView tvStartDayPlan, Context context, final Calendar cal) {
+        DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                cal.set(cal.YEAR, year);
+                cal.set(cal.MONTH, month);
+                cal.set(cal.DAY_OF_MONTH, dayOfMonth);
+
+                String s = Common.f_ddmmy.format(cal.getTime());
+                tvStartDayPlan.setText(s);
+            }
+        };
+
+        DatePickerDialog datePickerDialog=new DatePickerDialog(
+                context,
+                callback,
+                cal.get(cal.YEAR),
+                cal.get(cal.MONTH),
+                cal.get(cal.DAY_OF_MONTH)
+        );
+        datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+        datePickerDialog.show();
     }
 }

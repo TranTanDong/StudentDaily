@@ -1,8 +1,11 @@
 package com.example.woo.studentdaily.Subject.Fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +15,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Common.LoadData;
+import com.example.woo.studentdaily.Common.Popup;
+import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Server.Server;
 import com.example.woo.studentdaily.Subject.Adapter.StudyAdapter;
 import com.example.woo.studentdaily.Subject.Adapter.TestAdapter;
+import com.example.woo.studentdaily.Subject.AddScheduleStudyActivity;
 import com.example.woo.studentdaily.Subject.EditClassSemesterYearActivity;
 import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Study;
@@ -27,12 +42,14 @@ import com.example.woo.studentdaily.Subject.Model.Test;
 
 import java.util.ArrayList;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DocumentFragment extends Fragment {
+public class DocumentFragment extends Fragment implements StudyAdapter.IStudy {
     private TextView tvSemester, tvYear, tvClass, tvNoStudy, tvNoTest;
     private ImageView btnEdit;
     private int idST;
@@ -114,7 +131,7 @@ public class DocumentFragment extends Fragment {
 
         RecyclerView rcvStudy = v.findViewById(R.id.rcv_study);
         rcvStudy.setLayoutManager(new LinearLayoutManager(getActivity()));
-        studyAdapter = new StudyAdapter(getActivity(), studies);
+        studyAdapter = new StudyAdapter(getActivity(), studies, this);
         rcvStudy.setAdapter(studyAdapter);
 
         //Add data Test
@@ -138,9 +155,9 @@ public class DocumentFragment extends Fragment {
     private void setDataListStudy() {
         listStudy = Common.getListStudy(getContext());
         studies.clear();
-        for (Study i : listStudy){
-            if (i.getIdst() == idST){
-                studies.add(i);
+        for (Study study : listStudy){
+            if (study.getIdst() == idST){
+                studies.add(study);
             }
         }
         if (studies.size() > 0){
@@ -180,7 +197,95 @@ public class DocumentFragment extends Fragment {
         super.onResume();
         setInfClassYear();
         setDataListStudy();
+        setDataListTest();
         studyAdapter.notifyDataSetChanged();
         testAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onClickItemStudy(final int position) {
+        final String listAdd[] = {"Sửa lịch học", "Xóa lịch học"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setItems(listAdd, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (listAdd[i].equals("Sửa lịch học")){
+                            Intent mIntent = new Intent(getActivity(), AddScheduleStudyActivity.class);
+                            mIntent.putExtra("FLAG", "EDIT_STUDY");
+                            mIntent.putExtra("STUDY", studies.get(position));
+                            startActivity(mIntent);
+                        }else if (listAdd[i].equals("Xóa lịch học")){
+                            confirmDeletion(studies.get(position).getId());
+                        }
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void confirmDeletion(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Bạn có thật sự muốn xóa?");
+        builder.setNegativeButton("CÓ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deletionStudy(position);
+            }
+        });
+        builder.setPositiveButton("KHÔNG", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void deletionStudy(final int position) {
+        final Popup popup = new Popup(getActivity());
+        popup.createLoadingDialog();
+        popup.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchDeleteStudy, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getActivity(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.e("DATA_SCHEDULE_STUDY", response);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoadData.loadDataStudy(getActivity());
+                        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                popup.hide();
+                                setDataListStudy();
+                                studyAdapter.notifyDataSetChanged();
+                            }
+                        };
+                        timer.start();
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("sch_id", String.valueOf(position));
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 }

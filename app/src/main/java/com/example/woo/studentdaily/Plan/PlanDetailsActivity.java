@@ -9,27 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.woo.studentdaily.Common.Common;
-import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Plan.Adapter.EventAdapterPlan;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.R;
-import com.example.woo.studentdaily.Server.Server;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class PlanDetailsActivity extends AppCompatActivity implements EventAdapterPlan.IEvent {
     private Toolbar toolbar;
     private RecyclerView rcvEvent;
-    private TextView tvEventEmpty;
+    private TextView tvNoEvent;
     private EventAdapterPlan eventAdapterPlan;
     private ArrayList<Event> events, listEvent;
 
@@ -50,12 +41,10 @@ public class PlanDetailsActivity extends AppCompatActivity implements EventAdapt
         idPlan = pIntent.getIntExtra("ID_PLAN", -1);
         setTitle(name);
 
-        listEvent = new ArrayList<>();
-//        LoadData.loadDataEvent(getApplicationContext(), listEvent);
-        listEvent = Common.getListEvent(getApplicationContext());
-
-        tvEventEmpty = findViewById(R.id.tv_event_empty);
+        tvNoEvent = findViewById(R.id.tv_no_event);
         rcvEvent = findViewById(R.id.rcv_event_detail_plan);
+        listEvent = new ArrayList<>();
+
         events = new ArrayList<>();
         processDataEvent();
 
@@ -65,12 +54,17 @@ public class PlanDetailsActivity extends AppCompatActivity implements EventAdapt
     }
 
     private void processDataEvent() {
+        listEvent = Common.getListEvent(getApplicationContext());
         for (Event event : listEvent){
             if (event.getIdPlan() == idPlan){
                 events.add(event);
-                Log.e("Eventsss: ", event.toString());
+                Log.e("Eventsss: ", event.toString()+" - "+events.size());
             }
         }
+
+        if (events.size() > 0){
+            tvNoEvent.setVisibility(View.INVISIBLE);
+        }else tvNoEvent.setVisibility(View.INVISIBLE);
     }
 
 
