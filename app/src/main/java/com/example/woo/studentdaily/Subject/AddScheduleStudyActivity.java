@@ -109,6 +109,7 @@ public class AddScheduleStudyActivity extends AppCompatActivity {
 
             if (!nameSubject.isEmpty()){
                 spnSubjectStudy.setSelection(listSubject.indexOf(nameSubject));
+                spnSubjectStudy.setEnabled(false);
             }
         }else if (flag.equals("EDIT_STUDY")){
             setTitle("Sửa lịch học");
@@ -120,6 +121,7 @@ public class AddScheduleStudyActivity extends AppCompatActivity {
                 }
             }
             spnSubjectStudy.setSelection(listSubject.indexOf(nameSubject));
+            spnSubjectStudy.setEnabled(false);
             spnDayOfWeekStudy.setSelection(listDayOfWeek.indexOf(study.getDayOfWeek()));
             edtPlaceStudy.setText(study.getPlace());
             edtLessonStudy.setText(study.getLesson());
@@ -149,12 +151,24 @@ public class AddScheduleStudyActivity extends AppCompatActivity {
 
     }
 
+    private boolean isExists(String dayOfWeek, String lesson){
+        ArrayList<Study> listStudy = Common.getListStudy(getApplicationContext());
+        for (Study study:listStudy){
+            if (study.getDayOfWeek().equals(dayOfWeek) && study.getLesson().equals(lesson)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void processAddStudy(int idst, String dayOfWeek, String place, String lesson) {
         if (place.isEmpty()){
             Toast.makeText(this, "Chưa nhập phòng", Toast.LENGTH_SHORT).show();
         }else if (lesson.isEmpty()){
             Toast.makeText(this, "Chưa nhập tiết", Toast.LENGTH_SHORT).show();
-        }else {
+        }else if (isExists(dayOfWeek, lesson)) {
+            Toast.makeText(this, "Trùng lịch học", Toast.LENGTH_SHORT).show();
+        } else{
             insertScheduleStudy(String.valueOf(idst), dayOfWeek, place, lesson);
         }
     }
@@ -166,8 +180,9 @@ public class AddScheduleStudyActivity extends AppCompatActivity {
             Toast.makeText(this, "Chưa nhập tiết", Toast.LENGTH_SHORT).show();
         }else if (study.getIdst() == idst && study.getDayOfWeek().equals(dayOfWeek) && study.getPlace().equals(place) && study.getLesson().equals(lesson)){
             finish();
-        }
-        else{
+        }else if (isExists(dayOfWeek, lesson)) {
+            Toast.makeText(this, "Trùng lịch học", Toast.LENGTH_SHORT).show();
+        }else{
             updateScheduleStudy(String.valueOf(study.getId()), String.valueOf(idst), dayOfWeek, place, lesson);
         }
     }
