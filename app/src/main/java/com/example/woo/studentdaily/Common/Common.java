@@ -245,7 +245,7 @@ public class Common {
     public static void processBirthDay(Context context, final TextView textView, final String birthDay) {
         String arr[] = birthDay.split("/");
         final Calendar calendar = Calendar.getInstance();
-        calendar.set(Integer.parseInt(arr[2]), Integer.parseInt(arr[1]),Integer.parseInt(arr[0]));
+        calendar.set(Integer.parseInt(arr[2]), Integer.parseInt(arr[1])-1,Integer.parseInt(arr[0]));
         DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
