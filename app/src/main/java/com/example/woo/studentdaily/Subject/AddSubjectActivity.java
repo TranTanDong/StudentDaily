@@ -33,6 +33,7 @@ import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Common.Popup;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
+import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class AddSubjectActivity extends AppCompatActivity implements OnValueChan
     private TextView tvSchoolYear;
     private Spinner spnSemester;
     private TextInputEditText edtNameLecturer, edtPhoneLecturer, edtEmailLecturer, edtWebLecturer;
-    private List<String> listSemester;
+    private ArrayList<String> listSemester;
     private ArrayAdapter<String> adapterSemester;
     private FirebaseAuth mAuth;
 
@@ -123,7 +124,7 @@ public class AddSubjectActivity extends AppCompatActivity implements OnValueChan
 
     private void processSave() {
         String code = mAuth.getCurrentUser().getUid();
-        String nameSJ = edtNameSubject.getText().toString();
+        String nameSJ = edtNameSubject.getText().toString().trim();
         String nameClass = edtNameClass.getText().toString();
         String year = tvSchoolYear.getText().toString();
         String nameSemester = spnSemester.getSelectedItem().toString();
@@ -131,15 +132,28 @@ public class AddSubjectActivity extends AppCompatActivity implements OnValueChan
         String phoneLec = edtPhoneLecturer.getText().toString();
         String emailLec = edtEmailLecturer.getText().toString();
         String webLec = edtWebLecturer.getText().toString();
-        if (TextUtils.isEmpty(nameSJ)){
+
+        if (isSubjectExists(nameSJ)){
+            Toast.makeText(this, "Môn học đã tồn tại", Toast.LENGTH_SHORT).show();
+        }else if (TextUtils.isEmpty(nameSJ)){
             Toast.makeText(this, "Chưa nhập tên môn học", Toast.LENGTH_SHORT).show();
         }else if (TextUtils.isEmpty(nameClass)){
-            Toast.makeText(this, "Chưa nhập tên lớp", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Chưa nhập tên lớp/nhóm", Toast.LENGTH_SHORT).show();
         }else if (TextUtils.isEmpty(nameLec)){
             Toast.makeText(this, "Chưa nhập tên giảng viên", Toast.LENGTH_SHORT).show();
         }else {
             insertDataSubject(code, nameSJ, Common.f_ymmddhh.format(Calendar.getInstance().getTime()), year, nameSemester, nameLec, phoneLec, emailLec, webLec, nameClass);
         }
+    }
+
+    private boolean isSubjectExists(String nameSubject) {
+        ArrayList<Subject> listSubject = Common.getListSubject(getApplicationContext());
+        for (Subject subject:listSubject){
+            if (subject.getName().equals(nameSubject)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void addToolbar() {

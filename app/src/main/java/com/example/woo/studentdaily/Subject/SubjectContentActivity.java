@@ -125,7 +125,10 @@ public class SubjectContentActivity extends AppCompatActivity {
         btnAddScheduleTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SubjectContentActivity.this, AddScheduleTestActivity.class));
+                Intent mIntent = new Intent(SubjectContentActivity.this, AddScheduleTestActivity.class);
+                mIntent.putExtra("FLAG", "ADD_TEST");
+                mIntent.putExtra("NAME_SUBJECT", subject.getName());
+                startActivity(mIntent);
             }
         });
     }

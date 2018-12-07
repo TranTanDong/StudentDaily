@@ -73,7 +73,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Lớp"
+                android:text="Lớp/nhóm"
                 android:textSize="@dimen/font_size_text"
                 android:fontFamily="sans-serif-black"/>
             <TextView

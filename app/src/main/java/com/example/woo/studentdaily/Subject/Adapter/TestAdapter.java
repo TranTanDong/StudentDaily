@@ -20,11 +20,13 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     Context context;
     ArrayList<Test> tests;
     ArrayList<Subject> listSubject;
+    ITest iTest;
 
-    public TestAdapter(Context context, ArrayList<Test> tests, ArrayList<Subject> listSubject) {
+    public TestAdapter(Context context, ArrayList<Test> tests, ArrayList<Subject> listSubject, ITest iTest) {
         this.context = context;
         this.tests = tests;
         this.listSubject = listSubject;
+        this.iTest = iTest;
     }
 
     @NonNull
@@ -47,10 +49,12 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         holder.tvTitleTest.setText(nameSubject);
         holder.tvPlaceTest.setText("Phòng "+tests.get(position).getPlace());
 
+        holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Đau đầu vl", Toast.LENGTH_SHORT).show();
+                iTest.onClickItemTest(Integer.parseInt(v.getTag().toString()));
             }
         });
     }
@@ -81,5 +85,9 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             String time = startTime[1].substring(0, 5);
             return day + " " + time;
         }else return createDay;
+    }
+
+    public interface ITest{
+        void onClickItemTest(int position);
     }
 }

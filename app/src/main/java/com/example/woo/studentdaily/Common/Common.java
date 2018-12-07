@@ -241,7 +241,6 @@ public class Common {
 
     }
 
-
     public static void processBirthDay(Context context, final TextView textView, final String birthDay) {
         String arr[] = birthDay.split("/");
         final Calendar calendar = Calendar.getInstance();
@@ -267,4 +266,15 @@ public class Common {
         datePickerDialog.show();
     }
 
+
+    public static String isForm(int position){
+        switch (position){
+            case 1: return "Trắc nghiệm";
+            case 2: return "Tự luận";
+            case 3: return "Thực hành";
+            case 4: return "Trắc nghiệm và tự luận";
+            case 5: return "Khác";
+            default: return "";
+        }
+    }
 }

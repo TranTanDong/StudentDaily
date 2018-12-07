@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Subject.AddScheduleTestActivity">
+    tools:context=".Subject.DetailScheduleTestActivity">
 
-    <include layout="@layout/toolbar_layout"></include>
+    <include layout="@layout/toolbar_layout"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -31,18 +31,19 @@
                     android:layout_width="76dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Môn"
+                    android:text="Môn:"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/font_size_text"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/tv_subject_test_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Math"
                     android:layout_gravity="center"
                     android:textSize="@dimen/font_size_text"
                     android:fontFamily="sans-serif-black"/>
-
-                <Spinner
-                    android:id="@+id/spn_subject_test"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:textSize="@dimen/font_size_topic"
-                    android:textAlignment="center"
-                    android:textStyle="bold|italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -55,18 +56,19 @@
                     android:layout_width="76dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Hình thức"
+                    android:text="Hình thức:"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/font_size_text"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/tv_form_test_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Different"
                     android:layout_gravity="center"
                     android:textSize="@dimen/font_size_text"
                     android:fontFamily="sans-serif-black"/>
-
-                <Spinner
-                    android:id="@+id/spn_form_test"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:textSize="@dimen/font_size_topic"
-                    android:textAlignment="center"
-                    android:textStyle="bold|italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -79,10 +81,10 @@
                     android:layout_width="76dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Thời gian"
+                    android:text="Thời gian:"
                     android:layout_gravity="center"
                     android:textSize="@dimen/font_size_text"
-                    android:fontFamily="sans-serif-black"/>
+                    android:fontFamily="sans-serif"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,34 +92,27 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="2">
+
                     <TextView
-                        android:id="@+id/tv_time_test"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tv_time_test_detail"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:background="@color/bgGray"
                         android:layout_weight="1"
-                        android:layout_marginRight="20dp"
                         android:layout_gravity="center"
                         android:text="14:00"
-                        android:textColor="@color/textColorBlack"
-                        android:textAlignment="center"
-                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
+                        android:fontFamily="sans-serif-black"
                         android:paddingRight="10dp"
                         android:textSize="@dimen/font_size_text" />
 
                     <TextView
-                        android:id="@+id/tv_day_test"
+                        android:id="@+id/tv_day_test_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:text="20/12/2018"
+                        android:fontFamily="sans-serif-black"
                         android:layout_gravity="center"
-                        android:text="20/11/2018"
-                        android:background="@color/bgGray"
-                        android:textColor="@color/textColorBlack"
-                        android:textAlignment="center"
-                        android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp"
                         android:textSize="@dimen/font_size_text" />
-
                 </LinearLayout>
 
 
@@ -133,19 +128,19 @@
                     android:layout_width="76dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Phòng *"
+                    android:text="Phòng:"
                     android:layout_gravity="center"
                     android:textSize="@dimen/font_size_text"
-                    android:fontFamily="sans-serif-black"/>
+                    android:fontFamily="sans-serif"/>
 
-                <EditText
-                    android:id="@+id/edt_place_test"
+                <TextView
+                    android:id="@+id/tv_place_test_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:hint="Ví dụ: 202/C1, 101/KH, ..."
-                    android:textSize="@dimen/font_size_text" />
+                    android:text="202/C1"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/font_size_text"
+                    android:fontFamily="sans-serif-black" />
             </LinearLayout>
 
             <LinearLayout
@@ -158,28 +153,20 @@
                     android:layout_width="76dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Ghi chú"
+                    android:text="Ghi chú:"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/font_size_text"
+                    android:fontFamily="sans-serif"/>
+
+                <TextView
+                    android:id="@+id/tv_note_test_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Không có ghi chú gì"
                     android:layout_gravity="center"
                     android:textSize="@dimen/font_size_text"
                     android:fontFamily="sans-serif-black"/>
-
-                <EditText
-                    android:id="@+id/edt_note_test"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:hint="Ghi chú nội dung kiểm tra"
-                    android:textSize="@dimen/font_size_text" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="(* là trường không được bỏ trống)"
-                android:textColor="@color/colorRed"
-                android:layout_marginBottom="10dp"
-                android:textStyle="italic"/>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

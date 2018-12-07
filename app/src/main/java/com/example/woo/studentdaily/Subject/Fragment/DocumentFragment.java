@@ -33,6 +33,7 @@ import com.example.woo.studentdaily.Server.Server;
 import com.example.woo.studentdaily.Subject.Adapter.StudyAdapter;
 import com.example.woo.studentdaily.Subject.Adapter.TestAdapter;
 import com.example.woo.studentdaily.Subject.AddScheduleStudyActivity;
+import com.example.woo.studentdaily.Subject.DetailScheduleTestActivity;
 import com.example.woo.studentdaily.Subject.EditClassSemesterYearActivity;
 import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Study;
@@ -49,7 +50,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DocumentFragment extends Fragment implements StudyAdapter.IStudy {
+public class DocumentFragment extends Fragment implements StudyAdapter.IStudy, TestAdapter.ITest {
     private TextView tvSemester, tvYear, tvClass, tvNoStudy, tvNoTest;
     private ImageView btnEdit;
     private int idST;
@@ -139,7 +140,7 @@ public class DocumentFragment extends Fragment implements StudyAdapter.IStudy {
 
         RecyclerView rcvTest = v.findViewById(R.id.rcv_test);
         rcvTest.setLayoutManager(new LinearLayoutManager(getActivity()));
-        testAdapter = new TestAdapter(getActivity(), tests, Common.getListSubject(getActivity()));
+        testAdapter = new TestAdapter(getActivity(), tests, Common.getListSubject(getActivity()), this);
         rcvTest.setAdapter(testAdapter);
 
         //Add data "Loại tài liệu"
@@ -287,5 +288,12 @@ public class DocumentFragment extends Fragment implements StudyAdapter.IStudy {
             }
         };
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onClickItemTest(int position) {
+        Intent mIntent = new Intent(getActivity(), DetailScheduleTestActivity.class);
+        mIntent.putExtra("TEST", tests.get(position));
+        startActivity(mIntent);
     }
 }
