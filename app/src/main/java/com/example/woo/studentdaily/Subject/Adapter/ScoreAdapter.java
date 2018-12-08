@@ -18,11 +18,13 @@ import java.util.ArrayList;
 public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHolder> {
     Context context;
     ArrayList<Score> scores;
+    String type;
     IScore iScore;
 
-    public ScoreAdapter(Context context, ArrayList<Score> scores, IScore iScore) {
+    public ScoreAdapter(Context context, ArrayList<Score> scores, String type, IScore iScore) {
         this.context = context;
         this.scores = scores;
+        this.type = type;
         this.iScore = iScore;
     }
 
@@ -44,7 +46,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iScore.onClickDeleteScore(Integer.parseInt(view.getTag().toString()));
+                iScore.onClickDeleteScore(Integer.parseInt(view.getTag().toString()), type);
             }
         });
 
@@ -52,7 +54,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iScore.onClickEditScore(Integer.parseInt(view.getTag().toString()));
+                iScore.onClickEditScore(Integer.parseInt(view.getTag().toString()), type);
             }
         });
     }
@@ -91,7 +93,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
     }
 
     public interface IScore{
-        void onClickEditScore(int position);
-        void onClickDeleteScore(int position);
+        void onClickEditScore(int position, String type);
+        void onClickDeleteScore(int position, String type);
     }
 }

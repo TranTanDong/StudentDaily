@@ -69,7 +69,7 @@ public class DetailScheduleTestActivity extends AppCompatActivity {
                 }
             }
             tvSubjectDetail.setText(nameSubject);
-            tvFormDetail.setText(Common.isForm(test.getIdForm()));
+            tvFormDetail.setText(Common.stringForm(test.getIdForm()));
             tvDayTestDetail.setText(Common.moveSlashTo(test.getDayTest().substring(0, 10), "-", "/"));
             tvTimeTestDetail.setText(test.getDayTest().substring(11, 16));
             tvPlaceDetail.setText(test.getPlace());

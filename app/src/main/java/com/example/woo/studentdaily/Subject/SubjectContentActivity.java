@@ -108,7 +108,10 @@ public class SubjectContentActivity extends AppCompatActivity {
         btnAddScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SubjectContentActivity.this, AddScoreActivity.class));
+                Intent mIntent = new Intent(SubjectContentActivity.this, AddScoreActivity.class);
+                mIntent.putExtra("FLAG", "ADD_SCORE");
+                mIntent.putExtra("NAME_SUBJECT", subject.getName());
+                startActivity(mIntent);
             }
         });
 

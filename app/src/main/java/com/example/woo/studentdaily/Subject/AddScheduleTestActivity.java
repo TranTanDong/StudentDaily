@@ -91,26 +91,7 @@ public class AddScheduleTestActivity extends AppCompatActivity {
         }
         Log.e("ID_ST_ADD", idst+"");
         String form = spnFormTest.getSelectedItem().toString();
-        switch (form){
-            case "Trắc nghiệm":
-                idform = 1;
-                break;
-            case "Tự luận":
-                idform = 2;
-                break;
-            case "Thực hành":
-                idform = 3;
-                break;
-            case "Trắc nghiệm và tự luận":
-                idform = 4;
-                break;
-            case "Khác":
-                idform = 5;
-                break;
-            default:
-                idform = -1;
-                break;
-        }
+        idform = Common.idForm(form);
 
         String daytest = tvDayTest.getText().toString();
         String timetest = tvTimeTest.getText().toString();
@@ -304,7 +285,7 @@ public class AddScheduleTestActivity extends AppCompatActivity {
                 spnSubjectTest.setSelection(listSubject.indexOf(nameSubject));
                 spnSubjectTest.setEnabled(false);
             }
-            spnFormTest.setSelection(listFormTest.indexOf(Common.isForm(test.getIdForm())));
+            spnFormTest.setSelection(listFormTest.indexOf(Common.stringForm(test.getIdForm())));
             tvTimeTest.setText(test.getDayTest().substring(11, 16));
             tvDayTest.setText(Common.moveSlashTo(test.getDayTest().substring(0, 10), "-", "/"));
             edtPlaceTest.setText(test.getPlace());

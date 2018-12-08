@@ -19,146 +19,159 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="start"
+            android:layout_gravity="center"
             android:paddingLeft="10dp"
             android:text="Điểm TB"
-            android:textSize="@dimen/font_size_header"
+            android:textSize="@dimen/font_size_topic"
             android:fontFamily="sans-serif-black"/>
         <TextView
+            android:id="@+id/tv_score_avg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-           android:paddingRight="20dp"
+            android:paddingRight="20dp"
             android:text="0"
+            android:textColor="@color/colorRed"
             android:textSize="@dimen/font_size_header"
             android:fontFamily="sans-serif-black"/>
     </LinearLayout>
 
-    <com.github.florent37.expansionpanel.ExpansionHeader
-        android:layout_height="?attr/actionBarSize"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_marginBottom="5dp"
-        android:background="@color/bgLightBlue"
-        app:expansion_headerIndicator="@id/headerIndicatorNo1"
-        app:expansion_layout="@id/expansionLayoutNo1"
-        app:expansion_toggleOnClick="true">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.github.florent37.expansionpanel.ExpansionHeader
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="5dp"
+                android:background="@color/bgLightBlue"
+                app:expansion_headerIndicator="@id/headerIndicatorNo1"
+                app:expansion_layout="@id/expansionLayoutNo1"
+                app:expansion_toggleOnClick="true">
 
-        <!-- HEADER -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="Hệ số 1 (Điểm miệng, 15 phút)"
-            android:textSize="@dimen/font_size_topic"
-            android:fontFamily="sans-serif-black"/>
-        ...
-        <!-- HEADER INDICATOR -->
-        <ImageView
-            android:adjustViewBounds="true"
-            android:id="@+id/headerIndicatorNo1"
-            android:layout_gravity="center_vertical|right"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
-
-
-    </com.github.florent37.expansionpanel.ExpansionHeader>
-
-    <com.github.florent37.expansionpanel.ExpansionLayout
-        android:id="@+id/expansionLayoutNo1"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-
-        <!-- CONTENT -->
-        <include layout="@layout/item_recyclerview_score"/>
-
-    </com.github.florent37.expansionpanel.ExpansionLayout>
-
-    <com.github.florent37.expansionpanel.ExpansionHeader
-        android:layout_height="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="5dp"
-        android:background="@color/bgLightBlue"
-        app:expansion_headerIndicator="@id/headerIndicatorNo2"
-        app:expansion_layout="@id/expansionLayoutNo2"
-        app:expansion_toggleOnClick="true">
-
-        <!-- HEADER -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="Hệ số 2 (Điểm 1 tiết)"
-            android:textSize="@dimen/font_size_topic"
-            android:fontFamily="sans-serif-black"/>
-        ...
-        <!-- HEADER INDICATOR -->
-        <ImageView
-            android:adjustViewBounds="true"
-            android:id="@+id/headerIndicatorNo2"
-            android:layout_gravity="center_vertical|right"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+                <!-- HEADER -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="Hệ số 1 (Điểm miệng, 15 phút)"
+                    android:textSize="@dimen/font_size_topic"
+                    android:fontFamily="sans-serif-black"/>
+                ...
+                <!-- HEADER INDICATOR -->
+                <ImageView
+                    android:adjustViewBounds="true"
+                    android:id="@+id/headerIndicatorNo1"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
 
 
-    </com.github.florent37.expansionpanel.ExpansionHeader>
+            </com.github.florent37.expansionpanel.ExpansionHeader>
 
-    <com.github.florent37.expansionpanel.ExpansionLayout
-        android:id="@+id/expansionLayoutNo2"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+            <com.github.florent37.expansionpanel.ExpansionLayout
+                android:id="@+id/expansionLayoutNo1"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
 
-        <!-- CONTENT -->
-        <include layout="@layout/item_recyclerview_score"/>
+                <!-- CONTENT -->
+                <include layout="@layout/item_recyclerview_score"/>
 
-    </com.github.florent37.expansionpanel.ExpansionLayout>
+            </com.github.florent37.expansionpanel.ExpansionLayout>
 
-    <com.github.florent37.expansionpanel.ExpansionHeader
-        android:layout_height="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_marginBottom="5dp"
-        android:background="@color/bgLightBlue"
-        app:expansion_headerIndicator="@id/headerIndicatorNo3"
-        app:expansion_layout="@id/expansionLayoutNo3"
-        app:expansion_toggleOnClick="true">
+            <com.github.florent37.expansionpanel.ExpansionHeader
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="5dp"
+                android:background="@color/bgLightBlue"
+                app:expansion_headerIndicator="@id/headerIndicatorNo2"
+                app:expansion_layout="@id/expansionLayoutNo2"
+                app:expansion_toggleOnClick="true">
 
-        <!-- HEADER -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
-            android:text="Hệ số 3 (Điểm thi)"
-            android:textSize="@dimen/font_size_topic"
-            android:fontFamily="sans-serif-black"/>
-        ...
-        <!-- HEADER INDICATOR -->
-        <ImageView
-            android:adjustViewBounds="true"
-            android:id="@+id/headerIndicatorNo3"
-            android:layout_gravity="center_vertical|right"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
-
-
-    </com.github.florent37.expansionpanel.ExpansionHeader>
-
-    <com.github.florent37.expansionpanel.ExpansionLayout
-        android:id="@+id/expansionLayoutNo3"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-
-        <!-- CONTENT -->
-        <include layout="@layout/item_recyclerview_score"/>
+                <!-- HEADER -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="Hệ số 2 (Điểm 1 tiết)"
+                    android:textSize="@dimen/font_size_topic"
+                    android:fontFamily="sans-serif-black"/>
+                ...
+                <!-- HEADER INDICATOR -->
+                <ImageView
+                    android:adjustViewBounds="true"
+                    android:id="@+id/headerIndicatorNo2"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
 
 
-    </com.github.florent37.expansionpanel.ExpansionLayout>
+            </com.github.florent37.expansionpanel.ExpansionHeader>
+
+            <com.github.florent37.expansionpanel.ExpansionLayout
+                android:id="@+id/expansionLayoutNo2"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <!-- CONTENT -->
+                <include layout="@layout/item_recyclerview_score"/>
+
+            </com.github.florent37.expansionpanel.ExpansionLayout>
+
+            <com.github.florent37.expansionpanel.ExpansionHeader
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="5dp"
+                android:background="@color/bgLightBlue"
+                app:expansion_headerIndicator="@id/headerIndicatorNo3"
+                app:expansion_layout="@id/expansionLayoutNo3"
+                app:expansion_toggleOnClick="true">
+
+                <!-- HEADER -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="Hệ số 3 (Điểm thi)"
+                    android:textSize="@dimen/font_size_topic"
+                    android:fontFamily="sans-serif-black"/>
+                ...
+                <!-- HEADER INDICATOR -->
+                <ImageView
+                    android:adjustViewBounds="true"
+                    android:id="@+id/headerIndicatorNo3"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    app:srcCompat="@drawable/ic_expansion_header_indicator_grey_24dp" />
+
+
+            </com.github.florent37.expansionpanel.ExpansionHeader>
+
+            <com.github.florent37.expansionpanel.ExpansionLayout
+                android:id="@+id/expansionLayoutNo3"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <!-- CONTENT -->
+                <include layout="@layout/item_recyclerview_score"/>
+
+
+            </com.github.florent37.expansionpanel.ExpansionLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

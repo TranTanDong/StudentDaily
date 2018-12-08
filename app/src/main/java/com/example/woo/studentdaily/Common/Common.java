@@ -13,6 +13,7 @@ import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
+import com.example.woo.studentdaily.Subject.Model.Score;
 import com.example.woo.studentdaily.Subject.Model.Study;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.example.woo.studentdaily.Subject.Model.Test;
@@ -43,6 +44,7 @@ public class Common {
     private static final String LIST_STUDY = "LIST_STUDY";
     private static final String LIST_TEST = "LIST_TEST";
     private static final String LIST_DIARY = "LIST_DIARY";
+    private static final String LIST_SCORE = "LIST_SCORE";
 
 
     public static String moveSlashTo(String s, String a, String b){
@@ -50,6 +52,26 @@ public class Common {
             String arr[] = s.split(a);
             return arr[2] + b + arr[1] + b + arr[0];
         }else return s;
+    }
+
+    public static ArrayList<Score> getListScore(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<Score> listScore = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_SCORE, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Score>>(){}.getType();
+            listScore = gson.fromJson(serializedObject, type);
+        }
+        return listScore;
+    }
+
+    public static void setListScore(ArrayList<Score> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_SCORE, gson.toJson(list));
+        editor.apply();
     }
 
     public static ArrayList<Diary> getListDiary(Context context) {
@@ -267,7 +289,7 @@ public class Common {
     }
 
 
-    public static String isForm(int position){
+    public static String stringForm(int position){
         switch (position){
             case 1: return "Trắc nghiệm";
             case 2: return "Tự luận";
@@ -275,6 +297,23 @@ public class Common {
             case 4: return "Trắc nghiệm và tự luận";
             case 5: return "Khác";
             default: return "";
+        }
+    }
+
+    public static int idForm(String form){
+        switch (form){
+            case "Trắc nghiệm":
+                return 1;
+            case "Tự luận":
+                return 2;
+            case "Thực hành":
+                return 3;
+            case "Trắc nghiệm và tự luận":
+                return 4;
+            case "Khác":
+                return 5;
+            default:
+                return -1;
         }
     }
 }

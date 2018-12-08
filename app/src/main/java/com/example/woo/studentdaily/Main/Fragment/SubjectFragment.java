@@ -73,6 +73,7 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
             LoadData.loadDataClassYear(getActivity());
             LoadData.loadDataStudy(getActivity());
             LoadData.loadDataTest(getActivity());
+            LoadData.loadDataScore(getActivity());
         }
         listSubject = Common.getListSubject(getActivity());
         listLecturer = Common.getListLecturer(getActivity());
@@ -84,6 +85,7 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
         Log.e("CLASS_YEAR_SIZE", listClassYear.size()+"");
         Log.e("STUDY_SIZE", listStudy.size()+"");
         Log.e("TEST_SIZE", listTest.size()+"");
+        Log.e("TEST_SIZE", Common.getListScore(getActivity()).size()+"");
         if (listSubject.size() > 0){
             tvNoSubject.setVisibility(View.INVISIBLE);
         }else tvNoSubject.setVisibility(View.VISIBLE);

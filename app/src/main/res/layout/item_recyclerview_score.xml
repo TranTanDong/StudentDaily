@@ -12,14 +12,14 @@
 
 
     <TextView
-        android:id="@+id/tv_count_score"
+        android:id="@+id/tv_no_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:gravity="center"
         android:text="Chưa có điểm"
-        android:textSize="@dimen/font_size_header"
-        android:fontFamily="sans-serif-black"/>
+        android:textSize="@dimen/font_size_topic"
+        android:fontFamily="sans-serif"/>
 
 
 </FrameLayout>

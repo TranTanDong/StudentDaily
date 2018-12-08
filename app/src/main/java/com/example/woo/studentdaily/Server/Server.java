@@ -2,7 +2,7 @@ package com.example.woo.studentdaily.Server;
 
 public class Server {
 
-    public static String localhost = "192.168.1.14";
+    public static String localhost = "192.168.1.15";
     public static String patchInsertUser = "http://" + localhost + "/server/insert_user.php";
     public static String patchSelectUser = "http://" + localhost + "/server/select_user.php";
     public static String patchUpdateUser = "http://" + localhost + "/server/update_user.php";
@@ -35,6 +35,11 @@ public class Server {
     public static String patchInsertTest = "http://" + localhost + "/server/insert_test.php";
     public static String patchUpdateTest = "http://" + localhost + "/server/update_test.php";
     public static String patchDeleteTest = "http://" + localhost + "/server/delete_test.php";
+
+    public static String patchSelectScore = "http://" + localhost + "/server/select_score.php";
+    public static String patchInsertScore = "http://" + localhost + "/server/insert_score.php";
+    public static String patchUpdateScore = "http://" + localhost + "/server/update_score.php";
+    public static String patchDeleteScore = "http://" + localhost + "/server/delete_score.php";
 
 
 }

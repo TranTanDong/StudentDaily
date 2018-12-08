@@ -3,7 +3,7 @@ package com.example.woo.studentdaily.Subject.Model;
 import java.io.Serializable;
 
 public class Score implements Serializable {
-    private float score;
+    private double score;
     private int idst;
     private int idForm;
     private int idType;
@@ -14,7 +14,7 @@ public class Score implements Serializable {
 
     }
 
-    public Score(float score, int idst, int idForm, int idType, String updateDay, String note) {
+    public Score(double score, int idst, int idForm, int idType, String updateDay, String note) {
         this.score = score;
         this.idst = idst;
         this.idForm = idForm;
@@ -23,11 +23,11 @@ public class Score implements Serializable {
         this.note = note;
     }
 
-    public float getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

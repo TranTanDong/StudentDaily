@@ -15,6 +15,7 @@ import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Server.Server;
 import com.example.woo.studentdaily.Subject.Model.ClassYear;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
+import com.example.woo.studentdaily.Subject.Model.Score;
 import com.example.woo.studentdaily.Subject.Model.Study;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.example.woo.studentdaily.Subject.Model.Test;
@@ -328,6 +329,45 @@ public class LoadData {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Test", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public static void loadDataScore(final Context context) {
+        final ArrayList<Score> scores = new ArrayList<>();
+        final FirebaseAuth nAuth = FirebaseAuth.getInstance();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectScore, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    String code = nAuth.getCurrentUser().getUid();
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("codeuser").equals(code)){
+                                Score score = new Score();
+                                score.setScore(jsonObject.getDouble("score"));
+                                score.setNote(jsonObject.getString("note"));
+                                score.setUpdateDay(jsonObject.getString("updateday"));
+                                score.setIdForm(jsonObject.getInt("idform"));
+                                score.setIdType(jsonObject.getInt("idtos"));
+                                score.setIdst(jsonObject.getInt("idst"));
+                                scores.add(score);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Common.setListScore(scores, context);
+                    Toast.makeText(context, "Load Score success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Score", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
