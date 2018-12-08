@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.example.woo.studentdaily.R;
 
 public class ScoreFragment extends Fragment {
-
+    
 
     public ScoreFragment() {
         // Required empty public constructor
