@@ -2,17 +2,17 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rcv_score"
+        android:id="@+id/rcv_score_no_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
 
 
     <TextView
-        android:id="@+id/tv_no_score"
+        android:id="@+id/tv_no_score_no_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

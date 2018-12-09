@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +34,8 @@ public class Common {
     public static SimpleDateFormat f_dmy = new SimpleDateFormat("d/M/yyyy");
     public static SimpleDateFormat f_eymmdd = new SimpleDateFormat("EEE, yyyy-MM-dd");
     public static SimpleDateFormat f_ymmddhh = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static DecimalFormat d_double = new DecimalFormat("##.#");
 
     public static final String PREFERENCE = "USER";
     private static final String KEY_USER = "KEY_USER";

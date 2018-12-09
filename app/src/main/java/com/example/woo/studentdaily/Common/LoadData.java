@@ -348,6 +348,7 @@ public class LoadData {
                             JSONObject jsonObject = response.getJSONObject(i);
                             if (jsonObject.getString("codeuser").equals(code)){
                                 Score score = new Score();
+                                score.setId(jsonObject.getInt("id"));
                                 score.setScore(jsonObject.getDouble("score"));
                                 score.setNote(jsonObject.getString("note"));
                                 score.setUpdateDay(jsonObject.getString("updateday"));

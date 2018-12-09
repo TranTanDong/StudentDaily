@@ -52,6 +52,7 @@
                 android:drawableStart="@drawable/ic_phone_number"
                 android:drawablePadding="@dimen/input_drawable_padding"
                 android:hint="Số điện thoại"
+                android:maxLength="10"
                 android:inputType="phone"
                 android:fontFamily="sans-serif"
                 android:textColorHint="@color/textColorHint"

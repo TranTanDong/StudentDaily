@@ -38,20 +38,22 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
     @Override
     public void onBindViewHolder(@NonNull ScoreViewHolder holder, final int position) {
 
-        holder.tvScore.setText(String.valueOf(scores.get(position).getScore()));
+        holder.tvScore.setText(Common.d_double.format(scores.get(position).getScore()));
         holder.tvNote.setText(scores.get(position).getNote());
         holder.tvUpdateDay.setText("Cập nhật: "+moveDay(scores.get(position).getUpdateDay()));
+        holder.tvForm.setText(Common.stringForm(scores.get(position).getIdForm()));
 
-        holder.btnDelete.setTag(position);
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+
+        holder.itemView.setTag(position);
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onLongClick(View view) {
                 iScore.onClickDeleteScore(Integer.parseInt(view.getTag().toString()), type);
+                return false;
             }
         });
 
-        holder.btnEdit.setTag(position);
-        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 iScore.onClickEditScore(Integer.parseInt(view.getTag().toString()), type);
@@ -65,15 +67,13 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ScoreViewHol
     }
 
     public class ScoreViewHolder extends RecyclerView.ViewHolder{
-        TextView tvScore, tvUpdateDay, tvNote;
-        ImageView btnDelete, btnEdit;
+        TextView tvScore, tvUpdateDay, tvNote, tvForm;
         public ScoreViewHolder(View itemView) {
             super(itemView);
             tvScore = itemView.findViewById(R.id.tv_score);
             tvUpdateDay = itemView.findViewById(R.id.tv_update_day_score);
             tvNote = itemView.findViewById(R.id.tv_note_score);
-            btnEdit = itemView.findViewById(R.id.btn_edit_score);
-            btnDelete = itemView.findViewById(R.id.btn_delete_score);
+            tvForm = itemView.findViewById(R.id.tv_form_score);
         }
     }
 

@@ -161,7 +161,7 @@ public class AddScoreActivity extends AppCompatActivity {
     }
 
     private void insertScore(final String score, final String note, final String updateday, final String idst, final String idtype, final String idform) {
-        Toast.makeText(this, "Okê:   "+score+note+updateday+idst+idtype+idform, Toast.LENGTH_SHORT).show();
+        Log.e("INSERT_SCORE", score+note+updateday+idst+idtype+idform+"");
         final Popup popup = new Popup(AddScoreActivity.this);
         popup.createLoadingDialog();
         popup.show();
@@ -214,9 +214,12 @@ public class AddScoreActivity extends AppCompatActivity {
 
     private int idType(String type){
         switch (type){
-            case "Hệ số 1":return 1;
-            case "Hệ số 2":return 2;
-            case "Hệ số 3":return 3;
+            case "Hệ số 1":
+                return 1;
+            case "Hệ số 2":
+                return 2;
+            case "Hệ số 3":
+                return 3;
             default:return -1;
         }
     }
