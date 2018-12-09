@@ -27,6 +27,7 @@ import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Common.Popup;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
+import com.example.woo.studentdaily.Subject.Model.Score;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class AddScoreActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapterTyle, adapterForm;
 
     private String flag;
+    private Score scoreOB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,11 +118,16 @@ public class AddScoreActivity extends AppCompatActivity {
             }
         }else if (flag.equals("EDIT_SCORE")){
             setTitle("Sửa điểm");
-            String nameSubject = mIntent.getStringExtra("NAME_SUBJECT");
+            scoreOB = (Score) mIntent.getSerializableExtra("SCORE");
+            String nameSubject = Common.stringSubject(getApplicationContext(), scoreOB.getIdst());
 
             if (!nameSubject.isEmpty()){
                 tvSubject.setText(nameSubject);
             }
+            edtScore.setText(scoreOB.getScore()+"");
+            spnTyle.setSelection(listTyle.indexOf(Common.stringType(scoreOB.getIdType())));
+            spnForm.setSelection(listForm.indexOf(Common.stringForm(scoreOB.getIdForm())));
+            edtNote.setText(scoreOB.getNote());
         }
     }
 
@@ -152,12 +159,64 @@ public class AddScoreActivity extends AppCompatActivity {
             if (flag.equals("ADD_SCORE")){
                 insertScore(score, note, updateday, String.valueOf(idst), String.valueOf(idType), String.valueOf(idform));
             }else if (flag.equals("EDIT_SCORE")){
-//                if (test.getIdst() == idst && test.getIdForm() == idform && test.getDayTest().substring(0, 16).equals(date) && test.getPlace().equals(place) && test.getNote().equals(note)){
-//                    setResult(DetailScheduleTestActivity.RESULT_CODE_TEST);
-//                    finish();
-//                }else updateScheduleTest(String.valueOf(id), String.valueOf(idst), String.valueOf(idform), date, place, note);
+                if (scoreOB.getScore() == Double.parseDouble(score) && scoreOB.getIdType() == idType && scoreOB.getIdForm() == idform && scoreOB.getIdst() == idst && scoreOB.getNote().equals(note)){
+                    finish();
+                }else updateScore(String.valueOf(scoreOB.getId()), score, note, updateday, String.valueOf(idst), String.valueOf(idType), String.valueOf(idform));
             }
         }
+    }
+
+    private void updateScore(final String id, final String score, final String note, final String updateday, final String idst, final String idtos, final String idform) {
+        Log.e("UPDATE_SCORE", score+note+updateday+idst+idtos+idform+"");
+        final Popup popup = new Popup(AddScoreActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchUpdateScore, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.e("DATA_SCORE", response);
+                AddScoreActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoadData.loadDataScore(getApplicationContext());
+                        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                popup.hide();
+                                finish();
+                            }
+                        };
+                        timer.start();
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("sco_id", id);
+                hashMap.put("sco_score", score);
+                hashMap.put("sco_note", note);
+                hashMap.put("sco_updateday", updateday);
+                hashMap.put("sco_idstudy", idst);
+                hashMap.put("sco_idtos", idtos);
+                hashMap.put("sco_idform", idform);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void insertScore(final String score, final String note, final String updateday, final String idst, final String idtype, final String idform) {
@@ -220,7 +279,8 @@ public class AddScoreActivity extends AppCompatActivity {
                 return 2;
             case "Hệ số 3":
                 return 3;
-            default:return -1;
+            default:
+                return -1;
         }
     }
 

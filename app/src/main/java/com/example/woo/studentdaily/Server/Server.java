@@ -10,19 +10,20 @@ public class Server {
     public static String patchInsertPlan = "http://" + localhost + "/server/insert_plan.php";
     public static String patchSelectPlan = "http://" + localhost + "/server/select_plan.php";
     public static String patchDeletePlan = "http://" + localhost + "/server/delete_plan.php";
+    public static String patchUpdatePlan = "http://" + localhost + "/server/update_plan.php";
 
     public static String patchInsertDiary = "http://" + localhost + "/server/insert_diary.php";
     public static String patchSelectDiary = "http://" + localhost + "/server/select_diary.php";
 
     public static String patchInsertEvent = "http://" + localhost + "/server/insert_event.php";
     public static String patchSelectEvent = "http://" + localhost + "/server/select_event.php";
+    public static String patchUpdateEvent = "http://" + localhost + "/server/update_event.php";
+    public static String patchDeleteEvent = "http://" + localhost + "/server/delete_event.php";
 
     public static String patchInsertSubject = "http://" + localhost + "/server/insert_schoolyear_semester_class_subject_lecturer_study.php";
     public static String patchSelectSubject = "http://" + localhost + "/server/select_subject.php";
-
     public static String patchSelectLecturer = "http://" + localhost + "/server/select_lecturer.php";
     public static String patchUpdateLecturer = "http://" + localhost + "/server/update_lecturer.php";
-
     public static String patchSelectClassYear = "http://" + localhost + "/server/select_class_year.php";
     public static String patchUpdateClassYear = "http://" + localhost + "/server/update_subject_schoolyear_semester_class.php";
 

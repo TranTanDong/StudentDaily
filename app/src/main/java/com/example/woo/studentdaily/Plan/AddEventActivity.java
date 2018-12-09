@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -64,6 +65,9 @@ public class AddEventActivity extends AppCompatActivity {
     private SeekBar sbPriority;
     private Spinner spnPlan;
 
+    private String Flag;
+    private Event event;
+
     private int position = 1; //Vị trí click nhắc nhở
 
     private Map<String, Integer> mapPlan = new HashMap<String, Integer>();
@@ -120,8 +124,64 @@ public class AddEventActivity extends AppCompatActivity {
             Toast.makeText(this, "Hãy nhập tên sự kiện", Toast.LENGTH_SHORT).show();
         }else {
             Log.i("saveEvent", ss);
-            insertDataEvent(idPlan, nameEvent, placeEvent, dayTimeStart, dayTimeEnd, priority, remind, describe);
+            if (Flag.equals("ADD_EVENT")){
+                insertDataEvent(idPlan, nameEvent, placeEvent, dayTimeStart, dayTimeEnd, priority, remind, describe);
+            }else if (Flag.equals("EDIT_EVENT")){
+                updateDataEvent(String.valueOf(event.getId()), String.valueOf(idPlan), nameEvent, placeEvent, dayTimeStart, dayTimeEnd, String.valueOf(priority), String.valueOf(remind), describe);
+            }
+
         }
+    }
+
+    private void updateDataEvent(final String id, final String idplan, final String nameEvent, final String placeEvent, final String dayTimeStart, final String dayTimeEnd, final String priority, final String remind, final String describe) {
+        final Popup popup = new Popup(AddEventActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchUpdateEvent, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("DATA_EVENT", response);
+
+                LoadData.loadDataEvent(AddEventActivity.this);
+                CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                    @Override
+                    public void onTick(long l) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        popup.hide();
+                        setResult(EventDetailsActivity.RESULT_CODE_EVENT);
+                        finish();
+                    }
+                };
+                timer.start();
+                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(AddEventActivity.this, getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("e_id", id);
+                hashMap.put("e_idplan", idplan);
+                hashMap.put("e_name", nameEvent);
+                hashMap.put("e_place", placeEvent);
+                hashMap.put("e_starttime", dayTimeStart);
+                hashMap.put("e_endtime", dayTimeEnd);
+                hashMap.put("e_priority", priority);
+                hashMap.put("e_remind", remind);
+                hashMap.put("e_describe", describe);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void insertDataEvent(final int idPlan, final String nameEvent, final String placeEvent, final String dayTimeStart, final String dayTimeEnd, final int priority, final int remind, final String describe) {
@@ -223,6 +283,26 @@ public class AddEventActivity extends AppCompatActivity {
         spnPlan.setAdapter(adapterPlan);
 
         setInfEvent();
+
+        Intent mIntent = getIntent();
+        Flag = mIntent.getStringExtra("FLAG_EVENT");
+        if (Flag.equals("ADD_EVENT")){
+            setTitle("Sự kiện mới");
+        }else if (Flag.equals("EDIT_EVENT")){
+            setTitle("Sửa sự kiện");
+            event = (Event) mIntent.getSerializableExtra("EVENT");
+            spnPlan.setSelection(plans.indexOf(Common.stringPlan(getApplicationContext(), event.getIdPlan())));
+            edtNameEvent.setText(event.getName());
+            edtPlaceEvent.setText(event.getPlace());
+            tvStartDayEvent.setText(Common.moveSlashTo(event.getStartTime().substring(0, 10), "-", "/"));
+            tvStartTimeEvent.setText(event.getStartTime().substring(11, 16));
+            tvEndDayEvent.setText(Common.moveSlashTo(event.getEndTime().substring(0, 10), "-", "/"));
+            tvEndTimeEvent.setText(event.getEndTime().substring(11, 16));
+            sbPriority.setProgress(event.getPriority());
+            tvPriorityPercent.setText(event.getPriority()+" %");
+            tvRemindedEvent.setText(event.getRemind()+" phút");
+            edtDescribeEvent.setText(event.getDescribe());
+        }
     }
 
     private void setInfEvent() {
@@ -364,6 +444,9 @@ public class AddEventActivity extends AppCompatActivity {
     }
 
     private void processTime(final TextView tvStartTimePlan, Context context, final Calendar cal) {
+        String arr[] = tvStartTimePlan.getText().toString().split(":");
+        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(arr[0]));
+        cal.set(Calendar.MINUTE, Integer.parseInt(arr[1]));
         TimePickerDialog.OnTimeSetListener callback=new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -386,6 +469,8 @@ public class AddEventActivity extends AppCompatActivity {
 
 
     private void processDay(final TextView tvStartDayPlan, Context context, final Calendar cal) {
+        String arr[] = tvStartDayPlan.getText().toString().split("/");
+        cal.set(Integer.parseInt(arr[2]), Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
         DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

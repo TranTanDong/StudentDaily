@@ -68,7 +68,7 @@ public class AddPlanActivity extends AppCompatActivity {
                     if (namePlan.equals(plan.getName())){
                         finish();
                     }else if (!TextUtils.isEmpty(namePlan)){
-                        editDataPlan(String.valueOf(plan.getId()), namePlan, dayUpdate);
+                        editDataPlan(String.valueOf(plan.getId()), namePlan);
                     }else Toast.makeText(getApplicationContext(), "Hãy nhập tên kế hoạch", Toast.LENGTH_SHORT).show();
                 }
 
@@ -83,8 +83,51 @@ public class AddPlanActivity extends AppCompatActivity {
         });
     }
 
-    private void editDataPlan(String s, String namePlan, String dayUpdate) {
+    private void editDataPlan(final String id, final String namePlan) {
+        final Popup popup = new Popup(AddPlanActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchUpdatePlan, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.i("DATA_PLAN", response);
+                AddPlanActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoadData.loadDataPlan(AddPlanActivity.this);
+                        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                            @Override
+                            public void onTick(long l) {
 
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                popup.hide();
+                                finish();
+                            }
+                        };
+                        timer.start();
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("p_id", id);
+                hashMap.put("p_name", namePlan);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void addControls() {

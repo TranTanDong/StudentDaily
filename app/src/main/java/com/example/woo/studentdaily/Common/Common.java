@@ -319,4 +319,46 @@ public class Common {
                 return -1;
         }
     }
+
+    public static String stringSubject(Context context, int idst){
+        ArrayList<Subject> subjects = getListSubject(context);
+        for (Subject subject:subjects){
+            if (subject.getIdst() == idst){
+                return subject.getName();
+            }
+        }
+        return "";
+    }
+
+    public static String stringType(int position){
+        switch (position){
+            case 1: return "Hệ số 1";
+            case 2: return "Hệ số 2";
+            case 3: return "Hệ số 3";
+            default: return "";
+        }
+    }
+
+    public static int idType(String type){
+        switch (type){
+            case "Hệ số 1":
+                return 1;
+            case "Hệ số 2":
+                return 2;
+            case "Hệ số 3":
+                return 3;
+            default:
+                return -1;
+        }
+    }
+
+    public static String stringPlan(Context context, int position){
+        ArrayList<Plan> plans = getListPlan(context);
+        for (Plan plan:plans){
+            if (plan.getId() == position){
+                return plan.getName();
+            }
+        }
+        return "";
+    }
 }

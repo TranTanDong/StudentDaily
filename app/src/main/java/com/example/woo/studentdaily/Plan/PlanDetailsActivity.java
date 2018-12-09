@@ -55,6 +55,7 @@ public class PlanDetailsActivity extends AppCompatActivity implements EventAdapt
 
     private void processDataEvent() {
         listEvent = Common.getListEvent(getApplicationContext());
+        events.clear();
         for (Event event : listEvent){
             if (event.getIdPlan() == idPlan){
                 events.add(event);
@@ -64,7 +65,7 @@ public class PlanDetailsActivity extends AppCompatActivity implements EventAdapt
 
         if (events.size() > 0){
             tvNoEvent.setVisibility(View.INVISIBLE);
-        }else tvNoEvent.setVisibility(View.INVISIBLE);
+        }else tvNoEvent.setVisibility(View.VISIBLE);
     }
 
 
@@ -91,5 +92,12 @@ public class PlanDetailsActivity extends AppCompatActivity implements EventAdapt
         Intent mIntent = new Intent(PlanDetailsActivity.this, EventDetailsActivity.class);
         mIntent.putExtra("ITEM_EVENT", events.get(position));
         startActivity(mIntent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        processDataEvent();
+        eventAdapterPlan.notifyDataSetChanged();
     }
 }
