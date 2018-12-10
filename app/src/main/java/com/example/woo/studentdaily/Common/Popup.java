@@ -118,6 +118,12 @@ public class Popup {
         text.setText("Đang tải ...");
         dialogButton.setVisibility(View.GONE);
     }
+
+    public void createLoadingDialog (String s){
+        loading.setVisibility(View.VISIBLE);
+        text.setText(s);
+        dialogButton.setVisibility(View.GONE);
+    }
     public void show() {
         dialog.show();
     }

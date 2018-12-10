@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bgWhite"
     tools:context=".Diary.AddContentDiaryActivity">
 
     <include layout="@layout/toolbar_layout"></include>
@@ -12,9 +13,30 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/edt_content_diary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:maxLines="5"
+                android:hint="Nội dung bài viết"
+                android:fontFamily="sans-serif"/>
 
+            <ImageView
+                android:id="@+id/img_content_diary"
+                android:layout_width="350dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_image_add"/>
 
+        </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

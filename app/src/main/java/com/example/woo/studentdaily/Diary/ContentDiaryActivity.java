@@ -12,6 +12,7 @@ import com.github.clans.fab.FloatingActionButton;
 public class ContentDiaryActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton btnAddDiary;
+    private int idDiary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class ContentDiaryActivity extends AppCompatActivity {
         Intent mIntent = getIntent();
         String nameDiary = mIntent.getStringExtra("NAME_DIARY");
         setTitle(nameDiary);
+        idDiary = mIntent.getIntExtra("ID_DIARY", -1);
 
         btnAddDiary = findViewById(R.id.btn_add_diary);
 
@@ -35,7 +37,10 @@ public class ContentDiaryActivity extends AppCompatActivity {
         btnAddDiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ContentDiaryActivity.this, AddContentDiaryActivity.class));
+                Intent mIntent = new Intent(ContentDiaryActivity.this, AddContentDiaryActivity.class);
+                mIntent.putExtra("FLAG", "ADD_CONTENT_DIARY");
+                mIntent.putExtra("ID_DIARY", idDiary);
+                startActivity(mIntent);
             }
         });
     }

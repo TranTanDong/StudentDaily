@@ -90,6 +90,7 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.IDiary{
     public void onItemClickDiary(int position) {
         Intent mIntent = new Intent(getActivity(), ContentDiaryActivity.class);
         mIntent.putExtra("NAME_DIARY", listDiary.get(position).getName());
+        mIntent.putExtra("ID_DIARY", listDiary.get(position).getId());
         startActivity(mIntent);
     }
 }
