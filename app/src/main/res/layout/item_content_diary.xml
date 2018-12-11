@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="5dp"
+    android:background="@color/bgWhite"
     android:orientation="vertical">
 
     <LinearLayout
@@ -19,6 +19,7 @@
             android:src="@drawable/ic_dot_blue"/>
 
         <TextView
+            android:id="@+id/tv_day_create_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="11/11/2018 22:10:11"
@@ -27,7 +28,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="1dp"
             android:background="@color/colorPrimary"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"></View>
@@ -35,6 +36,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_content_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Nhìn em cạnh bên anh ngủ ngoan lòng anh quá nỗi nhẹ nhàng thoáng chốc anh quên đi bao phiền ưu "
@@ -42,12 +44,14 @@
         android:padding="10dp" />
 
     <ImageView
+        android:id="@+id/img_post"
         android:layout_width="380dp"
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:src="@drawable/beautiful_girl" />
 
     <ImageView
+        android:id="@+id/btn_delete_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_more_horizontal"

@@ -10,6 +10,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Diary.Model.Diary;
+import com.example.woo.studentdaily.Diary.Model.PostDiary;
+import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.Server.Server;
@@ -102,26 +104,68 @@ public class LoadData {
         requestQueue.add(jsonArrayRequest);
     }
 
+    public static void loadDataPostDiary(final Context context) {
+        final ArrayList<PostDiary> postDiaries = new ArrayList<>();
+        final FirebaseAuth nAuth = FirebaseAuth.getInstance();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectPostDiary, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    String code = nAuth.getCurrentUser().getUid();
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("codeuser").equals(code)){
+                                PostDiary postDiary = new PostDiary();
+                                postDiary.setId(jsonObject.getInt("id"));
+                                postDiary.setIdDiary(jsonObject.getInt("iddiary"));
+                                postDiary.setContent(jsonObject.getString("content"));
+                                postDiary.setDayCreate(jsonObject.getString("daycreate"));
+                                postDiary.setAttach(jsonObject.getString("attach"));
+                                postDiaries.add(0, postDiary);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Common.setListPostDiary(postDiaries, context);
+                    Toast.makeText(context, "Load Post Diary success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error Post Diary", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+    }
+
     public static void loadDataEvent(final Context context) {
         final ArrayList<Event> events = new ArrayList<>();
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectEvent, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 if (response != null){
+                    String code = mAuth.getCurrentUser().getUid();
                     for (int i=0; i<response.length(); i++){
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
-                            Event event = new Event();
-                            event.setId(jsonObject.getInt("id"));
-                            event.setIdPlan(jsonObject.getInt("idplan"));
-                            event.setName(jsonObject.getString("name"));
-                            event.setPlace(jsonObject.getString("place"));
-                            event.setStartTime(jsonObject.getString("starttime"));
-                            event.setEndTime(jsonObject.getString("endtime"));
-                            event.setPriority(jsonObject.getInt("priority"));
-                            event.setRemind(jsonObject.getInt("remind"));
-                            event.setDescribe(jsonObject.getString("describe"));
-                            events.add(0, event);
+                            if (jsonObject.getString("codeuser").equals(code)){
+                                Event event = new Event();
+                                event.setId(jsonObject.getInt("id"));
+                                event.setIdPlan(jsonObject.getInt("idplan"));
+                                event.setName(jsonObject.getString("name"));
+                                event.setPlace(jsonObject.getString("place"));
+                                event.setStartTime(jsonObject.getString("starttime"));
+                                event.setEndTime(jsonObject.getString("endtime"));
+                                event.setPriority(jsonObject.getInt("priority"));
+                                event.setRemind(jsonObject.getInt("remind"));
+                                event.setDescribe(jsonObject.getString("describe"));
+                                events.add(0, event);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -369,6 +413,46 @@ public class LoadData {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Error Score", error.toString());
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public static void loadDataUser(final Context context) {
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectUser, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                if (response != null){
+                    String code = mAuth.getCurrentUser().getUid();
+                    for (int i=0; i<response.length(); i++){
+                        try {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("code").equals(code)){
+                                final User user = new User();
+                                user.setCode(jsonObject.getString("code"));
+                                user.setName(jsonObject.getString("name"));
+                                user.setImage(jsonObject.getString("image"));
+                                user.setEmail(jsonObject.getString("email"));
+                                user.setGender(jsonObject.getString("gender"));
+                                user.setBirthDay(jsonObject.getString("birthday"));
+
+                                Common.setCurrentUser(context, user);
+                                Log.e("CheckData", user.toString());
+                                Toast.makeText(context, "Load User Ok", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error User", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);

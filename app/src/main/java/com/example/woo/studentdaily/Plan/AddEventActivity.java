@@ -7,14 +7,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +22,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,18 +38,14 @@ import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Common.Popup;
-import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
-import com.google.firebase.auth.FirebaseAuth;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -271,7 +264,7 @@ public class AddEventActivity extends AppCompatActivity {
         tvPriorityPercent = findViewById(R.id.tv_priority_percent);
 
         plans = new ArrayList<>();
-        loadDataPlan();
+        setInfPlan();
         spnPlan = findViewById(R.id.spn_event_plan);
 
         adapterPlan = new ArrayAdapter<>(
@@ -317,7 +310,7 @@ public class AddEventActivity extends AppCompatActivity {
         tvEndTimeEvent.setText(stf.format(calFrom.getTime()));
     }
 
-    private void loadDataPlan() {
+    private void setInfPlan() {
         plans.clear();
         mapPlan.clear();
         ArrayList<Plan> listPlan = Common.getListPlan(getApplicationContext());

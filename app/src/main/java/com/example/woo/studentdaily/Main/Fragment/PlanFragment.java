@@ -28,7 +28,6 @@ public class PlanFragment extends Fragment{
     private FloatingActionMenu btnMenuPlan;
     private FloatingActionButton btnAddEvent;
     private FloatingActionButton btnAddPlan;
-    private FirebaseAuth mAuth;
 
     public PlanFragment() {
         // Required empty public constructor
@@ -68,7 +67,6 @@ public class PlanFragment extends Fragment{
     }
 
     private void addControls(View view) {
-        mAuth   = FirebaseAuth.getInstance();
         btnAddEvent = view.findViewById(R.id.btn_add_event_floating);
         btnAddPlan = view.findViewById(R.id.btn_add_plan);
         btnMenuPlan = view.findViewById(R.id.floating_action_menu);

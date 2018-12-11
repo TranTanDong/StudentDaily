@@ -110,7 +110,7 @@ public class AddContentDiaryActivity extends AppCompatActivity {
                 AddContentDiaryActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //LoadData.loadDataDiary(AddContentDiaryActivity.this);
+                        LoadData.loadDataPostDiary(getApplicationContext());
                         CountDownTimer timer = new CountDownTimer(3000, 1000) {
                             @Override
                             public void onTick(long l) {
@@ -204,6 +204,9 @@ public class AddContentDiaryActivity extends AppCompatActivity {
     }
 
     private void excecute(final String s, final String content, final String daycreate){
+        final Popup popup = new Popup(AddContentDiaryActivity.this);
+        popup.createLoadingDialog("");
+        popup.show();
         if (bitmap != null){
             final StorageReference storageR = storageReference.child("Diary/" + Calendar.getInstance().getTime() + ".png");
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -228,6 +231,7 @@ public class AddContentDiaryActivity extends AppCompatActivity {
                         AddContentDiaryActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                popup.hide();
                                 insertPostDiary(s, content, daycreate, urlImage);
                             }
                         });
@@ -237,7 +241,10 @@ public class AddContentDiaryActivity extends AppCompatActivity {
                     }
                 }
             });
-        }else insertPostDiary(s, content, daycreate, urlImage);
+        }else {
+            popup.hide();
+            insertPostDiary(s, content, daycreate, urlImage);
+        }
 
     }
 

@@ -14,6 +14,8 @@ public class Server {
 
     public static String patchInsertDiary = "http://" + localhost + "/server/insert_diary.php";
     public static String patchSelectDiary = "http://" + localhost + "/server/select_diary.php";
+    public static String patchUpdateDiary = "http://" + localhost + "/server/update_diary.php";
+    public static String patchDeleteDiary = "http://" + localhost + "/server/delete_diary.php";
 
     public static String patchInsertEvent = "http://" + localhost + "/server/insert_event.php";
     public static String patchSelectEvent = "http://" + localhost + "/server/select_event.php";
@@ -26,6 +28,7 @@ public class Server {
     public static String patchUpdateLecturer = "http://" + localhost + "/server/update_lecturer.php";
     public static String patchSelectClassYear = "http://" + localhost + "/server/select_class_year.php";
     public static String patchUpdateClassYear = "http://" + localhost + "/server/update_subject_schoolyear_semester_class.php";
+    public static String patchDeleteSubjectAll = "http://" + localhost + "/server/delete_subject_all.php";
 
     public static String patchInsertStudy = "http://" + localhost + "/server/insert_schedule_study.php";
     public static String patchSelectStudy = "http://" + localhost + "/server/select_study.php";

@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Common.Popup;
+import com.example.woo.studentdaily.Diary.Model.Diary;
 import com.example.woo.studentdaily.Main.MainActivity;
 import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.R;
@@ -38,6 +39,9 @@ public class AddDiaryActivity extends AppCompatActivity {
     private TextView tvDayAddNewDiary;
     private Button btnOkDiary, btnCancelDiary;
     private FirebaseAuth mAuth;
+
+    private String Flag = "";
+    private Diary diary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

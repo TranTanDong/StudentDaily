@@ -8,6 +8,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.example.woo.studentdaily.Diary.Model.Diary;
+import com.example.woo.studentdaily.Diary.Model.PostDiary;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.Plan.Model.Event;
 import com.example.woo.studentdaily.Plan.Model.Plan;
@@ -48,6 +49,7 @@ public class Common {
     private static final String LIST_TEST = "LIST_TEST";
     private static final String LIST_DIARY = "LIST_DIARY";
     private static final String LIST_SCORE = "LIST_SCORE";
+    private static final String LIST_POST_DIARY = "LIST_POST_DIARY";
 
 
     public static String moveSlashTo(String s, String a, String b){
@@ -174,6 +176,26 @@ public class Common {
         SharedPreferences.Editor editor = sharedPref.edit();
         Gson gson = new Gson();
         editor.putString(LIST_TEST, gson.toJson(list));
+        editor.apply();
+    }
+
+    public static ArrayList<PostDiary> getListPostDiary(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        ArrayList<PostDiary> listPostDiary = new ArrayList<>();
+        String serializedObject = sharedPreferences.getString(LIST_POST_DIARY, null);
+        if (serializedObject != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<PostDiary>>(){}.getType();
+            listPostDiary = gson.fromJson(serializedObject, type);
+        }
+        return listPostDiary;
+    }
+
+    public static void setListPostDiary(ArrayList<PostDiary> list, Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+        editor.putString(LIST_POST_DIARY, gson.toJson(list));
         editor.apply();
     }
 
@@ -360,5 +382,14 @@ public class Common {
             }
         }
         return "";
+    }
+
+    public static String moveDay(String createDay) {
+        if (createDay.contains(" ")){
+            String startTime[] = createDay.split(" ");
+            String day = Common.moveSlashTo(startTime[0], "-", "/");
+            String time = startTime[1];
+            return day + " " + time;
+        }else return createDay;
     }
 }

@@ -36,6 +36,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Diary.AddDiaryActivity;
 import com.example.woo.studentdaily.Main.Fragment.DiaryFragment;
 import com.example.woo.studentdaily.Main.Fragment.MoreFragment;
@@ -62,9 +63,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private MaterialSearchView searchView;
-
-    private User user;
-    private FirebaseAuth mAuth;
 
     private BottomNavigationView mMainNav;
 
@@ -121,8 +119,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addControls();
-        loadDataUser();
-//        loadDataMainPlan(getApplicationContext());
+        //LoadData.loadDataUser(MainActivity.this);
         addEvents();
     }
 
@@ -132,51 +129,11 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    public static void loadDataMainPlan(final Context context) {
-        final ArrayList<Plan> mainPlans = new ArrayList<>();
-        mainPlans.clear();
-        final FirebaseAuth nAuth = FirebaseAuth.getInstance();
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectPlan, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if (response != null){
-                    String code = nAuth.getCurrentUser().getUid();
-                    for (int i=0; i<response.length(); i++){
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            if (jsonObject.getString("codeuser").equals(code)){
-                                Plan plan = new Plan();
-                                plan.setId(jsonObject.getInt("id"));
-                                plan.setCodeUser(jsonObject.getString("codeuser"));
-                                plan.setName(jsonObject.getString("name"));
-                                plan.setUpdateDay(jsonObject.getString("updateday"));
-                                mainPlans.add(plan);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    Common.setListPlan(mainPlans, context);
-                    Toast.makeText(context, "Loaded plan success", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Error Plan", error.toString());
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(jsonArrayRequest);
-    }
-
     private void addEvents() {
 
     }
 
     private void addControls() {
-        mAuth = FirebaseAuth.getInstance();
-        user = new User();
 
         container = findViewById(R.id.container);
         mMainNav     = findViewById(R.id.navigation);
@@ -226,46 +183,46 @@ public class MainActivity extends AppCompatActivity{
         alertDialog.show();
     }
 
-    private void loadDataUser() {
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectUser, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                if (response != null){
-                    String code = mAuth.getCurrentUser().getUid();
-                    for (int i=0; i<response.length(); i++){
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            if (jsonObject.getString("code").equals(code)){
-                                user.setCode(jsonObject.getString("code"));
-                                user.setName(jsonObject.getString("name"));
-                                user.setImage(jsonObject.getString("image"));
-                                user.setEmail(jsonObject.getString("email"));
-                                user.setGender(jsonObject.getString("gender"));
-                                user.setBirthDay(jsonObject.getString("birthday"));
-                                MainActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Common.setCurrentUser(getApplicationContext(), user);
-                                        Log.i("CheckData", user.toString());
-                                    }
-                                });
-                                Toast.makeText(getApplicationContext(), "Load User Ok", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Error User", error.toString());
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(jsonArrayRequest);
-    }
+//    private void loadDataUser() {
+//        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Server.patchSelectUser, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                if (response != null){
+//                    String code = mAuth.getCurrentUser().getUid();
+//                    for (int i=0; i<response.length(); i++){
+//                        try {
+//                            JSONObject jsonObject = response.getJSONObject(i);
+//                            if (jsonObject.getString("code").equals(code)){
+//                                user.setCode(jsonObject.getString("code"));
+//                                user.setName(jsonObject.getString("name"));
+//                                user.setImage(jsonObject.getString("image"));
+//                                user.setEmail(jsonObject.getString("email"));
+//                                user.setGender(jsonObject.getString("gender"));
+//                                user.setBirthDay(jsonObject.getString("birthday"));
+//                                MainActivity.this.runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        Common.setCurrentUser(getApplicationContext(), user);
+//                                        Log.e("CheckData", user.toString());
+//                                    }
+//                                });
+//                                Toast.makeText(getApplicationContext(), "Load User success", Toast.LENGTH_SHORT).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.e("Error User", error.toString());
+//            }
+//        });
+//        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+//        requestQueue.add(jsonArrayRequest);
+//    }
 
     @Override
     protected void onResume() {

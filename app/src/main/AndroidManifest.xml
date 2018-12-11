@@ -46,7 +46,8 @@
         <activity android:name=".Subject.AddScheduleTestActivity" />
         <activity android:name=".Subject.EditLecturerActivity" />
         <activity android:name=".Subject.EditClassSemesterYearActivity" />
-        <activity android:name=".Subject.DetailScheduleTestActivity"></activity>
+        <activity android:name=".Subject.DetailScheduleTestActivity" />
+        <activity android:name=".Login.LoadDataActivity"></activity>
     </application>
 
 </manifest>

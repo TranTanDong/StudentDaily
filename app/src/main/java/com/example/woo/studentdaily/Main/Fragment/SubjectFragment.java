@@ -67,14 +67,14 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
         rcvListSubject = v.findViewById(R.id.rcv_list_subject);
 
         listSubject = new ArrayList<>();
-        if (listSubject.size() <= 0){
-            LoadData.loadDataSubject(getActivity());
-            LoadData.loadDataLecturer(getActivity());
-            LoadData.loadDataClassYear(getActivity());
-            LoadData.loadDataStudy(getActivity());
-            LoadData.loadDataTest(getActivity());
-            LoadData.loadDataScore(getActivity());
-        }
+//        if (listSubject.size() <= 0){
+//            LoadData.loadDataSubject(getActivity());
+//            LoadData.loadDataLecturer(getActivity());
+//            LoadData.loadDataClassYear(getActivity());
+//            LoadData.loadDataStudy(getActivity());
+//            LoadData.loadDataTest(getActivity());
+//            LoadData.loadDataScore(getActivity());
+//        }
         listSubject = Common.getListSubject(getActivity());
         listLecturer = Common.getListLecturer(getActivity());
         listClassYear = Common.getListClassYear(getActivity());

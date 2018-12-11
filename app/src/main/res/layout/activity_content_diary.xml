@@ -15,25 +15,26 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tb_toolbar">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rcv_content_diary"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_content_diary">
+                android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
 
-            <include layout="@layout/item_content_diary"></include>
-            <include layout="@layout/item_content_diary"></include>
-            <include layout="@layout/item_content_diary"></include>
-            <include layout="@layout/item_content_diary"></include>
-            <include layout="@layout/item_content_diary"></include>
-
-        </LinearLayout>
+            <TextView
+                android:id="@+id/tv_no_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:text="Chưa có bài viết"
+                android:textSize="@dimen/font_size_topic"
+                android:fontFamily="sans-serif"/>
+        </FrameLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <com.github.clans.fab.FloatingActionButton
@@ -42,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:src="@drawable/ic_add_diary"
         app:fab_colorNormal="@color/colorPrimary"
         app:fab_size="normal" />

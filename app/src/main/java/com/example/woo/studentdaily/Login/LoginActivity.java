@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     //Nếu đã đăng nhập trước và đã cập nhật thông tin
     private void updateUI(FirebaseUser currentUser, boolean mFlag) {
         if (currentUser != null && mFlag == true){
-                Intent mIntent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent mIntent = new Intent(LoginActivity.this, LoadDataActivity.class);
                 startActivity(mIntent);
                 finish();
         }
