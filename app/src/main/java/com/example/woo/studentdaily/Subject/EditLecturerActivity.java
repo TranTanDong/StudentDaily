@@ -21,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Common.Popup;
+import com.example.woo.studentdaily.More.DetailLecturerActivity;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
 import com.example.woo.studentdaily.Subject.Model.Lecturer;
@@ -32,6 +33,8 @@ public class EditLecturerActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextInputEditText edtNameLecturer, edtPhoneLecturer, edtEmailLecturer, edtWebLecturer;
     private Lecturer lec;
+    private Intent mIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +90,9 @@ public class EditLecturerActivity extends AppCompatActivity {
 
                         @Override
                         public void onFinish() {
+                            Lecturer lecturer = new Lecturer(id, name, phone, email, web, lec.getIdst());
+                            mIntent.putExtra("LEC_RESULT", lecturer);
+                            setResult(DetailLecturerActivity.RESULT_CODE_EDIT_LECTURER, mIntent);
                             popup.hide();
                             finish();
                         }
@@ -127,7 +133,7 @@ public class EditLecturerActivity extends AppCompatActivity {
     }
 
     private void receiveAndSetInfLec() {
-        Intent mIntent = getIntent();
+        mIntent = getIntent();
         lec = (Lecturer) mIntent.getSerializableExtra("LEC");
         edtNameLecturer.setText(lec.getName());
         edtPhoneLecturer.setText(lec.getPhone());

@@ -107,11 +107,11 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
-                        progressDialog.hide();
+                        progressDialog.dismiss();
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUI(user, true);
                     }else {
-                        progressDialog.hide();
+                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, getResources().getString(R.string.email_or_password_fail), Toast.LENGTH_SHORT).show();
                     }
                 }

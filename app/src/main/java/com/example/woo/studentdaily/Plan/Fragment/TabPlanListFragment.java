@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -47,6 +48,7 @@ import java.util.Map;
  */
 public class TabPlanListFragment extends Fragment implements PlanAdapter.IPlan{
     private RecyclerView rcvPlan;
+    private TextView tvNoPlan;
     private PlanAdapter planAdapter;
     private ArrayList<Plan> listPlan;
 
@@ -66,16 +68,16 @@ public class TabPlanListFragment extends Fragment implements PlanAdapter.IPlan{
     }
 
     private void addControls(View v) {
+        tvNoPlan = v.findViewById(R.id.tv_no_plan);
         rcvPlan = v.findViewById(R.id.rcv_plan);
         listPlan = new ArrayList<>();
-//        if (listPlan.size() <= 0){
-//            LoadData.loadDataPlan(getActivity());
-//        }
         listPlan = Common.getListPlan(getActivity());
+
 
         rcvPlan.setLayoutManager(new LinearLayoutManager(getActivity()));
         planAdapter = new PlanAdapter(getActivity(), listPlan, this);
         rcvPlan.setAdapter(planAdapter);
+        setDataListPlan();
     }
 
     private void addEvents() {
@@ -105,6 +107,9 @@ public class TabPlanListFragment extends Fragment implements PlanAdapter.IPlan{
     private void setDataListPlan(){
         listPlan.clear();
         listPlan = Common.getListPlan(getActivity());
+        if (listPlan.size() > 0){
+            tvNoPlan.setVisibility(View.INVISIBLE);
+        }else tvNoPlan.setVisibility(View.VISIBLE);
         Log.i("listPlanSize", listPlan.size() + "");
         planAdapter.refreshAdapter(listPlan);
     }

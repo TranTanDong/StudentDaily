@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".More.DetailLecturerActivity">
+
+    <include layout="@layout/toolbar_layout"></include>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name_lecturer_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phạm Ngọc Quyền"
+                android:layout_margin="10dp"
+                android:textSize="@dimen/font_size_header"
+                android:fontFamily="sans-serif-black"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:id="@+id/tv_phone_lecturer_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:text="0123456789"
+                android:drawableLeft="@drawable/ic_phone_number"
+                android:textSize="@dimen/font_size_topic"
+                android:gravity="center_vertical"
+                android:drawablePadding="30dp"
+                android:fontFamily="sans-serif-black"/>
+
+            <TextView
+                android:id="@+id/tv_email_lecturer_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="pnquyen@cit.ctu.edu.vn"
+                android:drawableLeft="@drawable/ic_email"
+                android:textSize="@dimen/font_size_topic"
+                android:gravity="center_vertical"
+                android:drawablePadding="30dp"
+                android:fontFamily="sans-serif-black"/>
+
+            <TextView
+                android:id="@+id/tv_web_lecturer_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="pnquyen.com"
+                android:drawableLeft="@drawable/ic_web_lecturers"
+                android:textSize="@dimen/font_size_topic"
+                android:gravity="center_vertical"
+                android:drawablePadding="30dp"
+                android:fontFamily="sans-serif-black"/>
+
+            <Button
+                android:id="@+id/btn_update_lecturer_detail"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:text="Cập nhật"
+                android:layout_margin="10dp"
+                android:textColor="@color/textColorWhite"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</LinearLayout>

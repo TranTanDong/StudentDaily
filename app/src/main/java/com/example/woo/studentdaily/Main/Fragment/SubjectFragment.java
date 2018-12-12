@@ -65,43 +65,29 @@ public class SubjectFragment extends Fragment implements SubjectAdapter.ISubject
     private void addControls(View v) {
         tvNoSubject = v.findViewById(R.id.tv_no_subject);
         rcvListSubject = v.findViewById(R.id.rcv_list_subject);
-
         listSubject = new ArrayList<>();
-//        if (listSubject.size() <= 0){
-//            LoadData.loadDataSubject(getActivity());
-//            LoadData.loadDataLecturer(getActivity());
-//            LoadData.loadDataClassYear(getActivity());
-//            LoadData.loadDataStudy(getActivity());
-//            LoadData.loadDataTest(getActivity());
-//            LoadData.loadDataScore(getActivity());
-//        }
-        listSubject = Common.getListSubject(getActivity());
-        listLecturer = Common.getListLecturer(getActivity());
-        listClassYear = Common.getListClassYear(getActivity());
-        listStudy = Common.getListStudy(getActivity());
-        listTest = Common.getListTest(getActivity());
-        Log.e("SUBJECT_SIZE", listSubject.size()+"");
-        Log.e("LECTURER_SIZE", listLecturer.size()+"");
-        Log.e("CLASS_YEAR_SIZE", listClassYear.size()+"");
-        Log.e("STUDY_SIZE", listStudy.size()+"");
-        Log.e("TEST_SIZE", listTest.size()+"");
-        Log.e("TEST_SIZE", Common.getListScore(getActivity()).size()+"");
-        if (listSubject.size() > 0){
-            tvNoSubject.setVisibility(View.INVISIBLE);
-        }else tvNoSubject.setVisibility(View.VISIBLE);
+
+
 
         rcvListSubject.setLayoutManager(new LinearLayoutManager(getActivity()));
         subjectAdapter = new SubjectAdapter(getActivity(), listSubject, this);
         rcvListSubject.setAdapter(subjectAdapter);
-
+        setInfSubject();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.i("LOG_Resume", "LOG_Resume");
+        setInfSubject();
+    }
+
+    private void setInfSubject(){
         listSubject.clear();
         listSubject = Common.getListSubject(getActivity());
+        if (listSubject.size() > 0){
+            tvNoSubject.setVisibility(View.INVISIBLE);
+        }else tvNoSubject.setVisibility(View.VISIBLE);
         Log.e("listSubjectSize", listSubject.size() + "");
         subjectAdapter.refreshAdapter(listSubject);
     }

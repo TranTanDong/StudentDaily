@@ -60,16 +60,20 @@ public class AddPlanActivity extends AppCompatActivity {
                 String namePlan = edtNameNewPlan.getText().toString();
                 String codeUser = mAuth.getCurrentUser().getUid();
                 String dayUpdate = tvDayAddNewPlan.getText().toString();
-                if (Flag.equals("ADD_PLAN")){
-                    if (!TextUtils.isEmpty(namePlan)){
-                        insertDataPlan(codeUser, namePlan, dayUpdate);
-                    }else Toast.makeText(getApplicationContext(), "Hãy nhập tên kế hoạch", Toast.LENGTH_SHORT).show();
-                }else if (Flag.equals("EDIT_PLAN")){
-                    if (namePlan.equals(plan.getName())){
-                        finish();
-                    }else if (!TextUtils.isEmpty(namePlan)){
-                        editDataPlan(String.valueOf(plan.getId()), namePlan);
-                    }else Toast.makeText(getApplicationContext(), "Hãy nhập tên kế hoạch", Toast.LENGTH_SHORT).show();
+
+                if (TextUtils.isEmpty(namePlan)){
+                    Toast.makeText(getApplicationContext(), "Hãy nhập tên kế hoạch", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (Flag.equals("ADD_PLAN")){
+                        if (isExistsPlan(namePlan)){
+                            Toast.makeText(AddPlanActivity.this, "Trùng kế hoạch", Toast.LENGTH_SHORT).show();
+                        }else insertDataPlan(codeUser, namePlan, dayUpdate);
+                    }else if (Flag.equals("EDIT_PLAN")){
+                        if (namePlan.equals(plan.getName())){
+                            finish();
+                        }else editDataPlan(String.valueOf(plan.getId()), namePlan);
+
+                    }
                 }
 
             }
@@ -81,6 +85,16 @@ public class AddPlanActivity extends AppCompatActivity {
                finish();
             }
         });
+    }
+
+    private boolean isExistsPlan(String namePlan){
+        ArrayList<Plan> plans = Common.getListPlan(AddPlanActivity.this);
+        for (Plan plan:plans){
+            if (plan.getName().equals(namePlan)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void editDataPlan(final String id, final String namePlan) {

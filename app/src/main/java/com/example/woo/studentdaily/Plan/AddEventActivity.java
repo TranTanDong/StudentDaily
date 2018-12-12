@@ -93,7 +93,10 @@ public class AddEventActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.btn_save){
-            processSaveEvent();
+            if (plans.size() > 0){
+                processSaveEvent();
+            }else Toast.makeText(this, "Bạn hãy thêm kế hoạch trước", Toast.LENGTH_SHORT).show();
+
         }
         return super.onOptionsItemSelected(item);
     }

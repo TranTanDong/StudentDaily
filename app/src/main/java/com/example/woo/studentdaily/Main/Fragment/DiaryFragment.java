@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -43,6 +44,7 @@ import java.util.Map;
  */
 public class DiaryFragment extends Fragment implements DiaryAdapter.IDiary{
     private RecyclerView rcvDiary;
+    private TextView tvNoDiary;
     private DiaryAdapter diaryAdapter;
     private ArrayList<Diary> listDiary;
 
@@ -63,17 +65,15 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.IDiary{
     }
 
     private void addControls(View v) {
+        tvNoDiary = v.findViewById(R.id.tv_no_diary);
         rcvDiary = v.findViewById(R.id.rcv_diary);
         listDiary = new ArrayList<>();
-//        if (listDiary.size() <= 0){
-//            LoadData.loadDataDiary(getActivity());
-//            LoadData.loadDataPostDiary(getActivity());
-//        }
-        listDiary = Common.getListDiary(getActivity());
 
         rcvDiary.setLayoutManager(new LinearLayoutManager(getActivity()));
         diaryAdapter = new DiaryAdapter(getActivity(), listDiary, this);
         rcvDiary.setAdapter(diaryAdapter);
+
+        setInfDiary();
     }
 
     @Override
@@ -85,6 +85,9 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.IDiary{
     private void setInfDiary() {
         listDiary.clear();
         listDiary = Common.getListDiary(getActivity());
+        if (listDiary.size() > 0){
+            tvNoDiary.setVisibility(View.INVISIBLE);
+        }else tvNoDiary.setVisibility(View.VISIBLE);
         Log.i("listDiarySize", listDiary.size() + "");
         diaryAdapter.refreshAdapter(listDiary);
     }

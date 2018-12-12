@@ -175,7 +175,9 @@ public class MainActivity extends AppCompatActivity{
                         if (listAdd[i].equals("Thêm môn học")){
                             startActivity(new Intent(MainActivity.this, AddSubjectActivity.class));
                         }else if (listAdd[i].equals("Thêm nhật ký")){
-                            startActivity(new Intent(MainActivity.this, AddDiaryActivity.class));
+                            Intent mIntent = new Intent(MainActivity.this, AddDiaryActivity.class);
+                            mIntent.putExtra("FLAG_DIARY", "ADD_DIARY");
+                            startActivity(mIntent);
                         }
                     }
                 });

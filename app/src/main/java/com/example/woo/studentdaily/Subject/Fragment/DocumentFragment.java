@@ -143,14 +143,6 @@ public class DocumentFragment extends Fragment implements StudyAdapter.IStudy, T
         testAdapter = new TestAdapter(getActivity(), tests, Common.getListSubject(getActivity()), this);
         rcvTest.setAdapter(testAdapter);
 
-        //Add data "Loại tài liệu"
-        List<Object> styleDocument = new ArrayList<>();
-        styleDocument.add("Tất cả");
-        styleDocument.add("Hình ảnh");
-        styleDocument.add("File");
-        styleDocument.add("Text");
-
-
     }
 
     private void setDataListStudy() {

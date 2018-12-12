@@ -39,15 +39,17 @@
         <activity android:name=".Diary.ContentDiaryActivity" />
         <activity android:name=".Diary.AddContentDiaryActivity" />
         <activity android:name=".More.HelpActivity" />
-        <activity android:name=".More.StatisticalPlanActivity" />
-        <activity android:name=".More.ScheduleActivity" />
+        <activity android:name=".More.LecturerAllActivity" />
+        <activity android:name=".More.StudyAllActivity" />
         <activity android:name=".Subject.AddScoreActivity" />
         <activity android:name=".Subject.AddScheduleStudyActivity" />
         <activity android:name=".Subject.AddScheduleTestActivity" />
         <activity android:name=".Subject.EditLecturerActivity" />
         <activity android:name=".Subject.EditClassSemesterYearActivity" />
         <activity android:name=".Subject.DetailScheduleTestActivity" />
-        <activity android:name=".Login.LoadDataActivity"></activity>
+        <activity android:name=".Login.LoadDataActivity" />
+        <activity android:name=".More.TestAllActivity" />
+        <activity android:name=".More.DetailLecturerActivity"></activity>
     </application>
 
 </manifest>

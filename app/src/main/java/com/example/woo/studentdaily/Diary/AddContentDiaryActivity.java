@@ -28,9 +28,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Common.Popup;
+import com.example.woo.studentdaily.Diary.Model.PostDiary;
 import com.example.woo.studentdaily.More.EditInfAccountActivity;
 import com.example.woo.studentdaily.More.Model.User;
 import com.example.woo.studentdaily.R;
@@ -53,6 +58,9 @@ public class AddContentDiaryActivity extends AppCompatActivity {
     private ImageView imgContent;
 
     private int idDiary;
+
+    private String flag;
+    private PostDiary postDiary;
 
     Bitmap bitmap =  null;
     String urlImage = "";
@@ -91,7 +99,7 @@ public class AddContentDiaryActivity extends AppCompatActivity {
 
         String content = edtContent.getText().toString();
         String daycreate = Common.f_ymmddhh.format(Calendar.getInstance().getTime());
-        if (content.isEmpty()){
+        if (content.isEmpty() && bitmap == null){
             Toast.makeText(this, "Chưa nhập nội dung bài viết", Toast.LENGTH_SHORT).show();
         }else excecute(String.valueOf(idDiary), content, daycreate);
 
@@ -151,7 +159,30 @@ public class AddContentDiaryActivity extends AppCompatActivity {
         imgContent = findViewById(R.id.img_content_diary);
 
         Intent mIntent = getIntent();
-        idDiary = mIntent.getIntExtra("ID_DIARY", -1);
+        flag = mIntent.getStringExtra("FLAG_POST");
+
+        if (flag.equals("ADD_POST")){
+            setTitle("Bài viết mới");
+            idDiary = mIntent.getIntExtra("ID_DIARY", -1);
+        }else if (flag.equals("EDIT_POST")){
+            setTitle("Sửa bài viết");
+            postDiary = (PostDiary) mIntent.getSerializableExtra("POST");
+            edtContent.setText(postDiary.getContent());
+            if (!postDiary.getAttach().isEmpty()){
+                urlImage = postDiary.getAttach();
+
+                Glide.with(AddContentDiaryActivity.this).load(urlImage)
+                        .apply(RequestOptions
+                                .overrideOf(120, 120)
+                                .placeholder(R.drawable.ic_image_error_blue)
+                                .error(R.drawable.ic_image_error_blue)
+                                .formatOf(DecodeFormat.PREFER_RGB_565)
+                                .timeout(3000)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgContent);
+            }
+
+        }
+
     }
 
     private void addEvents() {
@@ -232,7 +263,12 @@ public class AddContentDiaryActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 popup.hide();
-                                insertPostDiary(s, content, daycreate, urlImage);
+                                if (flag.equals("ADD_POST")){
+                                    insertPostDiary(s, content, daycreate, urlImage);
+                                }else if (flag.equals("EDIT_POST")){
+                                    updatePostDiary(String.valueOf(postDiary.getId()), content, urlImage);
+                                }
+
                             }
                         });
 
@@ -242,10 +278,66 @@ public class AddContentDiaryActivity extends AppCompatActivity {
                 }
             });
         }else {
+            if (flag.equals("ADD_POST")){
+                insertPostDiary(s, content, daycreate, urlImage);
+            }else if (flag.equals("EDIT_POST")){
+                if (content.equals(postDiary.getContent())){
+                    finish();
+                }else updatePostDiary(String.valueOf(postDiary.getId()), content, urlImage);
+            }
+
             popup.hide();
-            insertPostDiary(s, content, daycreate, urlImage);
         }
 
+    }
+
+    private void updatePostDiary(final String id, final String content, final String urlImage) {
+        final Popup popup = new Popup(AddContentDiaryActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchUpdatePostDiary, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                Log.e("DATA_POST_DIARY", response);
+                AddContentDiaryActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoadData.loadDataPostDiary(getApplicationContext());
+                        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                setResult(ContentDiaryActivity.RESULT_CODE_EDIT_POST);
+                                popup.hide();
+                                finish();
+                            }
+                        };
+                        timer.start();
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> hashMap = new HashMap<>();
+                hashMap.put("dd_id", id);
+                hashMap.put("dd_content", content);
+                hashMap.put("dd_attach", urlImage);
+                return hashMap;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     private void addToolbar() {

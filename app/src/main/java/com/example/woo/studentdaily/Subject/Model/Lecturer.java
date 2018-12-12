@@ -2,6 +2,9 @@ package com.example.woo.studentdaily.Subject.Model;
 
 import java.io.Serializable;
 
+import me.aflak.filter_annotation.Filterable;
+
+@Filterable
 public class Lecturer implements Serializable {
     private int id;
     private String name;

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_day_of_week_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thứ 2"
+            android:textSize="@dimen/font_size_text"
+            android:paddingLeft="20dp"
+            android:fontFamily="sans-serif-black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textSize="@dimen/font_size_text"
+            android:fontFamily="sans-serif-black"/>
+
+        <TextView
+            android:id="@+id/tv_time_of_day_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiết 123"
+            android:textSize="@dimen/font_size_text"
+            android:fontFamily="sans-serif-black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textSize="@dimen/font_size_text"
+            android:fontFamily="sans-serif-black"/>
+
+        <TextView
+            android:id="@+id/tv_place_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phòng 202/C1"
+            android:textSize="@dimen/font_size_text"
+            android:fontFamily="sans-serif-black"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_name_subject_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="25dp"
+        android:paddingBottom="5dp"
+        android:gravity="end"
+        android:text="Toán rời rạc"
+        android:textSize="@dimen/font_size_topic"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="sans-serif-black"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"></View>
+
+</LinearLayout>

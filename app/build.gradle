@@ -41,6 +41,9 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.clans:fab:1.6.4'
+
+    implementation 'me.aflak.libraries:filter-annotation:1.2'
+    annotationProcessor 'me.aflak.libraries:filter-processor:1.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

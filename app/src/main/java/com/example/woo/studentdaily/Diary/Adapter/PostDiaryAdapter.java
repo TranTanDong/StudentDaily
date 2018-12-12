@@ -39,7 +39,7 @@ public class PostDiaryAdapter extends RecyclerView.Adapter<PostDiaryAdapter.Post
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostDiaryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostDiaryViewHolder holder, final int position) {
         holder.tvDayCreate.setText(Common.moveDay(postDiaries.get(position).getDayCreate()));
         holder.tvContent.setText(postDiaries.get(position).getContent());
         String img = postDiaries.get(position).getAttach();
@@ -60,7 +60,7 @@ public class PostDiaryAdapter extends RecyclerView.Adapter<PostDiaryAdapter.Post
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Delete ^^", Toast.LENGTH_SHORT).show();
+                iPostDiary.onClickDeletePostDiary(position);
             }
         });
     }

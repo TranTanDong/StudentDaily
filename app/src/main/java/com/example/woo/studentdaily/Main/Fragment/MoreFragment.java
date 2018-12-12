@@ -21,8 +21,9 @@ import com.example.woo.studentdaily.Login.LoginActivity;
 import com.example.woo.studentdaily.More.HelpActivity;
 import com.example.woo.studentdaily.More.InfoUserActivity;
 import com.example.woo.studentdaily.More.Model.User;
-import com.example.woo.studentdaily.More.ScheduleActivity;
-import com.example.woo.studentdaily.More.StatisticalPlanActivity;
+import com.example.woo.studentdaily.More.StudyAllActivity;
+import com.example.woo.studentdaily.More.LecturerAllActivity;
+import com.example.woo.studentdaily.More.TestAllActivity;
 import com.example.woo.studentdaily.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -34,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class MoreFragment extends Fragment {
     private LinearLayout btnLogout;
-    private LinearLayout btnDetailAccount, btnHelp, btnSchedule, btnStatisticalPlan;
+    private LinearLayout btnDetailAccount, btnHelp, btnStudyAll, btnLecturerAll, btnTestAll;
     private CircleImageView imgImageMore;
     private TextView tvNameMore;
 
@@ -63,19 +64,20 @@ public class MoreFragment extends Fragment {
         btnLogout        = view.findViewById(R.id.btn_log_out);
         btnDetailAccount = view.findViewById(R.id.lnl_inf_account);
         btnHelp          = view.findViewById(R.id.btn_help);
-        btnStatisticalPlan = view.findViewById(R.id.btn_statistical_plan);
-        btnSchedule      = view.findViewById(R.id.btn_schedule);
+        btnLecturerAll   = view.findViewById(R.id.btn_lecturer_all);
+        btnStudyAll      = view.findViewById(R.id.btn_study_all);
+        btnTestAll       = view.findViewById(R.id.btn_test_all);
         imgImageMore     = view.findViewById(R.id.img_image_more);
         tvNameMore       = view.findViewById(R.id.tv_name_more);
 
 
-        //setInfUserFragment();
     }
 
     private void setInfUserFragment() {
         User user = Common.getUser(getActivity());
         tvNameMore.setText(user.getName());
         //Load hình
+
         Glide.with(getActivity()).load(user.getImage())
                 .apply(RequestOptions
                         .overrideOf(120, 120)
@@ -84,6 +86,8 @@ public class MoreFragment extends Fragment {
                         .formatOf(DecodeFormat.PREFER_RGB_565)
                         .timeout(3000)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgImageMore);
+
+
     }
 
     private void addEvents() {
@@ -104,17 +108,17 @@ public class MoreFragment extends Fragment {
             }
         });
         //Xem thời khóa biểu
-        btnSchedule.setOnClickListener(new View.OnClickListener() {
+        btnStudyAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ScheduleActivity.class));
+                startActivity(new Intent(getActivity(), StudyAllActivity.class));
             }
         });
-        //Xem thống kê kế hoạch
-        btnStatisticalPlan.setOnClickListener(new View.OnClickListener() {
+        //Xem tất cả giảng viên
+        btnLecturerAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), StatisticalPlanActivity.class));
+                startActivity(new Intent(getActivity(), LecturerAllActivity.class));
             }
         });
         //Trợ giúp
@@ -122,6 +126,12 @@ public class MoreFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), HelpActivity.class));
+            }
+        });
+        btnTestAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), TestAllActivity.class));
             }
         });
     }

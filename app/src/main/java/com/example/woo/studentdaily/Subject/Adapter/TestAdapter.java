@@ -53,7 +53,6 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Đau đầu vl", Toast.LENGTH_SHORT).show();
                 iTest.onClickItemTest(Integer.parseInt(v.getTag().toString()));
             }
         });

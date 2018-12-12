@@ -39,6 +39,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_test_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -49,7 +50,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_edit_blue_24dp"/>
+                android:src="@drawable/ic_schedule_test_blue"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,7 +61,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btn_schedule"
+            android:id="@+id/btn_study_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -71,18 +72,18 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_date_range_black_24dp"/>
+                android:src="@drawable/ic_schedule_study_blue"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Thời khóa biểu"
+                android:text="Lịch học"
                 android:textSize="@dimen/font_size_topic"
                 android:fontFamily="sans-serif"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btn_statistical_plan"
+            android:id="@+id/btn_lecturer_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"

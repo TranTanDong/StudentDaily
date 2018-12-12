@@ -70,14 +70,16 @@ public class InfoUserActivity extends AppCompatActivity {
         }else tvGenderUser.setText("Nữ");
 
         //Load hình
-        Glide.with(getApplicationContext()).load(user.getImage())
-                .apply(RequestOptions
-                        .overrideOf(120, 120)
-                        .placeholder(R.drawable.ic_account_circle)
-                        .error(R.drawable.ic_account_circle)
-                        .formatOf(DecodeFormat.PREFER_RGB_565)
-                        .timeout(3000)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgImageUser);
+
+       Glide.with(getApplicationContext()).load(user.getImage())
+               .apply(RequestOptions
+                       .overrideOf(120, 120)
+                       .placeholder(R.drawable.ic_account_circle)
+                       .error(R.drawable.ic_account_circle)
+                       .formatOf(DecodeFormat.PREFER_RGB_565)
+                       .timeout(3000)
+                       .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgImageUser);
+
         //Picasso.get().load(dsFruit.get(position).getHinh()).into(holder.img_fImage);
     }
 

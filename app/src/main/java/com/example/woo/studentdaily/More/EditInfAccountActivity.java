@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -34,8 +35,10 @@ import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.woo.studentdaily.Common.Common;
+import com.example.woo.studentdaily.Common.LoadData;
 import com.example.woo.studentdaily.Common.Popup;
 import com.example.woo.studentdaily.More.Model.User;
+import com.example.woo.studentdaily.Plan.AddPlanActivity;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
 import com.google.android.gms.tasks.Continuation;
@@ -61,7 +64,7 @@ public class EditInfAccountActivity extends AppCompatActivity {
     private CircleImageView imgImageSet;
 
     Bitmap bitmap =  null;
-    String urlAvatar = "default";
+    String urlAvatar = "";
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageReference = storage.getReferenceFromUrl("gs://studentdiary-e027b.appspot.com");
 
@@ -97,7 +100,6 @@ public class EditInfAccountActivity extends AppCompatActivity {
         tvBirthdaySet   = findViewById(R.id.tv_birthday_set);
         tvEmailSet      = findViewById(R.id.tv_email_set);
         imgImageSet     = findViewById(R.id.img_user_set);
-        bitmap          = ((BitmapDrawable) imgImageSet.getDrawable()).getBitmap();
 
         setInfUser();
 
@@ -118,6 +120,7 @@ public class EditInfAccountActivity extends AppCompatActivity {
             radioMale.setChecked(false);
         }
         //Load hình
+
         Glide.with(getApplicationContext()).load(user.getImage())
                 .apply(RequestOptions
                         .overrideOf(120, 120)
@@ -126,6 +129,7 @@ public class EditInfAccountActivity extends AppCompatActivity {
                         .formatOf(DecodeFormat.PREFER_RGB_565)
                         .timeout(3000)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)).into(imgImageSet);
+
         urlAvatar = user.getImage();
     }
 
@@ -157,7 +161,7 @@ public class EditInfAccountActivity extends AppCompatActivity {
                 //Upload và lấy link avatar
                 String name = edtNameSet.getText().toString();
                 String birthday = Common.moveSlashTo(tvBirthdaySet.getText().toString(), "/", "-").trim();
-                if (name.trim().equals(user.getName()) && birthday.equals(user.getBirthDay()) && gender.equals(user.getGender()) && urlAvatar.equals(user.getImage())){
+                if (name.trim().equals(user.getName()) && birthday.equals(user.getBirthDay()) && gender.equals(user.getGender()) && urlAvatar.equals(user.getImage()) && bitmap == null){
                     finish();
                 }else {
                     excecute();
@@ -169,12 +173,34 @@ public class EditInfAccountActivity extends AppCompatActivity {
     }
 
     private void updateDataUser(final String code, final String name, final String image, final String isFemale, final String birthDay) {
+        final Popup popup = new Popup(EditInfAccountActivity.this);
+        popup.createLoadingDialog();
+        popup.show();
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Server.patchUpdateUser, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(EditInfAccountActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
                 Log.e("UPDATE_USER", response+image);
+                EditInfAccountActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoadData.loadDataUser(EditInfAccountActivity.this);
+                        CountDownTimer timer = new CountDownTimer(3000, 1000) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                popup.hide();
+                                finish();
+                            }
+                        };
+                        timer.start();
+                    }
+                });
             }
         }, new Response.ErrorListener() {
             @Override
@@ -243,43 +269,46 @@ public class EditInfAccountActivity extends AppCompatActivity {
 
     private void excecute(){
         final Popup popup = new Popup(EditInfAccountActivity.this);
-        popup.createLoadingDialog();
+        popup.createLoadingDialog("");
         popup.show();
-        final StorageReference storageR = storageReference.child("User/" + Common.getUser(getApplicationContext()).getCode() + ".png");
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 5, baos);
-        byte[] data = baos.toByteArray();
-        UploadTask uploadTask = storageR.putBytes(data);
-        final Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
+
+        if (bitmap != null){
+            final StorageReference storageR = storageReference.child("User/" + Common.getUser(getApplicationContext()).getCode() + ".png");
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 5, baos);
+            byte[] data = baos.toByteArray();
+            UploadTask uploadTask = storageR.putBytes(data);
+            final Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return storageR.getDownloadUrl();
                 }
-                return storageR.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    urlAvatar = downloadUri.toString();
-                    Log.e("URL_IMAGE", urlAvatar);
-                    EditInfAccountActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateDataUser(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, gender, tvBirthdaySet.getText().toString());
-                            User u1 = new User(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, user.getEmail(), gender, Common.moveSlashTo(tvBirthdaySet.getText().toString(), "/", "-"));
-                            Common.setCurrentUser(getApplicationContext(), u1);
-                            finish();
-                            popup.hide();
-                        }
-                    });
-                } else {
-                    Toast.makeText(EditInfAccountActivity.this, "Upload image error", Toast.LENGTH_SHORT).show();
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        urlAvatar = downloadUri.toString();
+                        Log.e("URL_IMAGE", urlAvatar);
+                        EditInfAccountActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                popup.hide();
+                                updateDataUser(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, gender, tvBirthdaySet.getText().toString());
+
+                            }
+                        });
+                    } else {
+                        Toast.makeText(EditInfAccountActivity.this, "Upload image error", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }else {
+            updateDataUser(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, gender, tvBirthdaySet.getText().toString());
+        }
     }
 
     private void addToolbar() {

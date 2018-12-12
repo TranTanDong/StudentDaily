@@ -151,7 +151,7 @@ public class SubjectContentActivity extends AppCompatActivity {
         tabLayoutSubject = findViewById(R.id.tab_layout_subject);
         viewPagerSubject = findViewById(R.id.view_pager_subject);
 
-        tabLayoutSubject.addTab(tabLayoutSubject.newTab().setText("TÀI LIỆU"));
+        tabLayoutSubject.addTab(tabLayoutSubject.newTab().setText("TỔNG QUAN"));
         tabLayoutSubject.addTab(tabLayoutSubject.newTab().setText("ĐIỂM"));
         tabLayoutSubject.addTab(tabLayoutSubject.newTab().setText("GIẢNG VIÊN"));
         Bundle bundle = new Bundle();
