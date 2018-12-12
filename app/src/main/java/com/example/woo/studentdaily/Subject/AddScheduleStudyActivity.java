@@ -110,7 +110,7 @@ public class AddScheduleStudyActivity extends AppCompatActivity {
             if (!nameSubject.isEmpty()){
                 spnSubjectStudy.setSelection(listSubject.indexOf(nameSubject));
                 spnSubjectStudy.setEnabled(false);
-            }
+            }else spnSubjectStudy.setEnabled(true);
         }else if (flag.equals("EDIT_STUDY")){
             setTitle("Sửa lịch học");
             study = (Study) mIntent.getSerializableExtra("STUDY");

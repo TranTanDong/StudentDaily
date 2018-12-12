@@ -5,13 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Subject.Adapter.TestAdapter;
+import com.example.woo.studentdaily.Subject.AddScheduleTestActivity;
 import com.example.woo.studentdaily.Subject.DetailScheduleTestActivity;
 import com.example.woo.studentdaily.Subject.Model.Test;
 
@@ -38,11 +43,12 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
         tvNoTestAll = findViewById(R.id.tv_no_test_all);
         rcvTestAll = findViewById(R.id.rcv_test_all);
         tests = new ArrayList<>();
-        setInfTestAll();
+
+
         rcvTestAll.setLayoutManager(new LinearLayoutManager(this));
         testAllAdapter = new TestAdapter(this, tests, Common.getListSubject(TestAllActivity.this), this);
         rcvTestAll.setAdapter(testAllAdapter);
-
+        setInfTestAll();
 
     }
 
@@ -51,6 +57,7 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
 
         if (tests.size() > 0){
             tvNoTestAll.setVisibility(View.INVISIBLE);
+            testAllAdapter.refreshAdapter(tests);
         }else {
             tvNoTestAll.setVisibility(View.VISIBLE);
         }
@@ -58,10 +65,46 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
         setInfTestAll();
-        testAllAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search_only, menu);
+        MenuItem item = menu.findItem(R.id.search_only);
+        menu.findItem(R.id.add_only).setVisible(true);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                testAllAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.add_only){
+            Intent mIntent = new Intent(TestAllActivity.this, AddScheduleTestActivity.class);
+            mIntent.putExtra("FLAG", "ADD_TEST");
+            mIntent.putExtra("NAME_SUBJECT", "");
+            startActivity(mIntent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

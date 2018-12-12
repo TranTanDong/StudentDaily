@@ -72,11 +72,11 @@ public class LecturerAllActivity extends AppCompatActivity implements LecturerAd
         rcvLecturer = findViewById(R.id.rcv_lecturer_all);
         lecturers = new ArrayList<>();
 
-        setInfLecturer();
+
         rcvLecturer.setLayoutManager(new LinearLayoutManager(this));
         lecturerAdapter = new LecturerAdapter(this, lecturers, this);
         rcvLecturer.setAdapter(lecturerAdapter);
-
+        setInfLecturer();
     }
 
 
@@ -85,6 +85,7 @@ public class LecturerAllActivity extends AppCompatActivity implements LecturerAd
 
         if (lecturers.size() > 0){
             tvNoLecturer.setVisibility(View.INVISIBLE);
+            lecturerAdapter.refreshAdapter(lecturers);
         }else {
             tvNoLecturer.setVisibility(View.VISIBLE);
         }
@@ -95,7 +96,6 @@ public class LecturerAllActivity extends AppCompatActivity implements LecturerAd
     protected void onResume() {
         super.onResume();
         setInfLecturer();
-        lecturerAdapter.notifyDataSetChanged();
     }
 
     private void addEvents() {

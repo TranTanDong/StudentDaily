@@ -8,9 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,15 +54,52 @@ public class StudyAllActivity extends AppCompatActivity implements StudyAllAdapt
         addEvents();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search_only, menu);
+        MenuItem item = menu.findItem(R.id.search_only);
+        menu.findItem(R.id.add_only).setVisible(true);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                studyAllAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.add_only){
+            Intent mIntent = new Intent(StudyAllActivity.this, AddScheduleStudyActivity.class);
+            mIntent.putExtra("FLAG", "ADD_STUDY");
+            mIntent.putExtra("NAME_SUBJECT", "");
+            startActivity(mIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void addControls() {
         tvNoStudyAll = findViewById(R.id.tv_no_study_all);
         rcvStudyAll = findViewById(R.id.rcv_study_all);
         studies = new ArrayList<>();
 
-        setInfStudyAll();
+
         rcvStudyAll.setLayoutManager(new LinearLayoutManager(this));
         studyAllAdapter = new StudyAllAdapter(this, studies, Common.getListSubject(StudyAllActivity.this), this);
         rcvStudyAll.setAdapter(studyAllAdapter);
+        setInfStudyAll();
     }
 
     private void setInfStudyAll() {
@@ -66,16 +107,16 @@ public class StudyAllActivity extends AppCompatActivity implements StudyAllAdapt
 
         if (studies.size() > 0){
             tvNoStudyAll.setVisibility(View.INVISIBLE);
+            studyAllAdapter.refreshAdapter(studies);
         }else {
             tvNoStudyAll.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
         setInfStudyAll();
-        studyAllAdapter.notifyDataSetChanged();
     }
 
     private void addEvents() {

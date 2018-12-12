@@ -274,7 +274,7 @@ public class AddScheduleTestActivity extends AppCompatActivity {
             if (!nameSubject.isEmpty()){
                 spnSubjectTest.setSelection(listSubject.indexOf(nameSubject));
                 spnSubjectTest.setEnabled(false);
-            }
+            }else spnSubjectTest.setEnabled(true);
         }else if (flag.equals("EDIT_TEST")){
             setTitle("Sửa lịch kiểm tra");
             String nameSubject = mIntent.getStringExtra("NAME_SUBJECT");

@@ -6,27 +6,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.R;
+import com.example.woo.studentdaily.Subject.Model.Lecturer;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.example.woo.studentdaily.Subject.Model.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> {
+public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> implements Filterable {
     Context context;
     ArrayList<Test> tests;
     ArrayList<Subject> listSubject;
     ITest iTest;
+    ArrayList<Test> listFilter;
 
     public TestAdapter(Context context, ArrayList<Test> tests, ArrayList<Subject> listSubject, ITest iTest) {
         this.context = context;
         this.tests = tests;
         this.listSubject = listSubject;
         this.iTest = iTest;
+        listFilter = new ArrayList<>(tests);
     }
 
     @NonNull
@@ -63,6 +69,42 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         return tests.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return listTestFilter;
+    }
+
+    private Filter listTestFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Test> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(listFilter);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Test item : listFilter) {
+                    if (item.getDayTest().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            tests.clear();
+            tests.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public class TestViewHolder extends RecyclerView.ViewHolder{
         TextView tvDayTest;
         TextView tvTitleTest;
@@ -75,6 +117,12 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             tvPlaceTest     = itemView.findViewById(R.id.tv_place_test);
         }
 
+    }
+
+    public void refreshAdapter(List<Test> lecturerNew){
+        tests.clear();
+        tests.addAll(lecturerNew);
+        notifyDataSetChanged();
     }
 
     private String moveDay(String createDay) {

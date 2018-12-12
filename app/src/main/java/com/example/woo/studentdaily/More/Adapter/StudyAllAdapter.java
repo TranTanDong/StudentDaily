@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.example.woo.studentdaily.R;
@@ -13,18 +15,21 @@ import com.example.woo.studentdaily.Subject.Model.Study;
 import com.example.woo.studentdaily.Subject.Model.Subject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class StudyAllAdapter extends RecyclerView.Adapter<StudyAllAdapter.StudyAllViewHolder> {
+public class StudyAllAdapter extends RecyclerView.Adapter<StudyAllAdapter.StudyAllViewHolder> implements Filterable {
     Context context;
     ArrayList<Study> studyList;
     ArrayList<Subject> subjects;
     IStudyAll iStudyAll;
+    ArrayList<Study> listFilter;
 
     public StudyAllAdapter(Context context, ArrayList<Study> studyList, ArrayList<Subject> subjects, IStudyAll iStudyAll) {
         this.context = context;
         this.studyList = studyList;
         this.subjects = subjects;
         this.iStudyAll = iStudyAll;
+        listFilter = new ArrayList<>(studyList);
     }
 
     @NonNull
@@ -62,6 +67,42 @@ public class StudyAllAdapter extends RecyclerView.Adapter<StudyAllAdapter.StudyA
         return studyList.size();
     }
 
+    private Filter listStudyFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Study> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(listFilter);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Study item : listFilter) {
+                    if (item.getDayOfWeek().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            studyList.clear();
+            studyList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return listStudyFilter;
+    }
+
     public class StudyAllViewHolder extends RecyclerView.ViewHolder{
         TextView tvDayOfWeek;
         TextView tvTimeOfDay;
@@ -74,6 +115,12 @@ public class StudyAllAdapter extends RecyclerView.Adapter<StudyAllAdapter.StudyA
             tvPlace     = itemView.findViewById(R.id.tv_place_all);
             tvSubject   = itemView.findViewById(R.id.tv_name_subject_all);
         }
+    }
+
+    public void refreshAdapter(List<Study> lecturerNew){
+        studyList.clear();
+        studyList.addAll(lecturerNew);
+        notifyDataSetChanged();
     }
 
     public interface IStudyAll{
