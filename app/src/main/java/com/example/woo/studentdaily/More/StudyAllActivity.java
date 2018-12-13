@@ -95,11 +95,11 @@ public class StudyAllActivity extends AppCompatActivity implements StudyAllAdapt
         rcvStudyAll = findViewById(R.id.rcv_study_all);
         studies = new ArrayList<>();
 
-
+        setInfStudyAll();
         rcvStudyAll.setLayoutManager(new LinearLayoutManager(this));
         studyAllAdapter = new StudyAllAdapter(this, studies, Common.getListSubject(StudyAllActivity.this), this);
         rcvStudyAll.setAdapter(studyAllAdapter);
-        setInfStudyAll();
+
     }
 
     private void setInfStudyAll() {
@@ -107,7 +107,6 @@ public class StudyAllActivity extends AppCompatActivity implements StudyAllAdapt
 
         if (studies.size() > 0){
             tvNoStudyAll.setVisibility(View.INVISIBLE);
-            studyAllAdapter.refreshAdapter(studies);
         }else {
             tvNoStudyAll.setVisibility(View.VISIBLE);
         }
@@ -116,7 +115,8 @@ public class StudyAllActivity extends AppCompatActivity implements StudyAllAdapt
     @Override
     protected void onResume() {
         super.onResume();
-        setInfStudyAll();
+        setInfStudyAll();studyAllAdapter.refreshAdapter(studies);
+
     }
 
     private void addEvents() {
@@ -201,7 +201,7 @@ public class StudyAllActivity extends AppCompatActivity implements StudyAllAdapt
                             public void onFinish() {
                                 popup.hide();
                                 setInfStudyAll();
-                                studyAllAdapter.notifyDataSetChanged();
+                                studyAllAdapter.refreshAdapter(studies);
                             }
                         };
                         timer.start();

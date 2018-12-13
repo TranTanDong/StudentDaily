@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Thi môn Toán"
-        android:textSize="@dimen/font_size_text"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_size_topic"
         android:fontFamily="sans-serif-black"
         android:layout_marginLeft="20dp"/>
     <TextView
@@ -30,11 +31,12 @@
         android:layout_marginRight="20dp"
         android:textSize="@dimen/font_size_text"
         android:fontFamily="sans-serif"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/textColorHint"/>
 
 </LinearLayout>

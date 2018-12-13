@@ -164,10 +164,10 @@ public class EventDetailsActivity extends AppCompatActivity {
         event = (Event)mIntent.getSerializableExtra("ITEM_EVENT");
 
 
-        String sDay = event.getStartTime().substring(0, 10);
+        String sDay = Common.moveSlashTo(event.getStartTime().substring(0, 10), "-", "/");
         String sTime = event.getStartTime().substring(11, 16);
 
-        String eDay = event.getEndTime().substring(0, 10);
+        String eDay = Common.moveSlashTo(event.getEndTime().substring(0, 10), "-", "/");
         String eTime = event.getEndTime().substring(11, 16);
         if (sDay.equals(eDay)){
             tvStartTime.setText(Common.moveSlashTo(sDay, "-", "/"));

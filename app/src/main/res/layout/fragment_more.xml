@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Lịch thi"
+                android:text="Lịch kiểm tra"
                 android:textSize="@dimen/font_size_topic"
                 android:fontFamily="sans-serif"/>
         </LinearLayout>

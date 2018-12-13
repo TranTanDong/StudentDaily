@@ -51,6 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Math"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
                 android:textColor="@color/textColorBlack"
                 android:layout_gravity="center"
                 android:textSize="@dimen/font_size_topic" />

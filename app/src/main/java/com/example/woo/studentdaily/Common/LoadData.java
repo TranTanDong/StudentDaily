@@ -164,7 +164,7 @@ public class LoadData {
                                 event.setPriority(jsonObject.getInt("priority"));
                                 event.setRemind(jsonObject.getInt("remind"));
                                 event.setDescribe(jsonObject.getString("describe"));
-                                events.add(0, event);
+                                events.add(event);
                             }
 
                         } catch (JSONException e) {
@@ -241,7 +241,7 @@ public class LoadData {
                                 lecturer.setEmail(jsonObject.getString("email"));
                                 lecturer.setWeb(jsonObject.getString("web"));
                                 lecturer.setIdst(jsonObject.getInt("idst"));
-                                lecturers.add(lecturer);
+                                lecturers.add(0, lecturer);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

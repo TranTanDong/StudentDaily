@@ -19,6 +19,7 @@
         android:paddingTop="5dp"
         android:visibility="visible"
         android:text="Chưa có lịch học nào"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_size_topic"
         android:gravity="center"/>
 

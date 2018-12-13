@@ -466,7 +466,7 @@ public class AddEventActivity extends AppCompatActivity {
 
     private void processDay(final TextView tvStartDayPlan, Context context, final Calendar cal) {
         String arr[] = tvStartDayPlan.getText().toString().split("/");
-        cal.set(Integer.parseInt(arr[2]), Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
+        cal.set(Integer.parseInt(arr[2]), Integer.parseInt(arr[1])-1, Integer.parseInt(arr[0]));
         DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -474,6 +474,7 @@ public class AddEventActivity extends AppCompatActivity {
                 cal.set(calendar.MONTH, month);
                 cal.set(calendar.DAY_OF_MONTH, dayOfMonth);
                 String s = Common.f_ddmmy.format(cal.getTime());
+
                 tvStartDayPlan.setText(s);
             }
         };

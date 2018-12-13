@@ -32,6 +32,7 @@
                 android:id="@+id/btn_color_subject"
                 android:layout_width="@dimen/image_view_plan"
                 android:layout_height="@dimen/image_view_plan"
+                android:visibility="invisible"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_color_lens_black_24dp"/>

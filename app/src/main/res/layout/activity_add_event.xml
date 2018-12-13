@@ -67,6 +67,7 @@
                     <ImageView
                         android:layout_width="@dimen/image_view_plan"
                         android:layout_height="@dimen/image_view_plan"
+                        android:visibility="invisible"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_color_lens_black_24dp"/>
                 </LinearLayout>
@@ -84,6 +85,7 @@
                     <ImageView
                         android:layout_width="@dimen/image_view_plan"
                         android:layout_height="@dimen/image_view_plan"
+                        android:visibility="invisible"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_location_on_black_24dp"/>
                 </LinearLayout>
@@ -220,6 +222,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
+                    android:visibility="invisible"
                     android:orientation="horizontal">
 
                     <CheckBox

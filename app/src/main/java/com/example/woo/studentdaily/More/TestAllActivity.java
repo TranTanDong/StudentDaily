@@ -44,11 +44,11 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
         rcvTestAll = findViewById(R.id.rcv_test_all);
         tests = new ArrayList<>();
 
-
+        setInfTestAll();
         rcvTestAll.setLayoutManager(new LinearLayoutManager(this));
         testAllAdapter = new TestAdapter(this, tests, Common.getListSubject(TestAllActivity.this), this);
         rcvTestAll.setAdapter(testAllAdapter);
-        setInfTestAll();
+
 
     }
 
@@ -57,7 +57,6 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
 
         if (tests.size() > 0){
             tvNoTestAll.setVisibility(View.INVISIBLE);
-            testAllAdapter.refreshAdapter(tests);
         }else {
             tvNoTestAll.setVisibility(View.VISIBLE);
         }
@@ -68,7 +67,7 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
     protected void onResume() {
         super.onResume();
         setInfTestAll();
-
+        testAllAdapter.refreshAdapter(tests);
     }
 
     @Override
@@ -116,7 +115,7 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_close);
         setSupportActionBar(toolbar);
-        setTitle("Tất cả lịch thi");
+        setTitle("Tất cả lịch kiểm tra");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
