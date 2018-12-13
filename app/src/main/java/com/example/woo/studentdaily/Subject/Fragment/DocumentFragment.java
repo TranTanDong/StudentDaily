@@ -41,8 +41,11 @@ import com.example.woo.studentdaily.Subject.Model.Subject;
 import com.example.woo.studentdaily.Subject.Model.Test;
 
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,9 +164,20 @@ public class DocumentFragment extends Fragment implements StudyAdapter.IStudy, T
     private void setDataListTest() {
         listTest = Common.getListTest(getContext());
         tests.clear();
+        Date day = null;
         for (Test i : listTest){
             if (i.getIdst() == idST){
-                tests.add(i);
+
+                try {
+                    day = Common.f_ymmddhh.parse(i.getDayTest());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (Calendar.getInstance().getTime().compareTo(day) != 1){
+                    tests.add(i);
+                }
+
             }
         }
         if (tests.size() > 0){

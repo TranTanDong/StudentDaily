@@ -20,7 +20,10 @@ import com.example.woo.studentdaily.Subject.AddScheduleTestActivity;
 import com.example.woo.studentdaily.Subject.DetailScheduleTestActivity;
 import com.example.woo.studentdaily.Subject.Model.Test;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class TestAllActivity extends AppCompatActivity implements TestAdapter.ITest {
     private Toolbar toolbar;
@@ -54,7 +57,7 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
 
     private void setInfTestAll() {
         tests = Common.getListTest(TestAllActivity.this);
-
+        
         if (tests.size() > 0){
             tvNoTestAll.setVisibility(View.INVISIBLE);
         }else {
