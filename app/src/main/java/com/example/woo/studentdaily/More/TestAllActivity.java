@@ -57,7 +57,7 @@ public class TestAllActivity extends AppCompatActivity implements TestAdapter.IT
 
     private void setInfTestAll() {
         tests = Common.getListTest(TestAllActivity.this);
-        
+
         if (tests.size() > 0){
             tvNoTestAll.setVisibility(View.INVISIBLE);
         }else {

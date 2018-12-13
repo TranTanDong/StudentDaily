@@ -54,7 +54,7 @@ public class LoadData {
                         }
                     }
                     Common.setListPlan(plans, context);
-                    Toast.makeText(context, "Load plan success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load plan success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -91,7 +91,7 @@ public class LoadData {
                         }
                     }
                     Common.setListDiary(diaries, context);
-                    Toast.makeText(context, "Load Diary success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load Diary success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -129,7 +129,7 @@ public class LoadData {
                         }
                     }
                     Common.setListPostDiary(postDiaries, context);
-                    Toast.makeText(context, "Load Post Diary success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load Post Diary success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -172,7 +172,7 @@ public class LoadData {
                         }
                     }
                     Common.setListEvent(events, context);
-                    Toast.makeText(context, "Load event success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load Event success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -209,7 +209,7 @@ public class LoadData {
                         }
                     }
                     Common.setListSubject(subjects, context);
-                    Toast.makeText(context, "Load subject success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load Subject success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -248,7 +248,7 @@ public class LoadData {
                         }
                     }
                     Common.setListLecturer(lecturers, context);
-                    Toast.makeText(context, "Load Lecturer success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load Lecturer success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -287,7 +287,7 @@ public class LoadData {
                         }
                     }
                     Common.setListClassYear(classYears, context);
-                    Toast.makeText(context, "Load Class Year success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load ClassYear success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -326,7 +326,7 @@ public class LoadData {
                         }
                     }
                     Common.setListStudy(studies, context);
-                    Toast.makeText(context, "Load Study success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load Study success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -366,7 +366,7 @@ public class LoadData {
                         }
                     }
                     Common.setListTest(tests, context);
-                    Toast.makeText(context, "Load Test success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load Test success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -406,7 +406,7 @@ public class LoadData {
                         }
                     }
                     Common.setListScore(scores, context);
-                    Toast.makeText(context, "Load Score success", Toast.LENGTH_SHORT).show();
+                    Log.e("Toast", "Load Score success");
                 }
             }
         }, new Response.ErrorListener() {
@@ -440,7 +440,7 @@ public class LoadData {
 
                                 Common.setCurrentUser(context, user);
                                 Log.e("CheckData", user.toString());
-                                Toast.makeText(context, "Load User Ok", Toast.LENGTH_SHORT).show();
+                                Log.e("Toast", "Load User success");
                                 break;
                             }
                         } catch (JSONException e) {
