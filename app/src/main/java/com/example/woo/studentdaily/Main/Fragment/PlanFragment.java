@@ -9,7 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.woo.studentdaily.Common.Common;
 import com.example.woo.studentdaily.Plan.Adapter.PagerAdapterPlan;
 import com.example.woo.studentdaily.Plan.AddEventActivity;
 import com.example.woo.studentdaily.Plan.AddPlanActivity;
@@ -49,9 +51,12 @@ public class PlanFragment extends Fragment{
         btnAddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(getActivity(), AddEventActivity.class);
-                mIntent.putExtra("FLAG_EVENT", "ADD_EVENT");
-                startActivity(mIntent);
+                if (Common.getListPlan(getActivity()).size() > 0){
+                    Intent mIntent = new Intent(getActivity(), AddEventActivity.class);
+                    mIntent.putExtra("FLAG_EVENT", "ADD_EVENT");
+                    startActivity(mIntent);
+                }else Toast.makeText(getActivity(), "Bạn hãy thêm kế hoạch trước", Toast.LENGTH_SHORT).show();
+
             }
         });
 

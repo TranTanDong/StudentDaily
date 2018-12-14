@@ -4,9 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgLightBlue"
     android:orientation="vertical"
     tools:context=".More.HelpActivity">
 
     <include layout="@layout/toolbar_layout"></include>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Gọi cho chúng tôi:"
+                android:textSize="@dimen/font_size_topic"
+                android:gravity="center_vertical"
+                android:drawablePadding="30dp"
+                android:fontFamily="sans-serif" />
+
+            <TextView
+                android:id="@+id/tv_phone_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="0964447435"
+                android:drawableLeft="@drawable/ic_phone_number"
+                android:textSize="@dimen/font_size_topic"
+                android:gravity="center_vertical"
+                android:drawablePadding="20dp"
+                android:fontFamily="sans-serif-black"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Email cho chúng tôi:"
+                android:textSize="@dimen/font_size_topic"
+                android:gravity="center_vertical"
+                android:drawablePadding="30dp"
+                android:fontFamily="sans-serif" />
+
+            <TextView
+                android:id="@+id/tv_email_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="trantandong96@gmail.com"
+                android:drawableLeft="@drawable/ic_email"
+                android:textSize="@dimen/font_size_topic"
+                android:gravity="center_vertical"
+                android:drawablePadding="20dp"
+                android:fontFamily="sans-serif-black"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_app_main"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

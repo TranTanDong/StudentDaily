@@ -322,4 +322,25 @@ public class MainActivity extends AppCompatActivity{
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage("Bạn muốn thoát khỏi ứng dụng?");
+        builder.setNegativeButton("CÓ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MainActivity.super.onBackPressed();
+            }
+        });
+        builder.setPositiveButton("KHÔNG", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
 }

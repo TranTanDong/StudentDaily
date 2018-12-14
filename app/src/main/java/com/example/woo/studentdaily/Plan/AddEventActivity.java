@@ -43,9 +43,11 @@ import com.example.woo.studentdaily.Plan.Model.Plan;
 import com.example.woo.studentdaily.R;
 import com.example.woo.studentdaily.Server.Server;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -330,7 +332,7 @@ public class AddEventActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String name = plans.get(i);
                 int id = mapPlan.get(name);
-                Toast.makeText(AddEventActivity.this, name + id, Toast.LENGTH_SHORT).show();
+                Log.e("ID_PLAN", name + ": " + id);
             }
 
             @Override
@@ -342,14 +344,14 @@ public class AddEventActivity extends AppCompatActivity {
         cvStartDayEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processDay(tvStartDayEvent, AddEventActivity.this, calTo);
+                processDay(tvStartDayEvent, tvEndDayEvent,  AddEventActivity.this, calTo, "TO");
             }
         });
         //Chọn ngày kết thúc sự kiện
         cvEndDayEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                processDay(tvEndDayEvent, AddEventActivity.this, calFrom);
+                processDay(tvEndDayEvent, tvStartDayEvent, AddEventActivity.this, calFrom, "FROM");
             }
         });
         //Chon thời gian bắt đầu
@@ -464,10 +466,21 @@ public class AddEventActivity extends AppCompatActivity {
     }
 
 
-    private void processDay(final TextView tvStartDayPlan, Context context, final Calendar cal) {
+    private void processDay(final TextView tvStartDayPlan, final TextView tvEndDayPlan, final Context context, final Calendar cal, final String type) {
         String arr[] = tvStartDayPlan.getText().toString().split("/");
+        String end = tvEndDayPlan.getText().toString();
+
         cal.set(Integer.parseInt(arr[2]), Integer.parseInt(arr[1])-1, Integer.parseInt(arr[0]));
-        DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
+
+        Date date = null;
+        try {
+            date = Common.f_ddmmy.parse(end);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        final Date finalDate = date;
+        final DatePickerDialog.OnDateSetListener callback=new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 cal.set(calendar.YEAR, year);
@@ -475,7 +488,20 @@ public class AddEventActivity extends AppCompatActivity {
                 cal.set(calendar.DAY_OF_MONTH, dayOfMonth);
                 String s = Common.f_ddmmy.format(cal.getTime());
 
-                tvStartDayPlan.setText(s);
+                if (type.equals("TO")){
+                    if (cal.getTime().compareTo(finalDate) == 1){
+                        Toast.makeText(context, "Vui lòng chọn thời gian kết thúc sau thời gian bắt đầu", Toast.LENGTH_SHORT).show();
+                        tvStartDayPlan.setText(s);
+                        tvEndDayPlan.setText(s);
+                    }else tvStartDayPlan.setText(s);
+                }else if (type.equals("FROM")){
+                    if (cal.getTime().compareTo(finalDate) == -1){
+                        Toast.makeText(context, "Vui lòng chọn thời gian kết thúc sau thời gian bắt đầu", Toast.LENGTH_SHORT).show();
+                        tvStartDayPlan.setText(s);
+                        tvEndDayPlan.setText(s);
+                    }else tvStartDayPlan.setText(s);
+                }
+
             }
         };
 

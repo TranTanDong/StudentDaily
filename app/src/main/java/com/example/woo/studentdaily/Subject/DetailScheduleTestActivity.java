@@ -187,7 +187,7 @@ public class DetailScheduleTestActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_close);
         setSupportActionBar(toolbar);
-        setTitle("Chi tiết lịch thi");
+        setTitle("Chi tiết lịch kiểm tra");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

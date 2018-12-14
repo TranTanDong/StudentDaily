@@ -307,6 +307,7 @@ public class EditInfAccountActivity extends AppCompatActivity {
                 }
             });
         }else {
+            popup.hide();
             updateDataUser(user.getCode(), edtNameSet.getText().toString().trim(), urlAvatar, gender, tvBirthdaySet.getText().toString());
         }
     }
